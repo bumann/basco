@@ -42,6 +42,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BascoException.cs" />
     <Compile Include="BascoExecutor.cs" />
     <Compile Include="IBascoExecutor.cs" />
     <Compile Include="IState.cs" />

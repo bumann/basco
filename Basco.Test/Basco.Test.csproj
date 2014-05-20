@@ -34,9 +34,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Appccelerate.AsyncModule.1.0.98\lib\Net40\Appccelerate.AsyncModule.dll</HintPath>
     </Reference>
-    <Reference Include="Basco">
-      <HintPath>..\packages\Basco.1.0.2.0\lib\net45\Basco.dll</HintPath>
-    </Reference>
     <Reference Include="FluentAssertions">
       <HintPath>..\packages\FluentAssertions.3.0.90\lib\net45\FluentAssertions.dll</HintPath>
     </Reference>
@@ -62,6 +59,9 @@
     <Compile Include="BascoTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="AnotherTestableState.cs" />
+    <Compile Include="StateExtensionsTest.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="TestableState.cs" />
     <Compile Include="TransitionsBuilderTest.cs" />
     <Compile Include="TransitionPoolExtensionsTest.cs" />
@@ -71,6 +71,12 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Basco\Basco.csproj">
+      <Project>{42BC5E18-622C-4DF1-847F-AA7BB9E1DAEB}</Project>
+      <Name>Basco</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -17,10 +17,18 @@
             this.bascoExecutor = bascoExecutor;
         }
 
+        public bool IsRunning { get; private set; }
+
         public void Start(IState<TTransitionTrigger> initialState)
         {
-            this.bascoExecutor.Start(initialState);
+            if (this.IsRunning)
+            {
+                throw new BascoException("The state machine was already started!");
+            }
+
+            this.IsRunning = true;
             this.bascoConfigurator.Configurate();
+            this.bascoExecutor.Start(initialState);
             this.moduleController.Initialize(this, 1, false, "Basco");
             this.moduleController.Start();
         }
@@ -29,6 +37,7 @@
         {
            this.bascoExecutor.Stop();
            this.moduleController.Stop();
+           this.IsRunning = false;
         }
 
         public void Trigger(TTransitionTrigger trigger)

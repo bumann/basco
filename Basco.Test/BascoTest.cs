@@ -1,6 +1,7 @@
 ﻿namespace Basco.Test
 {
     using Appccelerate.AsyncModule;
+    using FluentAssertions;
     using Moq;
     using Xunit;
 
@@ -63,6 +64,39 @@
         }
 
         [Fact]
+        public void Start_MustSetIsRunning()
+        {
+            var expectedState = new TestableState();
+
+            this.testee.Start(expectedState);
+
+            this.testee.IsRunning.Should().BeTrue();
+        }
+
+        [Fact]
+        public void Start_WhenStartedTwice_MustThrowBascoException()
+        {
+            var expectedState = new TestableState();
+
+            this.testee.Start(expectedState);
+
+            this.testee.Invoking(x => x.Start(expectedState))
+                .ShouldThrow<BascoException>();
+        }
+
+        [Fact]
+        public void Start_WhenStoppedBeforeRestart_MustNotThrowBascoException()
+        {
+            var expectedState = new TestableState();
+
+            this.testee.Start(expectedState);
+            this.testee.Stop();
+
+            this.testee.Invoking(x => x.Start(expectedState))
+                .ShouldNotThrow<BascoException>();
+        }
+
+        [Fact]
         public void Stop_MustStopExecutor()
         {
             this.testee.Stop();
@@ -76,6 +110,16 @@
             this.testee.Stop();
 
             this.moduleController.Verify(x => x.Stop());
+        }
+
+        [Fact]
+        public void Stop_MustResetIsRunning()
+        {
+            this.testee.Start(new TestableState());
+
+            this.testee.Stop();
+
+            this.testee.IsRunning.Should().BeFalse();
         }
 
         [Fact]
