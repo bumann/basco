@@ -5,18 +5,22 @@ namespace Basco
     public class BascoExecutor<TTransitionTrigger> : IBascoExecutor<TTransitionTrigger>
         where TTransitionTrigger : IComparable
     {
-        internal IState<TTransitionTrigger> CurrentState { get; private set; }
+        public event EventHandler StateChanged;
+
+        public IState<TTransitionTrigger> CurrentState { get; private set; }
 
         public void Start(IState<TTransitionTrigger> initialState)
         {
             this.CurrentState = initialState;
             this.EnterState();
+            this.ExecuteAndRaiseStateChanged();
         }
 
         public void Stop()
         {
             this.ExitState();
             this.CurrentState = null;
+            this.RaiseStateChanged();
         }
 
         public void ChangeState(TTransitionTrigger trigger)
@@ -35,7 +39,13 @@ namespace Basco
             this.ExitState();
             this.CurrentState = nextState;
             this.EnterState();
-            this.CurrentState.Execute();   
+            this.ExecuteAndRaiseStateChanged();
+        }
+
+        private void ExecuteAndRaiseStateChanged()
+        {
+            this.CurrentState.Execute();
+            this.RaiseStateChanged();
         }
 
         private void EnterState()
@@ -53,6 +63,14 @@ namespace Basco
             if (exitableState != null)
             {
                 exitableState.Exit();
+            }
+        }
+
+        private void RaiseStateChanged()
+        {
+            if (this.StateChanged != null)
+            {
+                this.StateChanged(this, new EventArgs());
             }
         }
     }

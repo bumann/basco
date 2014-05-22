@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Basco", "Basco\Basco.csproj
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Basco.Test", "Basco.Test\Basco.Test.csproj", "{D2237910-AC46-4B84-A042-0BF78E87414E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Basco.Samples", "Basco.Samples\Basco.Samples.csproj", "{8C447F9A-31B0-4AF5-BBF7-688C74F887C7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{D2237910-AC46-4B84-A042-0BF78E87414E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D2237910-AC46-4B84-A042-0BF78E87414E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D2237910-AC46-4B84-A042-0BF78E87414E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8C447F9A-31B0-4AF5-BBF7-688C74F887C7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8C447F9A-31B0-4AF5-BBF7-688C74F887C7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8C447F9A-31B0-4AF5-BBF7-688C74F887C7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8C447F9A-31B0-4AF5-BBF7-688C74F887C7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

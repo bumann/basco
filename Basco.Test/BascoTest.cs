@@ -24,6 +24,12 @@
         }
 
         [Fact]
+        public void Ctor_MustInitializeModuleController()
+        {
+            this.moduleController.Verify(x => x.Initialize(this.testee, 1, false, "Basco"));
+        }
+
+        [Fact]
         public void Start_MustStartExecutorWithInitialState()
         {
             var expectedState = new TestableState();
@@ -44,13 +50,13 @@
         }
 
         [Fact]
-        public void Start_MustInitializeModuleController()
+        public void Start_MustNotInitializeModuleController()
         {
             var expectedState = new TestableState();
 
             this.testee.Start(expectedState);
 
-            this.moduleController.Verify(x => x.Initialize(this.testee, 1, false, "Basco"));
+            this.moduleController.Verify(x => x.Initialize(this.testee, 1, false, "Basco"), Times.Once);
         }
 
         [Fact]

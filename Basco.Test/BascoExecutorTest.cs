@@ -37,6 +37,30 @@
         }
 
         [Fact]
+        public void Start_MustPerformExecuteOnInitialState()
+        {
+            bool called = false;
+            this.SetupStates();
+            this.initialState.OnExecution = () => { called = true; };
+
+            this.testee.Start(this.initialState);
+
+            called.Should().BeTrue();
+        }
+
+        [Fact]
+        public void Start_MustRaiseStateChanged()
+        {
+            bool called = false;
+            this.SetupStates();
+            this.testee.StateChanged += (sender, args) => { called = true; };
+            
+            this.testee.Start(this.initialState);
+
+            called.Should().BeTrue();
+        }
+
+        [Fact]
         public void Stop_MustResetInitialState()
         {
             this.testee.Stop();
@@ -49,8 +73,21 @@
         {
             bool called = false;
             this.SetupStates();
-            this.initialState.OnExit = () => { called = true; };
             this.testee.Start(this.initialState);
+            this.initialState.OnExit = () => { called = true; };
+
+            this.testee.Stop();
+
+            called.Should().BeTrue();
+        }
+
+        [Fact]
+        public void Stop_MustRaiseStateChanged()
+        {
+            bool called = false;
+            this.SetupStates();
+            this.testee.Start(this.initialState);
+            this.testee.StateChanged += (sender, args) => { called = true; };
 
             this.testee.Stop();
 
@@ -119,6 +156,19 @@
             this.SetupStates();
             this.nextState.OnExecution = () => { called = true; };
             this.testee.Start(this.initialState);
+
+            this.testee.ChangeState(TestTrigger.TransitionOne);
+
+            called.Should().BeTrue();
+        }
+
+        [Fact]
+        public void ChangeState_MustRaiseStateChanged()
+        {
+            bool called = false;
+            this.SetupStates();
+            this.testee.Start(this.initialState);
+            this.testee.StateChanged += (sender, args) => { called = true; };
 
             this.testee.ChangeState(TestTrigger.TransitionOne);
 

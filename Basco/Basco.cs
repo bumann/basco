@@ -13,6 +13,7 @@
         public Basco(IBascoConfigurator bascoConfigurator, IBascoExecutor<TTransitionTrigger> bascoExecutor, IModuleController moduleController)
         {
             this.moduleController = moduleController;
+            this.moduleController.Initialize(this, 1, false, "Basco");
             this.bascoConfigurator = bascoConfigurator;
             this.bascoExecutor = bascoExecutor;
         }
@@ -29,7 +30,6 @@
             this.IsRunning = true;
             this.bascoConfigurator.Configurate();
             this.bascoExecutor.Start(initialState);
-            this.moduleController.Initialize(this, 1, false, "Basco");
             this.moduleController.Start();
         }
 
