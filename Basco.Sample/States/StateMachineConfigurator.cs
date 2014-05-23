@@ -1,8 +1,6 @@
 ﻿namespace Basco.Samples.States
 {
-    using System.Collections.Generic;
-
-    public class StateMachineConfigurator : IBascoConfigurator<Transitions>
+    public class StateMachineConfigurator : IBascoConfigurator
     {
         private readonly IConnectedState connectedState;
         private readonly IProcessingState processingState;
@@ -15,7 +13,7 @@
             this.errorState = errorState;
         }
 
-        public IEnumerable<IState<Transitions>> Configurate()
+        public void Configurate()
         {
             this.connectedState.On(Transitions.Run).Goto(this.processingState)
                 .On(Transitions.Stop).ReEnter()
@@ -29,13 +27,6 @@
 
             this.errorState
                 .On(Transitions.Reset).Goto(this.connectedState);
-
-            return new List<IState<Transitions>>
-            {
-                this.connectedState,
-                this.processingState,
-                this.errorState
-            };
         }
     }
 }

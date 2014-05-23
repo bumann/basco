@@ -6,7 +6,8 @@
     {
         public override void Load()
         {
-            this.Bind<IDriverControlModel>().To<DriverControlModel>();
+            this.Bind<IDriver>().To<Driver>();
+            this.Bind<IDriverViewModel>().To<DriverViewModel>();
         }
     }
 }

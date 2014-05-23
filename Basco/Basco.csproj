@@ -45,6 +45,7 @@
     <Compile Include="BascoException.cs" />
     <Compile Include="BascoExecutor.cs" />
     <Compile Include="IBascoExecutor.cs" />
+    <Compile Include="IBascoState.cs" />
     <Compile Include="IState.cs" />
     <Compile Include="IBasco.cs" />
     <Compile Include="IStateEnter.cs" />

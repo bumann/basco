@@ -7,20 +7,20 @@
 
     public class BascoTest
     {
-        private readonly Mock<IBascoConfigurator> bascoConfigurator;
+        private readonly Mock<IBascoConfigurator<TestTrigger>> bascoConfigurator;
         private readonly Mock<IBascoExecutor<TestTrigger>> bascoExecutor;
         private readonly Mock<IModuleController> moduleController;
         private readonly Basco<TestTrigger> testee;
 
         public BascoTest()
         {
-            this.bascoConfigurator = new Mock<IBascoConfigurator>();
+            this.bascoConfigurator = new Mock<IBascoConfigurator<TestTrigger>>();
             this.bascoExecutor = new Mock<IBascoExecutor<TestTrigger>>();
             this.moduleController = new Mock<IModuleController>();
             this.testee = new Basco<TestTrigger>(
+                this.moduleController.Object,
                 this.bascoConfigurator.Object,
-                this.bascoExecutor.Object,
-                this.moduleController.Object);
+                this.bascoExecutor.Object);
         }
 
         [Fact]
@@ -30,21 +30,17 @@
         }
 
         [Fact]
-        public void Start_MustStartExecutorWithInitialState()
+        public void Start_WhenNoStartStateFound_MustNotStartExecutorWithInitialState()
         {
-            var expectedState = new TestableState();
+            this.testee.Start<TestableState>();
 
-            this.testee.Start(expectedState);
-
-            this.bascoExecutor.Verify(x => x.Start(expectedState));
+            this.bascoExecutor.Verify(x => x.Start(It.IsAny<IState<TestTrigger>>()), Times.Never);
         }
 
         [Fact]
         public void Start_MustConfigurateTransitions()
         {
-            var expectedState = new TestableState();
-
-            this.testee.Start(expectedState);
+            this.testee.Start<TestableState>();
 
             this.bascoConfigurator.Verify(x => x.Configurate());
         }
@@ -52,29 +48,23 @@
         [Fact]
         public void Start_MustNotInitializeModuleController()
         {
-            var expectedState = new TestableState();
-
-            this.testee.Start(expectedState);
+            this.testee.Start<TestableState>();
 
             this.moduleController.Verify(x => x.Initialize(this.testee, 1, false, "Basco"), Times.Once);
         }
 
         [Fact]
-        public void Start_MustStartModuleController()
+        public void Start_WhenNoStartStateFound_MustNotStartModuleController()
         {
-            var expectedState = new TestableState();
+            this.testee.Start<TestableState>();
 
-            this.testee.Start(expectedState);
-
-            this.moduleController.Verify(x => x.Start());
+            this.moduleController.Verify(x => x.Start(), Times.Never);
         }
 
         [Fact]
         public void Start_MustSetIsRunning()
         {
-            var expectedState = new TestableState();
-
-            this.testee.Start(expectedState);
+            this.testee.Start<TestableState>();
 
             this.testee.IsRunning.Should().BeTrue();
         }
@@ -82,23 +72,19 @@
         [Fact]
         public void Start_WhenStartedTwice_MustThrowBascoException()
         {
-            var expectedState = new TestableState();
+            this.testee.Start<TestableState>();
 
-            this.testee.Start(expectedState);
-
-            this.testee.Invoking(x => x.Start(expectedState))
+            this.testee.Invoking(x => x.Start<TestableState>())
                 .ShouldThrow<BascoException>();
         }
 
         [Fact]
         public void Start_WhenStoppedBeforeRestart_MustNotThrowBascoException()
         {
-            var expectedState = new TestableState();
-
-            this.testee.Start(expectedState);
+            this.testee.Start<TestableState>();
             this.testee.Stop();
 
-            this.testee.Invoking(x => x.Start(expectedState))
+            this.testee.Invoking(x => x.Start<TestableState>())
                 .ShouldNotThrow<BascoException>();
         }
 
@@ -121,7 +107,7 @@
         [Fact]
         public void Stop_MustResetIsRunning()
         {
-            this.testee.Start(new TestableState());
+            this.testee.Start<TestableState>();
 
             this.testee.Stop();
 

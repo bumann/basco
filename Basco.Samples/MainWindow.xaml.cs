@@ -9,16 +9,22 @@
     /// </summary>
     public partial class MainWindow : Window
     {
-        private IDriverViewModel driverViewModel;
-
         public MainWindow()
         {
             IKernel kernel = new StandardKernel();
             kernel.Load(Assembly.GetExecutingAssembly());
-            this.driverViewModel = kernel.Get<IDriverViewModel>();
-            this.DataContext = this.driverViewModel;
+            
+            var driverViewModel1 = kernel.Get<IDriverControlModel>();
+            var driverViewModel2 = kernel.Get<IDriverControlModel>();
+            var driverViewModel3 = kernel.Get<IDriverControlModel>();
+            var driverViewModel4 = kernel.Get<IDriverControlModel>();
 
             this.InitializeComponent();
+
+            this.DriverOne.DataContext = driverViewModel1;
+            this.DriverTwo.DataContext = driverViewModel2;
+            this.DriverThree.DataContext = driverViewModel3;
+            this.DriverFour.DataContext = driverViewModel4;
         }
     }
 }

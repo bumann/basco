@@ -1,7 +1,11 @@
 ﻿namespace Basco
 {
-    public interface IBascoConfigurator
+    using System;
+    using System.Collections.Generic;
+
+    public interface IBascoConfigurator<TTransitionTrigger>
+        where TTransitionTrigger : IComparable
     {
-        void Configurate();
+        IEnumerable<IState<TTransitionTrigger>> Configurate();
     }
 }

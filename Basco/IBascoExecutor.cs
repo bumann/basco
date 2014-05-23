@@ -2,13 +2,9 @@ namespace Basco
 {
     using System;
 
-    public interface IBascoExecutor<TTransitionTrigger> 
+    public interface IBascoExecutor<TTransitionTrigger> : IBascoState<TTransitionTrigger>
         where TTransitionTrigger : IComparable
     {
-        event EventHandler StateChanged;
-
-        IState<TTransitionTrigger> CurrentState { get; }
-
         void Start(IState<TTransitionTrigger> initialState);
 
         void Stop();
