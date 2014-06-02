@@ -1,12 +1,7 @@
 ﻿namespace Basco
 {
-    using System;
-
-    public interface IState<TTransitionTrigger>
-        where TTransitionTrigger : IComparable
+    public interface IState
     {
-        ITransitionPool<TTransitionTrigger> Transitions { get; set; }
-
         void Execute();
     }
 }

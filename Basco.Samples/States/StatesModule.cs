@@ -1,31 +1,28 @@
 ﻿namespace Basco.Samples.States
 {
-    using Appccelerate.AsyncModule;
+    using Basco.NinjectBindingExtension;
     using Ninject.Modules;
 
     public class StatesModule : NinjectModule
     {
         public override void Load()
         {
-            this.BindBasco();
+            this.BindStateMachine();
             this.BindStates();
         }
 
-        private void BindBasco()
+        private void BindStateMachine()
         {
-            // TODO: simpler binding - convenient usage
-            this.Bind<IModuleController>().To<ModuleController>();
-            this.Bind<IBascoConfigurator<Transitions>>().To<StateMachineConfigurator>();
-            this.Bind<IBasco<Transitions>>().To<Basco<Transitions>>();
-            this.Bind<IBascoExecutor<Transitions>>().To<BascoExecutor<Transitions>>();
-            this.Bind<ITransitionPool<Transitions>>().To<TransitionPool<Transitions>>();
+            // TODO: combine into one line
+            this.BindBasco().ForTriggers<TransitionTrigger>();
+            this.Bind<IBascoConfigurator<TransitionTrigger>>().To<StateMachineConfigurator>();
         }
 
         private void BindStates()
         {
-            this.Bind<IConnectedState>().To<ConnectedState>();
-            this.Bind<IProcessingState>().To<ProcessingState>();
-            this.Bind<IErrorState>().To<ErrorState>();
+            this.Bind<IConnectedState, IState>().To<ConnectedState>();
+            this.Bind<IProcessingState, IState>().To<ProcessingState>();
+            this.Bind<IErrorState, IState>().To<ErrorState>();
         }
     }
 }

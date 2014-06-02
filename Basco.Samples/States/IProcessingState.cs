@@ -2,7 +2,7 @@
 {
     using System;
 
-    public interface IProcessingState : IState<Transitions>, IStateExit
+    public interface IProcessingState : IState, IStateExit
     {
         event EventHandler ProcessingChanged;
 

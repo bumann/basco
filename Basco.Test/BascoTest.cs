@@ -30,41 +30,69 @@
         }
 
         [Fact]
-        public void Start_WhenNoStartStateFound_MustNotStartExecutorWithInitialState()
+        public void Ctor_MustConfigurateTransitions()
         {
-            this.testee.Start<TestableState>();
-
-            this.bascoExecutor.Verify(x => x.Start(It.IsAny<IState<TestTrigger>>()), Times.Never);
+            this.bascoConfigurator.Verify(x => x.Configurate(this.testee));
         }
 
         [Fact]
-        public void Start_MustConfigurateTransitions()
+        public void CurrentState_MustReturnExecutorCurrentState()
         {
-            this.testee.Start<TestableState>();
+            var expectedState = Mock.Of<IState>();
+            this.bascoExecutor.Setup(x => x.CurrentState)
+                .Returns(expectedState);
 
-            this.bascoConfigurator.Verify(x => x.Configurate());
+            IState result = this.testee.CurrentState;
+
+            result.Should().Be(expectedState);
+        }
+
+        [Fact]
+        public void RetrieveState_MustReturnExecutorState()
+        {
+            var expectedState = new SimpleTestState();
+            this.bascoExecutor.Setup(x => x.RetrieveState<SimpleTestState>())
+                .Returns(expectedState);
+
+            IState result = this.testee.RetrieveState<SimpleTestState>();
+
+            result.Should().Be(expectedState);
         }
 
         [Fact]
         public void Start_MustNotInitializeModuleController()
         {
-            this.testee.Start<TestableState>();
+            this.testee.Start<ExtendedTestState>();
 
             this.moduleController.Verify(x => x.Initialize(this.testee, 1, false, "Basco"), Times.Once);
         }
 
         [Fact]
-        public void Start_WhenNoStartStateFound_MustNotStartModuleController()
+        public void Start_WhenExecutorNotStarted_MustNotStartModuleController()
         {
-            this.testee.Start<TestableState>();
+            this.bascoExecutor.Setup(x => x.Start<ExtendedTestState>())
+                .Returns(false);
+
+            this.testee.Start<ExtendedTestState>();
 
             this.moduleController.Verify(x => x.Start(), Times.Never);
         }
 
         [Fact]
+        public void Start_WhenExecutorStarted_MustStartModuleController()
+        {
+            this.bascoExecutor.Setup(x => x.Start<ExtendedTestState>())
+                .Returns(true);
+
+            this.testee.Start<ExtendedTestState>();
+
+            this.moduleController.Verify(x => x.Start(), Times.Once);
+        }
+
+        [Fact]
         public void Start_MustSetIsRunning()
         {
-            this.testee.Start<TestableState>();
+            this.testee.Start<ExtendedTestState>();
 
             this.testee.IsRunning.Should().BeTrue();
         }
@@ -72,19 +100,19 @@
         [Fact]
         public void Start_WhenStartedTwice_MustThrowBascoException()
         {
-            this.testee.Start<TestableState>();
+            this.testee.Start<ExtendedTestState>();
 
-            this.testee.Invoking(x => x.Start<TestableState>())
+            this.testee.Invoking(x => x.Start<ExtendedTestState>())
                 .ShouldThrow<BascoException>();
         }
 
         [Fact]
         public void Start_WhenStoppedBeforeRestart_MustNotThrowBascoException()
         {
-            this.testee.Start<TestableState>();
+            this.testee.Start<ExtendedTestState>();
             this.testee.Stop();
 
-            this.testee.Invoking(x => x.Start<TestableState>())
+            this.testee.Invoking(x => x.Start<ExtendedTestState>())
                 .ShouldNotThrow<BascoException>();
         }
 
@@ -107,7 +135,7 @@
         [Fact]
         public void Stop_MustResetIsRunning()
         {
-            this.testee.Start<TestableState>();
+            this.testee.Start<ExtendedTestState>();
 
             this.testee.Stop();
 

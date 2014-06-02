@@ -9,7 +9,7 @@
     [ImplementPropertyChanged]
     public class DriverControlModel : IDriverControlModel
     {
-        private readonly IBasco<Transitions> basco;
+        private readonly IBasco<TransitionTrigger> basco;
         private readonly IProcessingState processingState;
 
         private ICommand connectCommand;
@@ -18,7 +18,7 @@
         private ICommand resetCommand;
         private ICommand disconnectCommand;
 
-        public DriverControlModel(IBasco<Transitions> basco)
+        public DriverControlModel(IBasco<TransitionTrigger> basco)
         {
             this.basco = basco;
             this.basco.StateChanged += this.OnDriverStateChanged;
@@ -70,17 +70,17 @@
 
         public void Run()
         {
-            this.basco.Trigger(Transitions.Run);
+            this.basco.Trigger(TransitionTrigger.Run);
         }
 
         public void Error()
         {
-            this.basco.Trigger(Transitions.Error);
+            this.basco.Trigger(TransitionTrigger.Error);
         }
 
         public void Reset()
         {
-            this.basco.Trigger(Transitions.Reset);
+            this.basco.Trigger(TransitionTrigger.Reset);
         }
 
         public void Disconnect()

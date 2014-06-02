@@ -39,7 +39,8 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Appccelerate.AsyncModule.1.0.98\lib\Net40\Appccelerate.AsyncModule.dll</HintPath>
     </Reference>
-    <Reference Include="Ninject">
+    <Reference Include="Ninject, Version=3.2.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Ninject.3.2.2.0\lib\net45-full\Ninject.dll</HintPath>
     </Reference>
     <Reference Include="PropertyChanged">
@@ -80,7 +81,7 @@
     <Compile Include="States\ProcessingState.cs" />
     <Compile Include="States\ErrorState.cs" />
     <Compile Include="States\StateMachineConfigurator.cs" />
-    <Compile Include="States\Transitions.cs" />
+    <Compile Include="States\TransitionTrigger.cs" />
     <Page Include="DriverControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -127,6 +128,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Basco.NinjectBindingExtension\Basco.NinjectBindingExtension.csproj">
+      <Project>{98F75B6E-5EFA-4FDF-B17E-28266B395CE6}</Project>
+      <Name>Basco.NinjectBindingExtension</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Basco\Basco.csproj">
       <Project>{42BC5E18-622C-4DF1-847F-AA7BB9E1DAEB}</Project>
       <Name>Basco</Name>

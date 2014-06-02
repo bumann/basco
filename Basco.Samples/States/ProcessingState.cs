@@ -12,8 +12,6 @@
 
         public int ItemCount { get; private set; }
 
-        public ITransitionPool<Transitions> Transitions { get; set; }
-
         public void Execute()
         {
             this.cancellationTokenSource = new CancellationTokenSource();

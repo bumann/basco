@@ -2,16 +2,18 @@
 {
     using System;
 
-    public interface IBasco<TTransitionTrigger> : IBascoState<TTransitionTrigger>
+    public interface IBasco<TTransitionTrigger> : IBascoState
         where TTransitionTrigger : IComparable
     {
         bool IsRunning { get; }
 
-        void Start<TState>() where TState : IState<TTransitionTrigger>;
+        IBascoExecutor<TTransitionTrigger> BascoExecutor { get; }
+
+        void Start<TState>() where TState : class, IState;
 
         void Stop();
 
-        IState<TTransitionTrigger> RetrieveState<TState>() where TState : IState<TTransitionTrigger>;
+        IState RetrieveState<TState>() where TState : class, IState;
 
         void Trigger(TTransitionTrigger trigger);
     }

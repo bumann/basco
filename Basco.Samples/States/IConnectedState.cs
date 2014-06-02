@@ -3,7 +3,7 @@
     /// <summary>
     /// connectedState: simplest state
     /// </summary>
-    public interface IConnectedState : IState<Transitions>
+    public interface IConnectedState : IState
     {
     }
 }

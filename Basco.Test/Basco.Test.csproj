@@ -56,16 +56,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BascoExecutorTest.cs" />
+    <Compile Include="BascoExtensionsTest.cs" />
     <Compile Include="BascoTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="AnotherTestableState.cs" />
-    <Compile Include="StateExtensionsTest.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="TestableState.cs" />
-    <Compile Include="TransitionsBuilderTest.cs" />
-    <Compile Include="TransitionPoolExtensionsTest.cs" />
-    <Compile Include="TransitionPoolTest.cs" />
+    <Compile Include="ExtendedTestState.cs" />
+    <Compile Include="StateTransitionsBuilderTest.cs" />
+    <Compile Include="StateTransitionsExtensionsTest.cs" />
+    <Compile Include="StateTransitionsTest.cs" />
+    <Compile Include="SimpleTestState.cs" />
     <Compile Include="TestTrigger.cs" />
   </ItemGroup>
   <ItemGroup>

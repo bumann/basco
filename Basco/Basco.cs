@@ -1,8 +1,6 @@
 ﻿namespace Basco
 {
     using System;
-    using System.Collections.Generic;
-    using System.Linq;
     using Appccelerate.AsyncModule;
 
     public class Basco<TTransitionTrigger> : IBasco<TTransitionTrigger>
@@ -10,7 +8,6 @@
     {
         private readonly IModuleController moduleController;
         private readonly IBascoExecutor<TTransitionTrigger> bascoExecutor;
-        private readonly IEnumerable<IState<TTransitionTrigger>> states;
 
         public Basco(IModuleController moduleController, IBascoConfigurator<TTransitionTrigger> bascoConfigurator, IBascoExecutor<TTransitionTrigger> bascoExecutor)
         {
@@ -18,20 +15,26 @@
             this.bascoExecutor = bascoExecutor;
 
             this.moduleController.Initialize(this, 1, false, "Basco");
-            this.bascoExecutor.StateChanged += this.OnStateChanged;
-            this.states = bascoConfigurator.Configurate();
+            this.BascoExecutor.StateChanged += this.OnStateChanged;
+
+            bascoConfigurator.Configurate(this);
         }
 
         public event EventHandler StateChanged;
 
         public bool IsRunning { get; private set; }
 
-        public IState<TTransitionTrigger> CurrentState
+        public IState CurrentState
         {
-            get { return this.bascoExecutor.CurrentState; }
+            get { return this.BascoExecutor.CurrentState; }
         }
 
-        public void Start<TState>() where TState : IState<TTransitionTrigger>
+        public IBascoExecutor<TTransitionTrigger> BascoExecutor
+        {
+            get { return this.bascoExecutor; }
+        }
+
+        public void Start<TState>() where TState : class, IState
         {
             if (this.IsRunning)
             {
@@ -39,28 +42,22 @@
             }
 
             this.IsRunning = true;
-
-            var startState = this.states.SingleOrDefault(x => x.GetType() == typeof(TState));
-            if (startState == null)
+            if (this.BascoExecutor.Start<TState>())
             {
-                return;
+                this.moduleController.Start();
             }
-
-            this.bascoExecutor.Start(startState);
-            this.moduleController.Start();
         }
 
         public void Stop()
         {
-           this.bascoExecutor.Stop();
+           this.BascoExecutor.Stop();
            this.moduleController.Stop();
            this.IsRunning = false;
         }
 
-        public IState<TTransitionTrigger> RetrieveState<TState>() where TState : IState<TTransitionTrigger>
+        public IState RetrieveState<TState>() where TState : class, IState
         {
-            IState<TTransitionTrigger> state = this.states.SingleOrDefault(x => x.GetType() == typeof(TState));
-            return state;
+            return this.bascoExecutor.RetrieveState<TState>();
         }
 
         public void Trigger(TTransitionTrigger trigger)
@@ -71,7 +68,7 @@
         [MessageConsumer]
         public void TriggerConsumer(TTransitionTrigger trigger)
         {
-            this.bascoExecutor.ChangeState(trigger);
+            this.BascoExecutor.ChangeState(trigger);
         }
 
         private void OnStateChanged(object sender, EventArgs e)

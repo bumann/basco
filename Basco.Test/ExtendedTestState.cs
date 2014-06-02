@@ -2,19 +2,16 @@
 {
     using System;
 
-    internal class TestableState : IState<TestTrigger>, IStateEnter, IStateExit
+    internal class ExtendedTestState : IState, IStateEnter, IStateExit
     {
-        public TestableState()
+        public ExtendedTestState()
         {
-            this.Transitions = new TransitionPool<TestTrigger>();
             this.OnEnter = () => { };
             this.OnExecution = () => { };
             this.OnExit = () => { };
         }
 
         public string Name { get; set; }
-
-        public ITransitionPool<TestTrigger> Transitions { get; set; }
 
         public Action OnEnter { get; set; }
 

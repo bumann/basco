@@ -8,9 +8,9 @@
         [Fact]
         public void On_MustReturnTransitionsBuilder()
         {
-            ITransitionsBuilder<TestTrigger> result = (new TestableState()).On(TestTrigger.TransitionOne);
+            IStateTransitionsBuilder<TestTrigger> result = (new TestableState()).On(TestTrigger.TransitionOne);
 
-            result.Should().BeOfType<TransitionsBuilder<TestTrigger>>();
+            result.Should().BeOfType<StateTransitionsBuilder<TestTrigger>>();
         } 
     }
 }

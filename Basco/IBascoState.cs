@@ -2,11 +2,10 @@
 {
     using System;
 
-    public interface IBascoState<TTransitionTrigger>
-        where TTransitionTrigger : IComparable
+    public interface IBascoState
     {
         event EventHandler StateChanged;
 
-        IState<TTransitionTrigger> CurrentState { get; }
+        IState CurrentState { get; }
     }
 }
