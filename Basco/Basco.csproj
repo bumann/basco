@@ -44,6 +44,9 @@
   <ItemGroup>
     <Compile Include="BascoException.cs" />
     <Compile Include="BascoExecutor.cs" />
+    <Compile Include="BascoExtensions.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="IBascoExecutor.cs" />
     <Compile Include="IBascoState.cs" />
     <Compile Include="IState.cs" />
@@ -55,7 +58,6 @@
     <Compile Include="IBascoConfigurator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Basco.cs" />
-    <Compile Include="BascoExtensions.cs" />
     <Compile Include="StateTransitionsBuilderExtensions.cs" />
     <Compile Include="StateTransitions.cs" />
     <Compile Include="StateTransitionsExtensions.cs" />
