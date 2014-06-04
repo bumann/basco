@@ -1,6 +1,6 @@
 ﻿namespace Basco.Samples.States
 {
-    using Basco.NinjectBindingExtension;
+    using Basco.NinjectExtensions;
     using Ninject.Modules;
 
     public class StatesModule : NinjectModule
@@ -13,7 +13,7 @@
 
         private void BindStateMachine()
         {
-            // TODO: combine into one line
+            // TODO: simplify
             this.BindBasco().ForTriggers<TransitionTrigger>();
             this.Bind<IBascoConfigurator<TransitionTrigger>>().To<StateMachineConfigurator>();
         }

@@ -128,9 +128,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Basco.NinjectBindingExtension\Basco.NinjectBindingExtension.csproj">
-      <Project>{98F75B6E-5EFA-4FDF-B17E-28266B395CE6}</Project>
-      <Name>Basco.NinjectBindingExtension</Name>
+    <ProjectReference Include="..\Basco.NinjectExtensions\Basco.NinjectExtensions.csproj">
+      <Project>{802AA931-621A-4A4C-B73D-E7DACABF71D9}</Project>
+      <Name>Basco.NinjectExtensions</Name>
     </ProjectReference>
     <ProjectReference Include="..\Basco\Basco.csproj">
       <Project>{42BC5E18-622C-4DF1-847F-AA7BB9E1DAEB}</Project>
