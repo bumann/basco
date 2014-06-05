@@ -8,7 +8,7 @@
         public override void Load()
         {
             this.Bind<IDriver>().To<Driver>()
-                .DefinesNamedScope(DriverConstants.DriverScope);
+                .DefinesNamedScope(Driver.DriverScope);
         }
     }
 }
