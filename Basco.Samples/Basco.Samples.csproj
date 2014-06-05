@@ -43,6 +43,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Ninject.3.2.2.0\lib\net45-full\Ninject.dll</HintPath>
     </Reference>
+    <Reference Include="Ninject.Extensions.NamedScope">
+      <HintPath>..\packages\Ninject.Extensions.NamedScope.3.2.0.0\lib\net45-full\Ninject.Extensions.NamedScope.dll</HintPath>
+    </Reference>
     <Reference Include="PropertyChanged">
       <HintPath>..\packages\PropertyChanged.Fody.1.48.2.0\Lib\NET35\PropertyChanged.dll</HintPath>
       <Private>False</Private>
@@ -67,21 +70,40 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="DriverModule.cs" />
+    <Compile Include="Driver\DriverConstants.cs" />
+    <Compile Include="Driver\States\ConnectedState.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Driver\States\ErrorState.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Driver\States\IConnectedState.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Driver\States\IErrorState.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Driver\States\IProcessingState.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Driver\States\ProcessingState.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Driver\States\StateMachineConfigurator.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Driver\States\StatesModule.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Driver\States\TransitionTrigger.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="IDriverControlModel.cs" />
-    <Compile Include="States\StatesModule.cs" />
     <Compile Include="RelayCommand.cs" />
     <Compile Include="DriverControl.xaml.cs">
       <DependentUpon>DriverControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="DriverControlModel.cs" />
-    <Compile Include="States\IConnectedState.cs" />
-    <Compile Include="States\IProcessingState.cs" />
-    <Compile Include="States\IErrorState.cs" />
-    <Compile Include="States\ConnectedState.cs" />
-    <Compile Include="States\ProcessingState.cs" />
-    <Compile Include="States\ErrorState.cs" />
-    <Compile Include="States\StateMachineConfigurator.cs" />
-    <Compile Include="States\TransitionTrigger.cs" />
     <Page Include="DriverControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

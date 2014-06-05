@@ -3,7 +3,7 @@
     using System;
     using System.Windows;
     using System.Windows.Input;
-    using Basco.Samples.States;
+    using Basco.Samples.Driver.States;
     using PropertyChanged;
 
     [ImplementPropertyChanged]

@@ -1,4 +1,4 @@
-﻿namespace Basco.Samples.States
+﻿namespace Basco.Samples.Driver.States
 {
     using Basco.NinjectExtensions;
     using Ninject.Modules;
@@ -13,16 +13,21 @@
 
         private void BindStateMachine()
         {
-            // TODO: simplify
-            this.BindBasco().ForTriggers<TransitionTrigger>();
-            this.Bind<IBascoConfigurator<TransitionTrigger>>().To<StateMachineConfigurator>();
+            this.BindBasco()
+                //// .InNamedScope(DriverConstants.DriverScope)
+                .WithConfigurator<StateMachineConfigurator>();
         }
 
         private void BindStates()
         {
             this.Bind<IConnectedState, IState>().To<ConnectedState>();
+                //// .InNamedScope(DriverConstants.DriverScope);
+
             this.Bind<IProcessingState, IState>().To<ProcessingState>();
+                //// .InNamedScope(DriverConstants.DriverScope);
+
             this.Bind<IErrorState, IState>().To<ErrorState>();
+                //// .InNamedScope(DriverConstants.DriverScope);
         }
     }
 }

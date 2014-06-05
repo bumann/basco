@@ -1,4 +1,4 @@
-﻿namespace Basco.Samples.States
+﻿namespace Basco.Samples.Driver.States
 {
     public class StateMachineConfigurator : IBascoConfigurator<TransitionTrigger>
     {
