@@ -48,9 +48,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BascoConfigurator.cs" />
     <Compile Include="BindingRootExtensions.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="IBascoConfigurator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

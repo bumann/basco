@@ -14,10 +14,10 @@
 
         private void BindStateMachine()
         {
-            this.BindBasco()
-                .InNamedScope(Driver.DriverScope)
-                .BindModuleController()
-                .WithConfigurator<StateMachineConfigurator>();
+            this.BindBasco(basco => basco
+                .WithConfigurator<StateMachineConfigurator>()
+                .WithModuleController()
+                .InNamedScope(Driver.DriverScope));
         }
 
         private void BindStates()
@@ -30,6 +30,11 @@
 
             this.Bind<IErrorState, IState>().To<ErrorState>()
                 .InNamedScope(Driver.DriverScope);
+
+            //// alternative: no named scope binding
+            //// this.Bind<IConnectedState, IState>().To<ConnectedState>();
+            //// this.Bind<IProcessingState, IState>().To<ProcessingState>();
+            //// this.Bind<IErrorState, IState>().To<ErrorState>();
         }
     }
 }
