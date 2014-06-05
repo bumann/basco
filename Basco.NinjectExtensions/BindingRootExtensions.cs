@@ -8,13 +8,17 @@
     {
         public static IBindingRoot BindBasco(this IBindingRoot syntax)
         {
-            syntax.Bind<IModuleController>().To<ModuleController>();
-
             syntax.Bind(typeof(IBasco<>)).To(typeof(Basco<>));
-            //// TODO:
+            //// TODO: binding when not in named scope
             //// syntax.Bind(typeof(IBascoExecutor<>)).To(typeof(BascoExecutor<>));
             syntax.Bind(typeof(IStateTransitions<>)).To(typeof(StateTransitions<>));
 
+            return syntax;
+        }
+
+        public static IBindingRoot BindModuleController(this IBindingRoot syntax)
+        {
+            syntax.Bind<IModuleController>().To<ModuleController>();
             return syntax;
         }
 

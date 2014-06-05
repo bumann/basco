@@ -16,6 +16,7 @@
         {
             this.BindBasco()
                 .InNamedScope(Driver.DriverScope)
+                .BindModuleController()
                 .WithConfigurator<StateMachineConfigurator>();
         }
 
