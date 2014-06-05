@@ -11,6 +11,7 @@
             syntax.Bind<IModuleController>().To<ModuleController>();
 
             syntax.Bind(typeof(IBasco<>)).To(typeof(Basco<>));
+            //// TODO:
             //// syntax.Bind(typeof(IBascoExecutor<>)).To(typeof(BascoExecutor<>));
             syntax.Bind(typeof(IStateTransitions<>)).To(typeof(StateTransitions<>));
 
