@@ -3,13 +3,14 @@
     using System;
     using System.Windows;
     using System.Windows.Input;
+    using Basco.Samples.Driver;
     using Basco.Samples.Driver.States;
     using PropertyChanged;
 
     [ImplementPropertyChanged]
     public class DriverControlModel : IDriverControlModel
     {
-        private readonly IBasco<TransitionTrigger> basco;
+        private readonly IDriver driver;
         private readonly IProcessingState processingState;
 
         private ICommand connectCommand;
@@ -18,16 +19,16 @@
         private ICommand resetCommand;
         private ICommand disconnectCommand;
 
-        public DriverControlModel(IBasco<TransitionTrigger> basco)
+        public DriverControlModel(IDriver driver)
         {
-            this.basco = basco;
-            this.basco.StateChanged += this.OnDriverStateChanged;
+            this.driver = driver;
+            this.driver.Basco.StateChanged += this.OnDriverStateChanged;
 
-            this.processingState = (IProcessingState)this.basco.RetrieveState<ProcessingState>();
+            this.processingState = (IProcessingState)this.driver.Basco.RetrieveState<ProcessingState>();
             this.processingState.ProcessingChanged += this.OnProcessingStateChanged;
 
             this.OnDriverStateChanged(null, new EventArgs());
-            this.DisplayInfo = "Basco Demo";
+            this.DisplayInfo = "Basco Demo - V 1.1";
         }
 
         public string DisplayInfo { get; set; }
@@ -65,34 +66,34 @@
 
         public void Connect()
         {
-            this.basco.Start<ConnectedState>();
+            this.driver.Basco.Start<ConnectedState>();
         }
 
         public void Run()
         {
-            this.basco.Trigger(TransitionTrigger.Run);
+            this.driver.Basco.Trigger(TransitionTrigger.Run);
         }
 
         public void Error()
         {
-            this.basco.Trigger(TransitionTrigger.Error);
+            this.driver.Basco.Trigger(TransitionTrigger.Error);
         }
 
         public void Reset()
         {
-            this.basco.Trigger(TransitionTrigger.Reset);
+            this.driver.Basco.Trigger(TransitionTrigger.Reset);
         }
 
         public void Disconnect()
         {
-            this.basco.Stop();
+            this.driver.Basco.Stop();
         }
 
         private void OnDriverStateChanged(object sender, EventArgs eventArgs)
         {
-            this.ConnectedVisibility = this.basco.CurrentState is IConnectedState ? Visibility.Visible : Visibility.Hidden;
-            this.ProcessingVisibility = this.basco.CurrentState is IProcessingState ? Visibility.Visible : Visibility.Hidden;
-            this.ErrorVisibility = this.basco.CurrentState is IErrorState ? Visibility.Visible : Visibility.Hidden;
+            this.ConnectedVisibility = this.driver.Basco.CurrentState is IConnectedState ? Visibility.Visible : Visibility.Hidden;
+            this.ProcessingVisibility = this.driver.Basco.CurrentState is IProcessingState ? Visibility.Visible : Visibility.Hidden;
+            this.ErrorVisibility = this.driver.Basco.CurrentState is IErrorState ? Visibility.Visible : Visibility.Hidden;
         }
 
         private void OnProcessingStateChanged(object sender, EventArgs eventArgs)

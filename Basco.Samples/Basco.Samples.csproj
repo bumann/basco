@@ -70,7 +70,10 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="DriverModule.cs" />
+    <Compile Include="Driver\Driver.cs" />
     <Compile Include="Driver\DriverConstants.cs" />
+    <Compile Include="Driver\DriverModule.cs" />
+    <Compile Include="Driver\IDriver.cs" />
     <Compile Include="Driver\States\ConnectedState.cs">
       <SubType>Code</SubType>
     </Compile>

@@ -11,7 +11,7 @@
             syntax.Bind<IModuleController>().To<ModuleController>();
 
             syntax.Bind(typeof(IBasco<>)).To(typeof(Basco<>));
-            syntax.Bind(typeof(IBascoExecutor<>)).To(typeof(BascoExecutor<>));
+            //// syntax.Bind(typeof(IBascoExecutor<>)).To(typeof(BascoExecutor<>));
             syntax.Bind(typeof(IStateTransitions<>)).To(typeof(StateTransitions<>));
 
             return syntax;
@@ -19,7 +19,6 @@
 
         public static IBindingRoot InNamedScope(this IBindingRoot syntax, string namedScopeName)
         {
-            // overwritable?
             syntax.Bind(typeof(IBascoExecutor<>)).To(typeof(BascoExecutor<>))
                 .InNamedScope(namedScopeName);
 
