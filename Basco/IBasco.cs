@@ -13,9 +13,9 @@
 
         void Stop();
 
+        void Trigger(TTransitionTrigger trigger);
+
         [Obsolete("Use named scope binding and inject the state where needed.")]
         IState RetrieveState<TState>() where TState : class, IState;
-
-        void Trigger(TTransitionTrigger trigger);
     }
 }

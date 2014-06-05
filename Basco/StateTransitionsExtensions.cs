@@ -2,7 +2,7 @@
 {
     using System;
 
-    public static class StateTransitionsExtensions
+    internal static class StateTransitionsExtensions
     {
         public static Type GetNextStateType<TTransitionTrigger>(this IStateTransitions<TTransitionTrigger> stateTransitions, TTransitionTrigger transitionTrigger)
             where TTransitionTrigger : IComparable
