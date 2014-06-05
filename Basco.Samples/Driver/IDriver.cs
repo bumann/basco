@@ -5,5 +5,7 @@
     public interface IDriver
     {
         IBasco<TransitionTrigger> Basco { get; }
+
+        IProcessingState ProcessingState { get; }
     }
 }

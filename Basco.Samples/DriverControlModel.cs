@@ -24,11 +24,11 @@
             this.driver = driver;
             this.driver.Basco.StateChanged += this.OnDriverStateChanged;
 
-            this.processingState = (IProcessingState)this.driver.Basco.RetrieveState<ProcessingState>();
+            this.processingState = this.driver.ProcessingState;
             this.processingState.ProcessingChanged += this.OnProcessingStateChanged;
 
             this.OnDriverStateChanged(null, new EventArgs());
-            this.DisplayInfo = "Basco Demo - V 1.1";
+            this.DisplayInfo = "Basco Demo";
         }
 
         public string DisplayInfo { get; set; }
