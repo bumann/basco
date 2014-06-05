@@ -1,19 +1,19 @@
 What is Basco ?
 ===============
-Basco is a simple and easy testable state machine.  
+Basco is a very simple and easy testable state machine.  
 It was specially designed for usage in TDD environments.
 
 How do I get started ?
 ======================
-1. Install **Basco** Nuget package  
-2. Create your state machine classes
-	1. Define transitions (*enum*)  
-    2. Create all states. Derive from IState.  
-		If needed implement also IStateEnter and ***IStateExit***
-    3. Implement the transition configurator (derived from ***IBascoConfigurator***)
-3. Create binding module (see Ninject module)
-4. Inject IBasco where you use the state machine and start it (*Start()*)
-5. Have fun :-)   
+1. 		Install **Basco** Nuget package
+2. 		*Optional:* Install **Basco.NinjectExtensions** Nuget package
+3. 		Create your state machine classes
+	1. 		Define your transitions (*enum*)
+	2. 		Create all states. Derive from ***IState***. If needed implement also ***IStateEnter*** and ***IStateExit***
+	3. 		Implement the transition configurator (derived from ***IBascoConfigurator***)
+4. *Optional*: Create your Ninject binding module (using Basco.NinjectExtensions)
+5. Inject IBasco where you use the state machine and start it (*Start<StartState\>()*)
+6. Have fun :-)   
 
 Where can I get it ?
 ====================
