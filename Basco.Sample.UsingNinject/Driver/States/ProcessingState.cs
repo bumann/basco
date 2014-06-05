@@ -1,4 +1,4 @@
-﻿namespace Basco.Samples.States
+﻿namespace Basco.Sample.UsingNinject.Driver.States
 {
     using System;
     using System.Threading;
@@ -19,9 +19,9 @@
             Task.Run(
                 () =>
                 {
-                    while (!token.IsCancellationRequested && ItemCount < 80)
+                    while (!token.IsCancellationRequested && this.ItemCount < 80)
                     {
-                        ItemCount++;
+                        this.ItemCount++;
                         this.RaiseStateChanged();
                         Thread.Sleep(TimeSpan.FromSeconds(1));
                     }

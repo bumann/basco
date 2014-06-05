@@ -1,4 +1,4 @@
-﻿namespace Basco.Samples.States
+﻿namespace Basco.Sample.UsingNinject.Driver.States
 {
     public class ErrorState : IErrorState
     {
