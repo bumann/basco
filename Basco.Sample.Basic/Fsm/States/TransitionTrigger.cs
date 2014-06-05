@@ -1,4 +1,4 @@
-﻿namespace Basco.Samples.States
+﻿namespace Basco.Sample.Basic.Fsm.States
 {
     public enum TransitionTrigger
     {

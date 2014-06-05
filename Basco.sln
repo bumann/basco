@@ -7,9 +7,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Basco", "Basco\Basco.csproj
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Basco.Test", "Basco.Test\Basco.Test.csproj", "{D2237910-AC46-4B84-A042-0BF78E87414E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Basco.Samples", "Basco.Samples\Basco.Samples.csproj", "{8C447F9A-31B0-4AF5-BBF7-688C74F887C7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Basco.Sample.4Ninject", "Basco.Samples\Basco.Sample.4Ninject.csproj", "{8C447F9A-31B0-4AF5-BBF7-688C74F887C7}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Basco.NinjectExtensions", "Basco.NinjectExtensions\Basco.NinjectExtensions.csproj", "{802AA931-621A-4A4C-B73D-E7DACABF71D9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Basco.Sample.Basic", "Basco.Sample.Basic\Basco.Sample.Basic.csproj", "{C7292F6F-F649-4B0A-B515-FE48FDD2DB1A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{802AA931-621A-4A4C-B73D-E7DACABF71D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{802AA931-621A-4A4C-B73D-E7DACABF71D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{802AA931-621A-4A4C-B73D-E7DACABF71D9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C7292F6F-F649-4B0A-B515-FE48FDD2DB1A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C7292F6F-F649-4B0A-B515-FE48FDD2DB1A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C7292F6F-F649-4B0A-B515-FE48FDD2DB1A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C7292F6F-F649-4B0A-B515-FE48FDD2DB1A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,0 +1,41 @@
+﻿<UserControl x:Class="Basco.Sample.Basic.DriverControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             Width="84.8"
+             Height="389.6"
+             d:DataContext="{d:DesignData DriverViewModel}"
+             mc:Ignorable="d">
+    <Grid>
+        <StackPanel Width="77"
+                    Height="390"
+                    Margin="4,0,3.8,-0.4"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Top">
+            <Label HorizontalAlignment="Center" Content="{Binding Path=DisplayInfo}" />
+            <Ellipse Height="73"
+                     Margin="0,0,0.8,0"
+                     Fill="#FFFF2102"
+                     Stroke="Black"
+                     Visibility="{Binding Path=ErrorVisibility}" />
+            <Ellipse Height="74"
+                     Margin="0,0,0.8,0"
+                     Fill="#FFFACC01"
+                     Stroke="Black"
+                     Visibility="{Binding Path=ProcessingVisibility}" />
+            <Ellipse Height="73"
+                     Margin="0,0,0.8,0"
+                     Fill="#FF59FF00"
+                     Stroke="Black"
+                     Visibility="{Binding Path=ConnectedVisibility}" />
+            <Label HorizontalAlignment="Center" Content="" />
+            <Button Command="{Binding ConnectCommand}" Content="Connect" />
+            <Button Command="{Binding Path=ProcessCommand}" Content="Process" />
+            <Button Command="{Binding Path=ErrorCommand}" Content="Error" />
+            <Button Command="{Binding Path=ResetCommand}" Content="Reset" />
+            <Button Command="{Binding Path=DisconnectCommand}" Content="Disconnect" />
+
+        </StackPanel>
+    </Grid>
+</UserControl>
