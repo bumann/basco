@@ -15,20 +15,20 @@
         private void BindStateMachine()
         {
             this.BindBasco()
-                .InNamedScope(DriverConstants.DriverScope)
+                .InNamedScope(Driver.DriverScope)
                 .WithConfigurator<StateMachineConfigurator>();
         }
 
         private void BindStates()
         {
             this.Bind<IConnectedState, IState>().To<ConnectedState>()
-                .InNamedScope(DriverConstants.DriverScope);
+                .InNamedScope(Driver.DriverScope);
 
             this.Bind<IProcessingState, IState>().To<ProcessingState>()
-                .InNamedScope(DriverConstants.DriverScope);
+                .InNamedScope(Driver.DriverScope);
 
             this.Bind<IErrorState, IState>().To<ErrorState>()
-                .InNamedScope(DriverConstants.DriverScope);
+                .InNamedScope(Driver.DriverScope);
         }
     }
 }
