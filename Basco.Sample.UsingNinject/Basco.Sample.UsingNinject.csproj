@@ -39,6 +39,14 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Appccelerate.AsyncModule.1.0.98\lib\Net40\Appccelerate.AsyncModule.dll</HintPath>
     </Reference>
+    <Reference Include="Basco, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Basco.1.1.0.0\lib\net45\Basco.dll</HintPath>
+    </Reference>
+    <Reference Include="Basco.NinjectExtensions, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Basco.NinjectExtensions.1.0.0.0\lib\net45\Basco.NinjectExtensions.dll</HintPath>
+    </Reference>
     <Reference Include="Ninject, Version=3.2.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Ninject.3.2.2.0\lib\net45-full\Ninject.dll</HintPath>
@@ -150,16 +158,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Basco.NinjectExtensions\Basco.NinjectExtensions.csproj">
-      <Project>{802AA931-621A-4A4C-B73D-E7DACABF71D9}</Project>
-      <Name>Basco.NinjectExtensions</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Basco\Basco.csproj">
-      <Project>{42BC5E18-622C-4DF1-847F-AA7BB9E1DAEB}</Project>
-      <Name>Basco</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Resource Include="FodyWeavers.xml" />
