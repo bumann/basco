@@ -90,16 +90,33 @@
         }
 
         [Fact]
-        public void Start_MustSetIsRunning()
+        public void Start_WhenExecutorStarts_MustSetIsRunningToTrue()
         {
+            this.bascoExecutor.Setup(x => x.Start<ExtendedTestState>())
+                .Returns(true);
+
             this.testee.Start<ExtendedTestState>();
 
             this.testee.IsRunning.Should().BeTrue();
         }
 
         [Fact]
-        public void Start_WhenStartedTwice_MustThrowBascoException()
+        public void Start_WhenExecutorDoesNotStart_MustSetIsRunningToFalse()
         {
+            this.bascoExecutor.Setup(x => x.Start<ExtendedTestState>())
+                .Returns(false);
+
+            this.testee.Start<ExtendedTestState>();
+
+            this.testee.IsRunning.Should().BeFalse();
+        }
+
+        [Fact]
+        public void Start_WhenStartedTwice_MustThrow()
+        {
+            this.bascoExecutor.Setup(x => x.Start<ExtendedTestState>())
+                .Returns(true);
+
             this.testee.Start<ExtendedTestState>();
 
             this.testee.Invoking(x => x.Start<ExtendedTestState>())
@@ -107,7 +124,7 @@
         }
 
         [Fact]
-        public void Start_WhenStoppedBeforeRestart_MustNotThrowBascoException()
+        public void Start_WhenStoppedBeforeRestart_MustNotThrow()
         {
             this.testee.Start<ExtendedTestState>();
             this.testee.Stop();

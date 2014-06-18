@@ -35,10 +35,10 @@
       <HintPath>..\packages\Appccelerate.AsyncModule.1.0.98\lib\Net40\Appccelerate.AsyncModule.dll</HintPath>
     </Reference>
     <Reference Include="FluentAssertions">
-      <HintPath>..\packages\FluentAssertions.3.0.90\lib\net45\FluentAssertions.dll</HintPath>
+      <HintPath>..\packages\FluentAssertions.3.0.107\lib\net45\FluentAssertions.dll</HintPath>
     </Reference>
     <Reference Include="FluentAssertions.Core">
-      <HintPath>..\packages\FluentAssertions.3.0.90\lib\net45\FluentAssertions.Core.dll</HintPath>
+      <HintPath>..\packages\FluentAssertions.3.0.107\lib\net45\FluentAssertions.Core.dll</HintPath>
     </Reference>
     <Reference Include="Moq">
       <HintPath>..\packages\Moq.4.2.1402.2112\lib\net40\Moq.dll</HintPath>

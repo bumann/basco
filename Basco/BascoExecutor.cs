@@ -14,6 +14,11 @@ namespace Basco
         {
             this.states = states;
             this.transitionPool = new Dictionary<Type, IStateTransitions<TTransitionTrigger>>();
+
+            if (this.states.Count == 0)
+            {
+                throw new BascoException("BascoExecutor was created without states. Create it with all available states or fix bindings!");
+            }
         }
 
         public event EventHandler StateChanged;

@@ -41,11 +41,13 @@
                 throw new BascoException("The state machine was already started!");
             }
 
-            this.IsRunning = true;
-            if (this.BascoExecutor.Start<TState>())
+            if (!this.BascoExecutor.Start<TState>())
             {
-                this.moduleController.Start();
+                return;
             }
+
+            this.moduleController.Start();
+            this.IsRunning = true;
         }
 
         public void Stop()

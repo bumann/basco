@@ -18,6 +18,13 @@
         }
 
         [Fact]
+        public void Ctor_WhenCreateWithNoStates_MustThrow()
+        {
+            this.Invoking(x => new BascoExecutor<TestTrigger>(new List<IState>()))
+                .ShouldThrow<BascoException>();        
+        }
+
+        [Fact]
         public void Start_WhenNoInitialStateFound_MustReturnFalse()
         {
             bool result = this.testee.Start<FakeState>();
