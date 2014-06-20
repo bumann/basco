@@ -35,17 +35,13 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Appccelerate.AsyncModule, Version=1.0.0.0, Culture=neutral, PublicKeyToken=917bca444d1f2b4c, processorArchitecture=MSIL">
+    <Reference Include="Basco, Version=1.1.1.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Appccelerate.AsyncModule.1.0.98\lib\Net40\Appccelerate.AsyncModule.dll</HintPath>
+      <HintPath>..\packages\Basco.1.1.1\lib\portable-net45+win+wp80\Basco.dll</HintPath>
     </Reference>
-    <Reference Include="Basco, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Basco.NinjectExtensions, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Basco.1.1.0.0\lib\net45\Basco.dll</HintPath>
-    </Reference>
-    <Reference Include="Basco.NinjectExtensions, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Basco.NinjectExtensions.1.0.0.0\lib\net45\Basco.NinjectExtensions.dll</HintPath>
+      <HintPath>..\packages\Basco.NinjectExtensions.1.1.0\lib\net45\Basco.NinjectExtensions.dll</HintPath>
     </Reference>
     <Reference Include="Ninject, Version=3.2.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -149,7 +145,9 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

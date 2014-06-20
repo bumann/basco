@@ -35,12 +35,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Appccelerate.AsyncModule">
-      <HintPath>..\packages\Appccelerate.AsyncModule.1.0.98\lib\Net40\Appccelerate.AsyncModule.dll</HintPath>
-    </Reference>
-    <Reference Include="Basco, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Basco, Version=1.1.1.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Basco.1.1.0.0\lib\net45\Basco.dll</HintPath>
+      <HintPath>..\packages\Basco.1.1.1\lib\portable-net45+win+wp80\Basco.dll</HintPath>
     </Reference>
     <Reference Include="PropertyChanged">
       <HintPath>..\packages\PropertyChanged.Fody.1.48.2.0\Lib\NET35\PropertyChanged.dll</HintPath>

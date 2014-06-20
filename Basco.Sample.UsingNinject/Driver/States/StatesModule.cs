@@ -17,7 +17,7 @@
         {
             this.BindBasco(basco => basco
                 .WithConfigurator<StateMachineConfigurator>()
-                .WithModuleController()
+                .WithScyano()
                 .InNamedScope(Driver.DriverScope));
         }
 
