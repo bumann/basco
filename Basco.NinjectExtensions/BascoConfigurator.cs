@@ -1,6 +1,6 @@
 ﻿namespace Basco.NinjectExtensions
 {
-    using Appccelerate.AsyncModule;
+    using Basco.Async;
     using Ninject.Syntax;
 
     public class BascoConfigurator : IBascoConfigurator
@@ -23,9 +23,9 @@
             return this;
         }
 
-        public IBascoConfigurator WithModuleController()
+        public IBascoConfigurator WithScyano()
         {
-            this.bindingRoot.Bind<IModuleController>().To<ModuleController>();
+            this.bindingRoot.Bind<IScyano>().To<Scyano>();
             return this;
         }
 

@@ -1,20 +1,20 @@
 ﻿namespace Basco
 {
     using System;
-    using Appccelerate.AsyncModule;
+    using Basco.Async;
 
     public class Basco<TTransitionTrigger> : IBasco<TTransitionTrigger>
         where TTransitionTrigger : IComparable
     {
-        private readonly IModuleController moduleController;
+        private readonly IScyano scyano;
         private readonly IBascoExecutor<TTransitionTrigger> bascoExecutor;
 
-        public Basco(IModuleController moduleController, IBascoConfigurator<TTransitionTrigger> bascoConfigurator, IBascoExecutor<TTransitionTrigger> bascoExecutor)
+        public Basco(IScyano scyano, IBascoConfigurator<TTransitionTrigger> bascoConfigurator, IBascoExecutor<TTransitionTrigger> bascoExecutor)
         {
-            this.moduleController = moduleController;
+            this.scyano = scyano;
             this.bascoExecutor = bascoExecutor;
 
-            this.moduleController.Initialize(this, 1, false, "Basco");
+            this.scyano.Initialize(this);
             this.BascoExecutor.StateChanged += this.OnStateChanged;
 
             bascoConfigurator.Configurate(this);
@@ -46,14 +46,14 @@
                 return;
             }
 
-            this.moduleController.Start();
+            this.scyano.Start();
             this.IsRunning = true;
         }
 
         public void Stop()
         {
            this.BascoExecutor.Stop();
-           this.moduleController.Stop();
+           this.scyano.Stop();
            this.IsRunning = false;
         }
 
@@ -64,7 +64,7 @@
 
         public void Trigger(TTransitionTrigger trigger)
         {
-            this.moduleController.EnqueueMessage(trigger);
+            this.scyano.Enqueue(trigger);
         }
 
         [MessageConsumer]

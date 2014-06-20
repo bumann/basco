@@ -1,6 +1,6 @@
 ﻿namespace Basco.Test
 {
-    using Appccelerate.AsyncModule;
+    using Basco.Async;
     using FluentAssertions;
     using Moq;
     using Xunit;
@@ -9,16 +9,16 @@
     {
         private readonly Mock<IBascoConfigurator<TestTrigger>> bascoConfigurator;
         private readonly Mock<IBascoExecutor<TestTrigger>> bascoExecutor;
-        private readonly Mock<IModuleController> moduleController;
+        private readonly Mock<IScyano> scyano;
         private readonly Basco<TestTrigger> testee;
 
         public BascoTest()
         {
             this.bascoConfigurator = new Mock<IBascoConfigurator<TestTrigger>>();
             this.bascoExecutor = new Mock<IBascoExecutor<TestTrigger>>();
-            this.moduleController = new Mock<IModuleController>();
+            this.scyano = new Mock<IScyano>();
             this.testee = new Basco<TestTrigger>(
-                this.moduleController.Object,
+                this.scyano.Object,
                 this.bascoConfigurator.Object,
                 this.bascoExecutor.Object);
         }
@@ -26,7 +26,7 @@
         [Fact]
         public void Ctor_MustInitializeModuleController()
         {
-            this.moduleController.Verify(x => x.Initialize(this.testee, 1, false, "Basco"));
+            this.scyano.Verify(x => x.Initialize(this.testee));
         }
 
         [Fact]
@@ -64,7 +64,7 @@
         {
             this.testee.Start<ExtendedTestState>();
 
-            this.moduleController.Verify(x => x.Initialize(this.testee, 1, false, "Basco"), Times.Once);
+            this.scyano.Verify(x => x.Initialize(this.testee), Times.Once);
         }
 
         [Fact]
@@ -75,7 +75,7 @@
 
             this.testee.Start<ExtendedTestState>();
 
-            this.moduleController.Verify(x => x.Start(), Times.Never);
+            this.scyano.Verify(x => x.Start(), Times.Never);
         }
 
         [Fact]
@@ -86,7 +86,7 @@
 
             this.testee.Start<ExtendedTestState>();
 
-            this.moduleController.Verify(x => x.Start(), Times.Once);
+            this.scyano.Verify(x => x.Start(), Times.Once);
         }
 
         [Fact]
@@ -146,7 +146,7 @@
         {
             this.testee.Stop();
 
-            this.moduleController.Verify(x => x.Stop());
+            this.scyano.Verify(x => x.Stop());
         }
 
         [Fact]
@@ -160,13 +160,13 @@
         }
 
         [Fact]
-        public void Trigger_MustEnqueueMessage()
+        public void Trigger_MustEnqueue()
         {
             const TestTrigger ExpectedTrigger = TestTrigger.TransitionOne;
 
             this.testee.Trigger(ExpectedTrigger);
 
-            this.moduleController.Verify(x => x.EnqueueMessage(ExpectedTrigger));
+            this.scyano.Verify(x => x.Enqueue(ExpectedTrigger));
         }
 
         [Fact]

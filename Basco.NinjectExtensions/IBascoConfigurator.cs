@@ -4,7 +4,7 @@
     {
         IBascoConfigurator WithConfigurator<TBascoConfigurator>();
 
-        IBascoConfigurator WithModuleController();
+        IBascoConfigurator WithScyano();
 
         IBascoConfigurator InNamedScope(string scopeName);
     }

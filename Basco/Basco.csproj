@@ -30,9 +30,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Appccelerate.AsyncModule">
-      <HintPath>..\packages\Appccelerate.AsyncModule.1.0.98\lib\Net40\Appccelerate.AsyncModule.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -42,6 +39,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Async\IScyano.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Async\MessageConsumerAttribute.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Async\Scyano.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="BascoException.cs" />
     <Compile Include="BascoExecutor.cs" />
     <Compile Include="BascoExtensions.cs">
@@ -62,11 +68,6 @@
     <Compile Include="StateTransitions.cs" />
     <Compile Include="StateTransitionsExtensions.cs" />
     <Compile Include="StateTransitionsBuilder.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config">
-      <SubType>Designer</SubType>
-    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
