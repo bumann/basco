@@ -1,7 +1,5 @@
 ﻿namespace Basco.Sample.UsingNinject.Driver.States
 {
-    using Basco;
-
     public class StateMachineConfigurator : IBascoConfigurator<TransitionTrigger>
     {
         public void Configurate(IBasco<TransitionTrigger> basco)
