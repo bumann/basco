@@ -1,8 +1,8 @@
 ﻿namespace Basco.Test
 {
-    using Basco.Async;
     using FluentAssertions;
     using Moq;
+    using Scyano;
     using Xunit;
 
     public class BascoExtensionsTest

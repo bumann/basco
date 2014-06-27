@@ -1,7 +1,7 @@
 ﻿namespace Basco.NinjectExtensions
 {
-    using Basco.Async;
     using Ninject.Syntax;
+    using Scyano.NinjectExtensions;
 
     public class BascoConfigurator : IBascoConfigurator
     {
@@ -25,7 +25,7 @@
 
         public IBascoConfigurator WithScyano()
         {
-            this.bindingRoot.Bind<IScyano>().To<Scyano>();
+            this.bindingRoot.BindScyano();
             return this;
         }
 

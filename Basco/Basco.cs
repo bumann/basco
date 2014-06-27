@@ -1,7 +1,7 @@
 ﻿namespace Basco
 {
     using System;
-    using Basco.Async;
+    using Scyano;
 
     public class Basco<TTransitionTrigger> : IBasco<TTransitionTrigger>
         where TTransitionTrigger : IComparable

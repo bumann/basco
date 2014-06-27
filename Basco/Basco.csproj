@@ -34,12 +34,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <!-- A reference to the entire .NET Framework is automatically included -->
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Async\IScyano.cs" />
-    <Compile Include="Async\MessageConsumerAttribute.cs" />
-    <Compile Include="Async\Scyano.cs" />
     <Compile Include="Basco.cs" />
     <Compile Include="BascoException.cs" />
     <Compile Include="BascoExecutor.cs" />
@@ -48,6 +42,9 @@
     <Compile Include="IBascoConfigurator.cs" />
     <Compile Include="IBascoExecutor.cs" />
     <Compile Include="IBascoState.cs" />
+    <Compile Include="ICompositeStateConfigurator.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="IState.cs" />
     <Compile Include="IStateEnter.cs" />
     <Compile Include="IStateExit.cs" />
@@ -58,6 +55,14 @@
     <Compile Include="StateTransitionsBuilder.cs" />
     <Compile Include="StateTransitionsBuilderExtensions.cs" />
     <Compile Include="StateTransitionsExtensions.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Scyano">
+      <HintPath>..\packages\Scyano.1.0.0\lib\portable-net45+win+wp80\Scyano.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

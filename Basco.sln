@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Basco.Sample.Basic", "Basco
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Basco.Sample.UsingNinject", "Basco.Sample.UsingNinject\Basco.Sample.UsingNinject.csproj", "{8C447F9A-31B0-4AF5-BBF7-688C74F887C7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Basco.Sample.CompositeStates", "Basco.Sample.CompositeStates\Basco.Sample.CompositeStates.csproj", "{57084DF5-7F7F-4B09-B51F-63B118BA9222}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{8C447F9A-31B0-4AF5-BBF7-688C74F887C7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8C447F9A-31B0-4AF5-BBF7-688C74F887C7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8C447F9A-31B0-4AF5-BBF7-688C74F887C7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{57084DF5-7F7F-4B09-B51F-63B118BA9222}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{57084DF5-7F7F-4B09-B51F-63B118BA9222}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{57084DF5-7F7F-4B09-B51F-63B118BA9222}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{57084DF5-7F7F-4B09-B51F-63B118BA9222}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
