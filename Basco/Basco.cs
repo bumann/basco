@@ -7,14 +7,14 @@
         where TTransitionTrigger : IComparable
     {
         private readonly IScyano scyano;
-        private readonly IBascoExecutor<TTransitionTrigger> bascoExecutor;
 
         public Basco(IScyano scyano, IBascoConfigurator<TTransitionTrigger> bascoConfigurator, IBascoExecutor<TTransitionTrigger> bascoExecutor)
         {
             this.scyano = scyano;
-            this.bascoExecutor = bascoExecutor;
+            this.BascoExecutor = bascoExecutor;
 
             this.scyano.Initialize(this);
+            this.BascoExecutor.Initialize();
             this.BascoExecutor.StateChanged += this.OnStateChanged;
 
             bascoConfigurator.Configurate(this);
@@ -29,10 +29,7 @@
             get { return this.BascoExecutor.CurrentState; }
         }
 
-        public IBascoExecutor<TTransitionTrigger> BascoExecutor
-        {
-            get { return this.bascoExecutor; }
-        }
+        public IBascoExecutor<TTransitionTrigger> BascoExecutor { get; private set; }
 
         public void Start<TState>() where TState : class, IState
         {
@@ -59,7 +56,7 @@
 
         public IState RetrieveState<TState>() where TState : class, IState
         {
-            return this.bascoExecutor.RetrieveState<TState>();
+            return this.BascoExecutor.RetrieveState<TState>();
         }
 
         public void Trigger(TTransitionTrigger trigger)

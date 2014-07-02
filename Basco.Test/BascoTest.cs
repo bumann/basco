@@ -24,6 +24,12 @@
         }
 
         [Fact]
+        public void Ctor_MustInitializeBascoExecutor()
+        {
+            this.bascoExecutor.Verify(x => x.Initialize());
+        }
+
+        [Fact]
         public void Ctor_MustInitializeModuleController()
         {
             this.scyano.Verify(x => x.Initialize(this.testee));

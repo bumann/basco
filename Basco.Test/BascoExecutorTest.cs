@@ -21,9 +21,9 @@
         }
 
         [Fact]
-        public void Start_MustInitializeStateCache()
+        public void Initialize_MustInitializeStateCache()
         {
-            this.testee.Start<FakeState>();
+            this.testee.Initialize();
 
             this.stateCache.Verify(x => x.Initialize());
         }

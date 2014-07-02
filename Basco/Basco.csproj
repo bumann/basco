@@ -38,22 +38,24 @@
     <Compile Include="BascoException.cs" />
     <Compile Include="BascoExecutor.cs" />
     <Compile Include="BascoExtensions.cs" />
+    <Compile Include="BascoFactory.cs" />
     <Compile Include="BascoStateCache.cs" />
     <Compile Include="IBasco.cs" />
     <Compile Include="IBascoConfigurator.cs" />
     <Compile Include="IBascoExecutor.cs" />
+    <Compile Include="IBascoStatesFactory.cs" />
     <Compile Include="IBascoState.cs" />
     <Compile Include="IBascoStateCache.cs" />
     <Compile Include="ICompositeStateConfigurator.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="IBascoFactory.cs" />
     <Compile Include="IState.cs" />
     <Compile Include="IStateEnter.cs" />
     <Compile Include="IStateExit.cs" />
     <Compile Include="IStateTransitions.cs" />
     <Compile Include="IStateTransitionsBuilder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ScyanoFactory.cs" />
     <Compile Include="StateTransitions.cs" />
     <Compile Include="StateTransitionsBuilder.cs" />
     <Compile Include="StateTransitionsBuilderExtensions.cs" />

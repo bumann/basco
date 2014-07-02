@@ -6,17 +6,17 @@
 
     public class BascoStateCache : IBascoStateCache
     {
-        private readonly IBascoFactory statesBascoFactory;
+        private readonly IBascoStatesFactory statesBascoFactory;
         private ICollection<IState> states;
 
-        public BascoStateCache(IBascoFactory statesBascoFactory)
+        public BascoStateCache(IBascoStatesFactory statesBascoFactory)
         {
             this.statesBascoFactory = statesBascoFactory;
         }
 
         public void Initialize()
         {
-            this.states = this.statesBascoFactory.CreateAll<IState>().ToList();
+            this.states = this.statesBascoFactory.CreateStates().ToList();
 
             if (this.states.Count == 0)
             {

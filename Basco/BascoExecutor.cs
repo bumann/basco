@@ -19,6 +19,11 @@ namespace Basco
 
         public IState CurrentState { get; private set; }
 
+        public void Initialize()
+        {
+            this.bascoStateCache.Initialize();
+        }
+
         public void AddStateTransitions<TState>(StateTransitions<TTransitionTrigger> stateTransitions)
             where TState : class, IState
         {
@@ -27,7 +32,6 @@ namespace Basco
 
         public bool Start<TState>() where TState : class, IState
         {
-            this.bascoStateCache.Initialize();
             this.CurrentState = this.bascoStateCache.GetState(typeof(TState));
             if (this.CurrentState == null)
             {
