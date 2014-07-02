@@ -1,6 +1,6 @@
 ﻿namespace Basco
 {
-    public interface IStateEnter
+    public interface IStateEnter : IState
     {
         void Enter();
     }

@@ -1,6 +1,6 @@
 ﻿namespace Basco
 {
-    public interface IStateExit
+    public interface IStateExit : IState
     {
         void Exit();
     }

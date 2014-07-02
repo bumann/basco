@@ -2,23 +2,17 @@ namespace Basco
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
 
     public class BascoExecutor<TTransitionTrigger> : IBascoExecutor<TTransitionTrigger>
         where TTransitionTrigger : IComparable
     {
-        private readonly ICollection<IState> states;
+        private readonly IBascoStateCache bascoStateCache;
         private readonly Dictionary<Type, IStateTransitions<TTransitionTrigger>> transitionPool;
 
-        public BascoExecutor(ICollection<IState> states)
+        public BascoExecutor(IBascoStateCache bascoStateCache)
         {
-            this.states = states;
+            this.bascoStateCache = bascoStateCache;
             this.transitionPool = new Dictionary<Type, IStateTransitions<TTransitionTrigger>>();
-
-            if (this.states.Count == 0)
-            {
-                throw new BascoException("BascoExecutor was created without states. Create it with all available states or fix bindings!");
-            }
         }
 
         public event EventHandler StateChanged;
@@ -33,7 +27,8 @@ namespace Basco
 
         public bool Start<TState>() where TState : class, IState
         {
-            this.CurrentState = this.GetState(typeof(TState));
+            this.bascoStateCache.Initialize();
+            this.CurrentState = this.bascoStateCache.GetState(typeof(TState));
             if (this.CurrentState == null)
             {
                 return false;
@@ -53,7 +48,7 @@ namespace Basco
 
         public IState RetrieveState<TState>() where TState : class, IState
         {
-            return this.GetState(typeof(TState));
+            return this.bascoStateCache.GetState(typeof(TState));
         }
 
         public void ChangeState(TTransitionTrigger trigger)
@@ -116,14 +111,9 @@ namespace Basco
 
             IStateTransitions<TTransitionTrigger> stateTransitions = this.transitionPool[this.CurrentState.GetType()];
             Type nextStateType = stateTransitions.GetNextStateType(trigger);
-            IState nextState = this.GetState(nextStateType);
+            IState nextState = this.bascoStateCache.GetState(nextStateType);
 
             return nextState;
-        }
-
-        private IState GetState(Type stateType)
-        {
-            return this.states.SingleOrDefault(x => x.GetType() == stateType);
         }
     }
 }

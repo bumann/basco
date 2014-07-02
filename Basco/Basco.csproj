@@ -38,13 +38,16 @@
     <Compile Include="BascoException.cs" />
     <Compile Include="BascoExecutor.cs" />
     <Compile Include="BascoExtensions.cs" />
+    <Compile Include="BascoStateCache.cs" />
     <Compile Include="IBasco.cs" />
     <Compile Include="IBascoConfigurator.cs" />
     <Compile Include="IBascoExecutor.cs" />
     <Compile Include="IBascoState.cs" />
+    <Compile Include="IBascoStateCache.cs" />
     <Compile Include="ICompositeStateConfigurator.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="IBascoFactory.cs" />
     <Compile Include="IState.cs" />
     <Compile Include="IStateEnter.cs" />
     <Compile Include="IStateExit.cs" />

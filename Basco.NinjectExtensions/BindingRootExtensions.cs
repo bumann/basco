@@ -15,8 +15,7 @@
             {
                 syntax.Bind(typeof(IBasco<>)).To(typeof(Basco<>));
                 syntax.Bind<IBascoFactory>().To<BascoFactory>();
-                syntax.Bind<IBascoStateCache>().To<BascoStateCache>()
-                    .OnActivation<IBascoStateCache>(x => x.Initialize());
+                syntax.Bind<IBascoStateCache>().To<BascoStateCache>();
                 syntax.Bind(typeof(IBascoExecutor<>)).To(typeof(BascoExecutor<>));
             }
             else
@@ -26,8 +25,7 @@
                 syntax.Bind<IBascoFactory>().To<BascoFactory>()
                     .InNamedScope(bascoConfigurator.ScopeName);
                 syntax.Bind<IBascoStateCache>().To<BascoStateCache>()
-                    .InNamedScope(bascoConfigurator.ScopeName)
-                    .OnActivation<IBascoStateCache>(x => x.Initialize());
+                    .InNamedScope(bascoConfigurator.ScopeName);
                     
                 syntax.Bind(typeof(IBascoExecutor<>)).To(typeof(BascoExecutor<>))
                     .InNamedScope(bascoConfigurator.ScopeName);

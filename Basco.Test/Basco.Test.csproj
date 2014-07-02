@@ -57,6 +57,7 @@
   <ItemGroup>
     <Compile Include="BascoExecutorTest.cs" />
     <Compile Include="BascoExtensionsTest.cs" />
+    <Compile Include="BascoStateCacheTest.cs" />
     <Compile Include="BascoTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ExtendedTestState.cs" />
