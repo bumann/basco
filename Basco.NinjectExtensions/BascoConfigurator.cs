@@ -11,7 +11,7 @@
         {
             this.bindingRoot = bindingRoot;
 
-            this.bindingRoot.Bind(typeof(IBasco<>)).To(typeof(Basco<>));
+            
             this.bindingRoot.Bind(typeof(IStateTransitions<>)).To(typeof(StateTransitions<>));
         }
 
