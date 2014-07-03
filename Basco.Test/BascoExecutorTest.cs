@@ -163,6 +163,19 @@
         }
 
         [Fact]
+        public void ChangeState_WhenStateNotConfigured_MustThrow()
+        {
+            var state = new NotConfiguredState();
+            this.stateCache.Setup(x => x.GetState(It.IsAny<Type>())).Returns(state);
+            this.SetupExtendedStateTransitions();
+
+            this.testee.Start<NotConfiguredState>();
+
+            this.Invoking(x => this.testee.ChangeState(TestTrigger.TransitionOne))
+                .ShouldThrow<BascoException>();
+        }
+
+        [Fact]
         public void ChangeState_WhenExitableState_MustExitInitialState()
         {
             var state = new ExtendedTestState();
@@ -270,6 +283,13 @@
         }
 
         private class FakeState : IState
+        {
+            public void Execute()
+            {
+            }
+        }
+
+        private class NotConfiguredState : IState
         {
             public void Execute()
             {

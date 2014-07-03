@@ -1,5 +1,6 @@
 ﻿namespace Basco.Test
 {
+    using System;
     using FluentAssertions;
     using Moq;
     using Scyano;
@@ -80,28 +81,6 @@
         }
 
         [Fact]
-        public void Start_MustNotInitializeModuleController()
-        {
-            this.testee.Initialize();
-
-            this.testee.Start<ExtendedTestState>();
-
-            this.scyano.Verify(x => x.Initialize(this.testee), Times.Once);
-        }
-
-        [Fact]
-        public void Start_WhenExecutorNotStarted_MustNotStartModuleController()
-        {
-            this.testee.Initialize();
-            this.bascoExecutor.Setup(x => x.Start<ExtendedTestState>())
-                .Returns(false);
-
-            this.testee.Start<ExtendedTestState>();
-
-            this.scyano.Verify(x => x.Start(), Times.Never);
-        }
-
-        [Fact]
         public void Start_WhenExecutorStarted_MustStartModuleController()
         {
             this.testee.Initialize();
@@ -126,15 +105,14 @@
         }
 
         [Fact]
-        public void Start_WhenExecutorDoesNotStart_MustSetIsRunningToFalse()
+        public void Start_WhenExecutorDoesNotStart_MustThrow()
         {
             this.testee.Initialize();
             this.bascoExecutor.Setup(x => x.Start<ExtendedTestState>())
                 .Returns(false);
 
-            this.testee.Start<ExtendedTestState>();
-
-            this.testee.IsRunning.Should().BeFalse();
+            this.testee.Invoking(x => x.Start<ExtendedTestState>())
+                .ShouldThrow<BascoException>();
         }
 
         [Fact]
@@ -154,6 +132,7 @@
         public void Start_WhenStoppedBeforeRestart_MustNotThrow()
         {
             this.testee.Initialize();
+            this.bascoExecutor.Setup(x => x.Start<ExtendedTestState>()).Returns(true);
             this.testee.Start<ExtendedTestState>();
             this.testee.Stop();
 
@@ -181,6 +160,7 @@
         public void Stop_MustResetIsRunning()
         {
             this.testee.Initialize();
+            this.bascoExecutor.Setup(x => x.Start<ExtendedTestState>()).Returns(true);
             this.testee.Start<ExtendedTestState>();
 
             this.testee.Stop();

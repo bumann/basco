@@ -110,10 +110,20 @@ namespace Basco
         {
             if (this.transitionPool.Count == 0)
             {
+                //// TODO: throw exception
                 return null;
             }
 
-            IStateTransitions<TTransitionTrigger> stateTransitions = this.transitionPool[this.CurrentState.GetType()];
+            IStateTransitions<TTransitionTrigger> stateTransitions;
+            try
+            {
+                stateTransitions = this.transitionPool[this.CurrentState.GetType()];
+            }
+            catch (KeyNotFoundException ex)
+            {
+                throw new BascoException(string.Format("The state {0} is not configured correctly. Configure transitions for this state in your IBascoConfigurator properly!", this.CurrentState), ex);
+            }
+            
             Type nextStateType = stateTransitions.GetNextStateType(trigger);
             IState nextState = this.bascoStateCache.GetState(nextStateType);
 

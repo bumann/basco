@@ -43,17 +43,17 @@
         {
             if (!this.IsInitialized)
             {
-                throw new BascoException("The state machine was not initialized!");
+                throw new BascoException("The state machine was not initialized. Do call Basco.Initialize()!");
             }
 
             if (this.IsRunning)
             {
-                throw new BascoException("The state machine was already started!");
+                throw new BascoException("The state machine was already started. Do not call Start() twice!");
             }
 
             if (!this.BascoExecutor.Start<TState>())
             {
-                return;
+                throw new BascoException(string.Format("The state machine could not be started. Check configuration (IBascoConfigurator) or start state [{0}]!", typeof(TState)));
             }
 
             this.scyano.Start();
