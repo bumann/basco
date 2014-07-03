@@ -58,6 +58,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BascoConfigurator.cs" />
+    <Compile Include="BascoStatesFactory.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="BindingRootExtensions.cs">
       <SubType>Code</SubType>
     </Compile>
