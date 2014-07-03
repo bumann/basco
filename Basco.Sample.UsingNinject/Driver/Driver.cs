@@ -16,6 +16,7 @@
         public Driver(IBasco<TransitionTrigger> basco, IProcessingState processingState)
         {
             this.Basco = basco;
+            this.Basco.Initialize();
             this.processingState = processingState;
         }
 
