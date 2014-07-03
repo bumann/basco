@@ -7,5 +7,7 @@
         event EventHandler StateChanged;
 
         IState CurrentState { get; }
+
+        IState RetrieveState<TState>() where TState : class, IState;
     }
 }

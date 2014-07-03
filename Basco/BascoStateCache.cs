@@ -20,7 +20,7 @@
 
             if (this.states.Count == 0)
             {
-                throw new BascoException("BascoStateCache initialization failed. No states could be created. BascoFactory should return all available IStates!");
+                throw new BascoException("BascoStateCache initialization failed. No states could be created. Concrete BascoStatesFactory should return all available IStates!");
             }
         }
 

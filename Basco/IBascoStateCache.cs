@@ -4,8 +4,8 @@
 
     public interface IBascoStateCache
     {
-        IState GetState(Type stateType);
-
         void Initialize();
+
+        IState GetState(Type stateType);
     }
 }

@@ -67,7 +67,7 @@ namespace Basco.Sample.UsingNinject
 
         public void Connect()
         {
-            this.driver.Basco.Start<ConnectedState>();
+            this.driver.Basco.Start();
         }
 
         public void Run()

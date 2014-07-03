@@ -43,6 +43,7 @@
     <Compile Include="IBasco.cs" />
     <Compile Include="IBascoConfigurator.cs" />
     <Compile Include="IBascoExecutor.cs" />
+    <Compile Include="IBascoInternal.cs" />
     <Compile Include="IBascoStatesFactory.cs" />
     <Compile Include="IBascoState.cs" />
     <Compile Include="IBascoStateCache.cs" />

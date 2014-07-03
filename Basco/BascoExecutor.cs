@@ -19,9 +19,16 @@ namespace Basco
 
         public IState CurrentState { get; private set; }
 
-        public void Initialize()
+        public void InitializeWithStartState<TState>() where TState : class, IState
         {
             this.bascoStateCache.Initialize();
+
+            var stateType = typeof(TState);
+            this.CurrentState = this.bascoStateCache.GetState(stateType);
+            if (this.CurrentState == null)
+            {
+                throw new BascoException(string.Format("No valid start state. Check configuration (IBascoConfigurator) of state [{0}] !", stateType));
+            }
         }
 
         public void AddStateTransitions<TState>(StateTransitions<TTransitionTrigger> stateTransitions)
@@ -30,17 +37,10 @@ namespace Basco
             this.transitionPool.Add(typeof(TState), stateTransitions);
         }
 
-        public bool Start<TState>() where TState : class, IState
+        public void Start()
         {
-            this.CurrentState = this.bascoStateCache.GetState(typeof(TState));
-            if (this.CurrentState == null)
-            {
-                return false;
-            }
-
             this.EnterState();
             this.ExecuteAndRaiseStateChanged();
-            return true;
         }
 
         public void Stop()

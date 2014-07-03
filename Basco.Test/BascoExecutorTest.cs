@@ -16,45 +16,36 @@
         {
             this.simpleTestState = new SimpleTestState();
             this.extendedTestState = new ExtendedTestState();
-            this.stateCache = new Mock<IBascoStateCache>();
+            this.stateCache = new Mock<IBascoStateCache> { DefaultValue = DefaultValue.Mock };
             this.testee = new BascoExecutor<TestTrigger>(this.stateCache.Object);
         }
 
         [Fact]
-        public void Initialize_MustInitializeStateCache()
+        public void InitializeWithStartState_MustInitializeStateCache()
         {
-            this.testee.Initialize();
+            this.testee.InitializeWithStartState<IState>();
 
             this.stateCache.Verify(x => x.Initialize());
         }
 
         [Fact]
-        public void Start_WhenNoInitialStateFound_MustReturnFalse()
-        {
-            bool result = this.testee.Start<FakeState>();
-
-            result.Should().BeFalse();
-        }
-
-        [Fact]
-        public void Start_WhenInitialStateFound_MustReturnTrue()
-        {
-            this.stateCache.Setup(x => x.GetState(It.IsAny<Type>())).Returns(new Mock<IState>().Object);
-
-            bool result = this.testee.Start<ExtendedTestState>();
-
-            result.Should().BeTrue();
-        }
-
-        [Fact]
-        public void Start_MustSetInitialState()
+        public void InitializeWithStartState_MustSetInitialState()
         {
             var state = Mock.Of<IState>();
             this.stateCache.Setup(x => x.GetState(It.IsAny<Type>())).Returns(state);
 
-            this.testee.Start<IState>();
+            this.testee.InitializeWithStartState<IState>();
 
             this.testee.CurrentState.Should().Be(state);
+        }
+
+        [Fact]
+        public void InitializeWithStartState_WhenNoValidStartState_MustThrow()
+        {
+            this.stateCache.Setup(x => x.GetState(It.IsAny<Type>())).Returns<IState>(null);
+
+            this.testee.Invoking(x => x.InitializeWithStartState<ExtendedTestState>())
+                .ShouldThrow<BascoException>();
         }
 
         [Fact]
@@ -62,8 +53,9 @@
         {
             var state = new Mock<IStateEnter>();
             this.stateCache.Setup(x => x.GetState(It.IsAny<Type>())).Returns(state.Object);
+            this.testee.InitializeWithStartState<IState>();
 
-            this.testee.Start<ExtendedTestState>();
+            this.testee.Start();
 
             state.Verify(x => x.Enter(), Times.Once);
         }
@@ -73,8 +65,9 @@
         {
             bool called = false;
             this.simpleTestState.OnEnter = () => { called = true; };
+            this.testee.InitializeWithStartState<SimpleTestState>();
 
-            this.testee.Start<SimpleTestState>();
+            this.testee.Start();
 
             called.Should().BeFalse();
         }
@@ -84,8 +77,9 @@
         {
             var state = new Mock<IState>();
             this.stateCache.Setup(x => x.GetState(It.IsAny<Type>())).Returns(state.Object);
+            this.testee.InitializeWithStartState<ExtendedTestState>();
 
-            this.testee.Start<ExtendedTestState>();
+            this.testee.Start();
 
             state.Verify(x => x.Execute(), Times.Once);
         }
@@ -93,11 +87,11 @@
         [Fact]
         public void Start_MustRaiseStateChanged()
         {
-            this.stateCache.Setup(x => x.GetState(It.IsAny<Type>())).Returns(new Mock<IState>().Object);
             bool called = false;
             this.testee.StateChanged += (sender, args) => { called = true; };
+            this.testee.InitializeWithStartState<ExtendedTestState>();
 
-            this.testee.Start<ExtendedTestState>();
+            this.testee.Start();
 
             called.Should().BeTrue();
         }
@@ -115,7 +109,7 @@
         {
             var state = new Mock<IStateExit>();
             this.stateCache.Setup(x => x.GetState(It.IsAny<Type>())).Returns(state.Object);
-            this.testee.Start<IStateExit>();
+            this.testee.InitializeWithStartState<IStateExit>();
 
             this.testee.Stop();
 
@@ -126,7 +120,7 @@
         public void Stop_WhenNotExitableState_MustNotExitState()
         {
             bool called = false;
-            this.testee.Start<SimpleTestState>();
+            this.testee.InitializeWithStartState<SimpleTestState>();
             this.simpleTestState.OnExit = () => { called = true; };
 
             this.testee.Stop();
@@ -138,7 +132,7 @@
         public void Stop_MustRaiseStateChanged()
         {
             bool called = false;
-            this.testee.Start<ExtendedTestState>();
+            this.testee.InitializeWithStartState<ExtendedTestState>();
             this.testee.StateChanged += (sender, args) => { called = true; };
 
             this.testee.Stop();
@@ -156,7 +150,9 @@
         [Fact]
         public void ChangeState_WhenNextStateNotSet_MustNotThrow()
         {
-            this.testee.Start<ExtendedTestState>();
+            this.testee.InitializeWithStartState<ExtendedTestState>();
+
+            this.testee.Start();
 
             this.Invoking(x => this.testee.ChangeState(TestTrigger.TransitionOne))
                 .ShouldNotThrow();
@@ -165,11 +161,10 @@
         [Fact]
         public void ChangeState_WhenStateNotConfigured_MustThrow()
         {
-            var state = new NotConfiguredState();
-            this.stateCache.Setup(x => x.GetState(It.IsAny<Type>())).Returns(state);
             this.SetupExtendedStateTransitions();
+            this.testee.InitializeWithStartState<NotConfiguredState>();
 
-            this.testee.Start<NotConfiguredState>();
+            this.testee.Start();
 
             this.Invoking(x => this.testee.ChangeState(TestTrigger.TransitionOne))
                 .ShouldThrow<BascoException>();
@@ -183,7 +178,8 @@
             bool called = false;
             state.OnExit = () => { called = true; };
             this.SetupExtendedStateTransitions();
-            this.testee.Start<ExtendedTestState>();
+            this.testee.InitializeWithStartState<ExtendedTestState>();
+            this.testee.Start();
 
             this.testee.ChangeState(TestTrigger.TransitionOne);
 
@@ -196,7 +192,8 @@
             this.stateCache.Setup(x => x.GetState(typeof(ExtendedTestState))).Returns(this.extendedTestState);
             this.stateCache.Setup(x => x.GetState(typeof(SimpleTestState))).Returns(this.simpleTestState);
             this.SetupExtendedStateTransitions();
-            this.testee.Start<ExtendedTestState>();
+            this.testee.InitializeWithStartState<ExtendedTestState>();
+            this.testee.Start();
 
             this.testee.ChangeState(TestTrigger.TransitionOne);
 
@@ -212,7 +209,8 @@
             bool called = false;
             this.SetupSimpleStateTransitions();
             this.extendedTestState.OnEnter = () => { called = true; };
-            this.testee.Start<SimpleTestState>();
+            this.testee.InitializeWithStartState<SimpleTestState>();
+            this.testee.Start();
 
             this.testee.ChangeState(TestTrigger.TransitionOne);
 
@@ -227,7 +225,8 @@
             bool called = false;
             this.SetupExtendedStateTransitions();
             this.simpleTestState.OnExecution = () => { called = true; };
-            this.testee.Start<ExtendedTestState>();
+            this.testee.InitializeWithStartState<ExtendedTestState>();
+            this.testee.Start();
             
             this.testee.ChangeState(TestTrigger.TransitionOne);
 
@@ -241,7 +240,8 @@
             this.stateCache.Setup(x => x.GetState(typeof(SimpleTestState))).Returns(this.simpleTestState);
             bool called = false;
             this.SetupExtendedStateTransitions();
-            this.testee.Start<ExtendedTestState>();
+            this.testee.InitializeWithStartState<ExtendedTestState>();
+            this.testee.Start();
             this.testee.StateChanged += (sender, args) => { called = true; };
             
             this.testee.ChangeState(TestTrigger.TransitionOne);
@@ -263,6 +263,8 @@
         [Fact]
         public void RetrieveState_WhenStateNotExists_MustReturnNull()
         {
+            this.stateCache.Setup(x => x.GetState(It.IsAny<Type>())).Returns<IState>(null);
+
             IState result = this.testee.RetrieveState<FakeState>();
 
             result.Should().BeNull();

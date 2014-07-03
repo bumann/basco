@@ -21,7 +21,7 @@
         public DriverControlModel(IBasco<TransitionTrigger> basco)
         {
             this.basco = basco;
-            this.basco.Initialize();
+            this.basco.InitializeWithStartState<ConnectedState>();
             this.basco.StateChanged += this.OnDriverStateChanged;
 
             this.processingState = (IProcessingState)this.basco.RetrieveState<ProcessingState>();
@@ -66,7 +66,7 @@
 
         public void Connect()
         {
-            this.basco.Start<ConnectedState>();
+            this.basco.Start();
         }
 
         public void Run()

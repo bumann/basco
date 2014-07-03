@@ -29,33 +29,31 @@
 
         public IBascoExecutor<TTransitionTrigger> BascoExecutor { get; private set; }
 
-        public void Initialize()
+        public void InitializeWithStartState<TState>() where TState : class, IState
         {
             this.scyano.Initialize(this);
-            this.BascoExecutor.Initialize();
+            this.BascoExecutor.InitializeWithStartState<TState>();
+
+            //// TODO
             this.BascoExecutor.StateChanged += this.OnStateChanged;
 
             this.bascoConfigurator.Configurate(this);
             this.IsInitialized = true;
         }
 
-        public void Start<TState>() where TState : class, IState
+        public void Start()
         {
             if (!this.IsInitialized)
             {
-                throw new BascoException("The state machine was not initialized. Do call Basco.Initialize()!");
+                throw new BascoException("The state machine was not initialized. Do call Basco.InitializeWithStartState<TStartState>()!");
             }
 
             if (this.IsRunning)
             {
-                throw new BascoException("The state machine was already started. Do not call Start() twice!");
+                throw new BascoException("The state machine was already started. Do not call Basco.Start() twice!");
             }
 
-            if (!this.BascoExecutor.Start<TState>())
-            {
-                throw new BascoException(string.Format("The state machine could not be started. Check configuration (IBascoConfigurator) or start state [{0}]!", typeof(TState)));
-            }
-
+            this.BascoExecutor.Start();
             this.scyano.Start();
             this.IsRunning = true;
         }
