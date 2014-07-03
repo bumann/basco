@@ -55,7 +55,6 @@
     <Compile Include="IStateTransitions.cs" />
     <Compile Include="IStateTransitionsBuilder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ScyanoFactory.cs" />
     <Compile Include="StateTransitions.cs" />
     <Compile Include="StateTransitionsBuilder.cs" />
     <Compile Include="StateTransitionsBuilderExtensions.cs" />
@@ -63,7 +62,7 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Scyano">
-      <HintPath>..\packages\Scyano.1.0.0\lib\portable-net45+win+wp80\Scyano.dll</HintPath>
+      <HintPath>..\packages\Scyano.1.0.1\lib\portable-net45+win+wp80\Scyano.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
