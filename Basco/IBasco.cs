@@ -5,9 +5,13 @@
     public interface IBasco<TTransitionTrigger> : IBascoState
         where TTransitionTrigger : IComparable
     {
+        bool IsInitialized { get; }
+
         bool IsRunning { get; }
 
         IBascoExecutor<TTransitionTrigger> BascoExecutor { get; }
+
+        void Initialize();
 
         void Start<TState>() where TState : class, IState;
 

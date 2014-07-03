@@ -7,20 +7,18 @@
         where TTransitionTrigger : IComparable
     {
         private readonly IScyano scyano;
+        private readonly IBascoConfigurator<TTransitionTrigger> bascoConfigurator;
 
         public Basco(IScyano scyano, IBascoConfigurator<TTransitionTrigger> bascoConfigurator, IBascoExecutor<TTransitionTrigger> bascoExecutor)
         {
             this.scyano = scyano;
+            this.bascoConfigurator = bascoConfigurator;
             this.BascoExecutor = bascoExecutor;
-
-            this.scyano.Initialize(this);
-            this.BascoExecutor.Initialize();
-            this.BascoExecutor.StateChanged += this.OnStateChanged;
-
-            bascoConfigurator.Configurate(this);
         }
 
         public event EventHandler StateChanged;
+
+        public bool IsInitialized { get; private set; }
 
         public bool IsRunning { get; private set; }
 
@@ -31,8 +29,23 @@
 
         public IBascoExecutor<TTransitionTrigger> BascoExecutor { get; private set; }
 
+        public void Initialize()
+        {
+            this.scyano.Initialize(this);
+            this.BascoExecutor.Initialize();
+            this.BascoExecutor.StateChanged += this.OnStateChanged;
+
+            this.bascoConfigurator.Configurate(this);
+            this.IsInitialized = true;
+        }
+
         public void Start<TState>() where TState : class, IState
         {
+            if (!this.IsInitialized)
+            {
+                throw new BascoException("The state machine was not initialized!");
+            }
+
             if (this.IsRunning)
             {
                 throw new BascoException("The state machine was already started!");
