@@ -10,8 +10,6 @@
         public BascoConfigurator(IBindingRoot bindingRoot)
         {
             this.bindingRoot = bindingRoot;
-
-            
             this.bindingRoot.Bind(typeof(IStateTransitions<>)).To(typeof(StateTransitions<>));
         }
 
