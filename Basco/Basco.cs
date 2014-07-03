@@ -53,9 +53,18 @@
                 throw new BascoException("The state machine was already started. Do not call Basco.Start() twice!");
             }
 
-            this.BascoExecutor.Start();
-            this.scyano.Start();
             this.IsRunning = true;
+            try
+            {
+                this.scyano.Start();
+                this.BascoExecutor.Start();
+            }
+            catch (Exception)
+            {
+                this.scyano.Stop();
+                this.IsRunning = false;
+                throw;
+            }
         }
 
         public void Stop()

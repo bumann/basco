@@ -46,7 +46,6 @@ namespace Basco
         public void Stop()
         {
             this.ExitState();
-            this.CurrentState = null;
             this.RaiseStateChanged();
         }
 

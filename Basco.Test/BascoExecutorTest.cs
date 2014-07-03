@@ -97,14 +97,6 @@
         }
 
         [Fact]
-        public void Stop_MustResetInitialState()
-        {
-            this.testee.Stop();
-
-            this.testee.CurrentState.Should().BeNull();
-        }
-
-        [Fact]
         public void Stop_WhenExitableState_MustExitState()
         {
             var state = new Mock<IStateExit>();
