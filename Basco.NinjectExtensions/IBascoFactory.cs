@@ -1,4 +1,4 @@
-﻿namespace Basco
+﻿namespace Basco.NinjectExtensions
 {
     using System.Collections.Generic;
 

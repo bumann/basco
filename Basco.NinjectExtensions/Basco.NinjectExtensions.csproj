@@ -39,9 +39,10 @@
     <Reference Include="Ninject.Extensions.NamedScope">
       <HintPath>..\packages\Ninject.Extensions.NamedScope.3.2.0.0\lib\net45-full\Ninject.Extensions.NamedScope.dll</HintPath>
     </Reference>
-    <Reference Include="Scyano, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Scyano, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Scyano.1.0.0\lib\portable-net45+win+wp80\Scyano.dll</HintPath>
+      <HintPath>..\packages\Scyano.1.0.1\lib\portable-net45+win+wp80\Scyano.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Scyano.NinjectExtensions, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -62,6 +63,7 @@
     </Compile>
     <Compile Include="BascoFactory.cs" />
     <Compile Include="IBascoConfigurator.cs" />
+    <Compile Include="IBascoFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

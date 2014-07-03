@@ -7,9 +7,9 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("Basco.Test")]
 [assembly: AssemblyDescription("Test project for Basco.")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("Bumann")]
 [assembly: AssemblyProduct("Basco.Test")]
-[assembly: AssemblyCopyright("B. Bumann")]
+[assembly: AssemblyCopyright("Copyright © B. Bumann 2014")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
