@@ -6,11 +6,11 @@ using System.Windows;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("Basco.Sample.UsingNinject")]
-[assembly: AssemblyDescription("Sample project for testing Basco.")]
+[assembly: AssemblyDescription("Sample project for Basco to instruct Basco usage with dependency injection (Ninject).")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("bumann")]
+[assembly: AssemblyCompany("Bumann")]
 [assembly: AssemblyProduct("Basco.Samples")]
-[assembly: AssemblyCopyright("B. Bumann")]
+[assembly: AssemblyCopyright("Copyright © B. Bumann 2014")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
