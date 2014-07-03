@@ -21,6 +21,7 @@
         public DriverControlModel(IBasco<TransitionTrigger> basco)
         {
             this.basco = basco;
+            this.basco.Initialize();
             this.basco.StateChanged += this.OnDriverStateChanged;
 
             this.processingState = (IProcessingState)this.basco.RetrieveState<ProcessingState>();
