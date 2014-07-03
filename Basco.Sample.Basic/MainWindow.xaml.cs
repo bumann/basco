@@ -1,10 +1,7 @@
 ﻿namespace Basco.Sample.Basic
 {
-    using System.Collections.Generic;
     using System.Windows;
-    using Basco.Async;
     using Basco.Sample.Basic.Fsm;
-    using Basco.Sample.Basic.Fsm.States;
 
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -13,10 +10,13 @@
     {
         public MainWindow()
         {
-            var driverViewModel1 = new DriverControlModel(new Basco<TransitionTrigger>(new Scyano(), new BascoConfigurator(), new BascoExecutor<TransitionTrigger>(new List<IState> { new ConnectedState(), new ProcessingState(), new ErrorState() })));
-            var driverViewModel2 = new DriverControlModel(new Basco<TransitionTrigger>(new Scyano(), new BascoConfigurator(), new BascoExecutor<TransitionTrigger>(new List<IState> { new ConnectedState(), new ProcessingState(), new ErrorState() })));
-            var driverViewModel3 = new DriverControlModel(new Basco<TransitionTrigger>(new Scyano(), new BascoConfigurator(), new BascoExecutor<TransitionTrigger>(new List<IState> { new ConnectedState(), new ProcessingState(), new ErrorState() })));
-            var driverViewModel4 = new DriverControlModel(new Basco<TransitionTrigger>(new Scyano(), new BascoConfigurator(), new BascoExecutor<TransitionTrigger>(new List<IState> { new ConnectedState(), new ProcessingState(), new ErrorState() })));
+            var statesFactory = new BascoStatesFactory();
+            var bascoConfigurator = new BascoConfigurator();
+
+            var driverViewModel1 = new DriverControlModel(BascoFactory.Create(statesFactory, bascoConfigurator));
+            var driverViewModel2 = new DriverControlModel(BascoFactory.Create(statesFactory, bascoConfigurator));
+            var driverViewModel3 = new DriverControlModel(BascoFactory.Create(statesFactory, bascoConfigurator));
+            var driverViewModel4 = new DriverControlModel(BascoFactory.Create(statesFactory, bascoConfigurator));
 
             this.InitializeComponent();
 

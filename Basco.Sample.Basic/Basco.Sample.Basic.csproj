@@ -35,13 +35,13 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Basco, Version=1.1.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Basco.1.1.1\lib\portable-net45+win+wp80\Basco.dll</HintPath>
-    </Reference>
     <Reference Include="PropertyChanged">
       <HintPath>..\packages\PropertyChanged.Fody.1.48.2.0\Lib\NET35\PropertyChanged.dll</HintPath>
       <Private>False</Private>
+    </Reference>
+    <Reference Include="Scyano, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Scyano.1.0.1\lib\portable-net45+win+wp80\Scyano.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -76,6 +76,7 @@
     <Compile Include="Fsm\States\TransitionTrigger.cs" />
     <Compile Include="IDriverControlModel.cs" />
     <Compile Include="RelayCommand.cs" />
+    <Compile Include="BascoStatesFactory.cs" />
     <Page Include="DriverControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -126,6 +127,12 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="readme.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Basco\Basco.csproj">
+      <Project>{42BC5E18-622C-4DF1-847F-AA7BB9E1DAEB}</Project>
+      <Name>Basco</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Fody.1.24.0\build\Fody.targets" Condition="Exists('..\packages\Fody.1.24.0\build\Fody.targets')" />
