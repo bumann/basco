@@ -92,7 +92,7 @@ namespace Basco.Sample.UsingNinject
 
         private void OnDriverStateChanged(object sender, EventArgs eventArgs)
         {
-            this.ConnectedVisibility = this.driver.Basco.CurrentState is IConnectedState ? Visibility.Visible : Visibility.Hidden;
+            this.ConnectedVisibility = this.driver.Basco.IsRunning && this.driver.Basco.CurrentState is IConnectedState ? Visibility.Visible : Visibility.Hidden;
             this.ProcessingVisibility = this.driver.Basco.CurrentState is IProcessingState ? Visibility.Visible : Visibility.Hidden;
             this.ErrorVisibility = this.driver.Basco.CurrentState is IErrorState ? Visibility.Visible : Visibility.Hidden;
         }

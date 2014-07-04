@@ -30,11 +30,11 @@
                      Stroke="Black"
                      Visibility="{Binding Path=ConnectedVisibility}" />
             <Label HorizontalAlignment="Center" Content="" />
-            <Button Command="{Binding ConnectCommand}" Content="Connect" />
+            <Button Command="{Binding ConnectCommand}" Content="Start" />
             <Button Command="{Binding Path=ProcessCommand}" Content="Process" />
             <Button Command="{Binding Path=ErrorCommand}" Content="Error" />
             <Button Command="{Binding Path=ResetCommand}" Content="Reset" />
-            <Button Command="{Binding Path=DisconnectCommand}" Content="Disconnect" />
+            <Button Command="{Binding Path=DisconnectCommand}" Content="Stop" />
 
         </StackPanel>
     </Grid>

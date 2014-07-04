@@ -91,7 +91,7 @@
 
         private void OnDriverStateChanged(object sender, EventArgs eventArgs)
         {
-            this.ConnectedVisibility = this.basco.CurrentState is IConnectedState ? Visibility.Visible : Visibility.Hidden;
+            this.ConnectedVisibility = this.basco.IsRunning && this.basco.CurrentState is IConnectedState ? Visibility.Visible : Visibility.Hidden;
             this.ProcessingVisibility = this.basco.CurrentState is IProcessingState ? Visibility.Visible : Visibility.Hidden;
             this.ErrorVisibility = this.basco.CurrentState is IErrorState ? Visibility.Visible : Visibility.Hidden;
         }
