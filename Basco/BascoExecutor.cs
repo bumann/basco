@@ -15,6 +15,10 @@ namespace Basco
             this.transitionPool = new Dictionary<Type, IStateTransitions<TTransitionTrigger>>();
         }
 
+        public event EventHandler StateEntered;
+
+        public event EventHandler StateExiting;
+        
         public event EventHandler StateChanged;
 
         public IState CurrentState { get; private set; }
@@ -46,7 +50,7 @@ namespace Basco
         public void Stop()
         {
             this.ExitState();
-            this.RaiseStateChanged();
+            this.OnStateChanged();
         }
 
         public IState RetrieveState<TState>() where TState : class, IState
@@ -73,36 +77,58 @@ namespace Basco
             this.ExecuteAndRaiseStateChanged();
         }
 
-        private void ExecuteAndRaiseStateChanged()
+        protected void OnStateEntered()
         {
-            this.CurrentState.Execute();
-            this.RaiseStateChanged();
-        }
-
-        private void EnterState()
-        {
-            var enterableState = this.CurrentState as IStateEnter;
-            if (enterableState != null)
+            if (this.StateEntered != null)
             {
-                enterableState.Enter();
+                this.StateEntered(this, new EventArgs());
             }
         }
 
-        private void ExitState()
+        protected void OnStateExiting()
         {
-            var exitableState = this.CurrentState as IStateExit;
-            if (exitableState != null)
+            if (this.StateExiting != null)
             {
-                exitableState.Exit();
+                this.StateExiting(this, new EventArgs());
             }
         }
 
-        private void RaiseStateChanged()
+        protected void OnStateChanged()
         {
             if (this.StateChanged != null)
             {
                 this.StateChanged(this, new EventArgs());
             }
+        }
+
+        private void ExecuteAndRaiseStateChanged()
+        {
+            this.CurrentState.Execute();
+            this.OnStateChanged();
+        }
+
+        private void EnterState()
+        {
+            var enterableState = this.CurrentState as IStateEnter;
+            if (enterableState == null)
+            {
+                return;
+            }
+
+            enterableState.Enter();
+            this.OnStateEntered();
+        }
+
+        private void ExitState()
+        {
+            var exitableState = this.CurrentState as IStateExit;
+            if (exitableState == null)
+            {
+                return;
+            }
+
+            this.OnStateExiting();
+            exitableState.Exit();
         }
 
         private IState GetNextState(TTransitionTrigger trigger)

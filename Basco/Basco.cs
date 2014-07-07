@@ -16,6 +16,10 @@
             this.BascoExecutor = bascoExecutor;
         }
 
+        public event EventHandler StateEntered;
+
+        public event EventHandler StateExiting;
+        
         public event EventHandler StateChanged;
 
         public bool IsInitialized { get; private set; }
@@ -36,6 +40,8 @@
 
             //// TODO
             this.BascoExecutor.StateChanged += this.OnStateChanged;
+            this.BascoExecutor.StateEntered += this.OnStateEntered;
+            this.BascoExecutor.StateExiting += this.OnStateExiting;
 
             this.bascoConfigurator.Configurate(this);
             this.IsInitialized = true;
@@ -90,11 +96,27 @@
             this.BascoExecutor.ChangeState(trigger);
         }
 
-        private void OnStateChanged(object sender, EventArgs e)
+        protected void OnStateChanged(object sender, EventArgs e)
         {
             if (this.StateChanged != null)
             {
                 this.StateChanged(this, new EventArgs());
+            }
+        }
+
+        protected void OnStateEntered(object sender, EventArgs e)
+        {
+            if (this.StateEntered != null)
+            {
+                this.StateEntered(this, new EventArgs());
+            }
+        }
+
+        protected void OnStateExiting(object sender, EventArgs e)
+        {
+            if (this.StateExiting != null)
+            {
+                this.StateExiting(this, new EventArgs());
             }
         }
     }

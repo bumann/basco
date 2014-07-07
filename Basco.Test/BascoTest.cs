@@ -1,5 +1,6 @@
 ﻿namespace Basco.Test
 {
+    using System;
     using FluentAssertions;
     using Moq;
     using Scyano;
@@ -167,6 +168,42 @@
             this.testee.TriggerConsumer(ExpectedTrigger);
 
             this.bascoExecutor.Verify(x => x.ChangeState(ExpectedTrigger));
+        }
+
+        [Fact]
+        public void BascoExecutorStateEntered_WhenInitialized_MustRaiseStateEntered()
+        {
+            var called = false;
+            this.testee.InitializeWithStartState<SimpleTestState>();
+            this.testee.StateEntered += (sender, args) => { called = true; };
+
+            this.bascoExecutor.Raise(x => x.StateEntered += null, new EventArgs());
+
+            called.Should().BeTrue();
+        }
+
+        [Fact]
+        public void BascoExecutorStateExiting_WhenInitialized_MustRaiseStateExiting()
+        {
+            var called = false;
+            this.testee.InitializeWithStartState<SimpleTestState>();
+            this.testee.StateExiting += (sender, args) => { called = true; };
+
+            this.bascoExecutor.Raise(x => x.StateExiting += null, new EventArgs());
+
+            called.Should().BeTrue();
+        }
+
+        [Fact]
+        public void BascoExecutorStateChanged_WhenInitialized_MustRaiseStateChanged()
+        {
+            var called = false;
+            this.testee.InitializeWithStartState<SimpleTestState>();
+            this.testee.StateChanged += (sender, args) => { called = true; };
+
+            this.bascoExecutor.Raise(x => x.StateChanged += null, new EventArgs());
+
+            called.Should().BeTrue();
         }
     }
 }

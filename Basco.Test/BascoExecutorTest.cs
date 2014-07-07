@@ -163,13 +163,29 @@
         }
 
         [Fact]
-        public void ChangeState_WhenExitableState_MustExitInitialState()
+        public void ChangeState_WhenExitableState_MustExitPreviousState()
         {
             var state = new ExtendedTestState();
             this.stateCache.Setup(x => x.GetState(It.IsAny<Type>())).Returns(state);
             bool called = false;
             state.OnExit = () => { called = true; };
             this.SetupExtendedStateTransitions();
+            this.testee.InitializeWithStartState<ExtendedTestState>();
+            this.testee.Start();
+
+            this.testee.ChangeState(TestTrigger.TransitionOne);
+
+            called.Should().BeTrue();
+        }
+
+        [Fact]
+        public void ChangeState_WhenExitableState_MustRaiseExitingState()
+        {
+            var state = new ExtendedTestState();
+            this.stateCache.Setup(x => x.GetState(It.IsAny<Type>())).Returns(state);
+            bool called = false;
+            this.SetupExtendedStateTransitions();
+            this.testee.StateExiting += (sender, args) => { called = true; };
             this.testee.InitializeWithStartState<ExtendedTestState>();
             this.testee.Start();
 
@@ -201,6 +217,22 @@
             bool called = false;
             this.SetupSimpleStateTransitions();
             this.extendedTestState.OnEnter = () => { called = true; };
+            this.testee.InitializeWithStartState<SimpleTestState>();
+            this.testee.Start();
+
+            this.testee.ChangeState(TestTrigger.TransitionOne);
+
+            called.Should().BeTrue();
+        }
+
+        [Fact]
+        public void ChangeState_WhenNextStateIsEnterable_MustRaiseStateEntered()
+        {
+            this.stateCache.Setup(x => x.GetState(typeof(ExtendedTestState))).Returns(this.extendedTestState);
+            this.stateCache.Setup(x => x.GetState(typeof(SimpleTestState))).Returns(this.simpleTestState);
+            bool called = false;
+            this.SetupSimpleStateTransitions();
+            this.testee.StateEntered += (sender, args) => { called = true; };
             this.testee.InitializeWithStartState<SimpleTestState>();
             this.testee.Start();
 
