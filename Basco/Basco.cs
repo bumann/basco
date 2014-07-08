@@ -75,9 +75,9 @@
 
         public void Stop()
         {
-           this.BascoExecutor.Stop();
-           this.scyano.Stop();
-           this.IsRunning = false;
+            this.IsRunning = false;
+            this.BascoExecutor.Stop();
+            this.scyano.Stop();
         }
 
         public IState RetrieveState<TState>() where TState : class, IState
