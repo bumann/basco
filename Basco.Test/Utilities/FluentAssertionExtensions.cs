@@ -1,11 +1,13 @@
 ﻿namespace Basco.Test.Utilities
 {
     using System;
+    using System.Diagnostics.CodeAnalysis;
     using System.Reflection;
     using FluentAssertions;
     using FluentAssertions.Events;
     using Moq;
 
+    [ExcludeFromCodeCoverage]
     public static class FluentAssertionExtensions
     {
         public static EventRecorder ShouldRaise<T>(this T value, Action<T> eventCallback)
