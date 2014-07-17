@@ -12,10 +12,12 @@
 
         public Basco(
             IScyano scyano,
+            IBascoTransitionCache<TTransitionTrigger> transitionCache,
             IBascoConfigurator<TTransitionTrigger> bascoConfigurator,
             IBascoExecutor<TTransitionTrigger> bascoExecutor)
         {
             this.scyano = scyano;
+            this.TransitionCache = transitionCache;
             this.bascoConfigurator = bascoConfigurator;
             this.BascoExecutor = bascoExecutor;
         }
@@ -30,6 +32,8 @@
         {
             get { return this.BascoExecutor.CurrentState; }
         }
+
+        public IBascoTransitionCache<TTransitionTrigger> TransitionCache { get; private set; }
 
         public IBascoExecutor<TTransitionTrigger> BascoExecutor { get; private set; }
 

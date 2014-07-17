@@ -5,8 +5,8 @@ namespace Basco.Execution
     public interface IBascoExecutor<TTransitionTrigger> : IBascoState
         where TTransitionTrigger : IComparable
     {
-        void AddStateTransitions<TState>(StateTransitions<TTransitionTrigger> stateTransitions)
-            where TState : class, IState;
+        //void AddStateTransitions<TState>(StateTransitions<TTransitionTrigger> stateTransitions)
+        //    where TState : class, IState;
 
         void InitializeWithStartState<TState>() where TState : class, IState;
 

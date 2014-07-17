@@ -34,16 +34,9 @@
             const TestTrigger ExpectedTrigger = TestTrigger.TransitionOne;
             this.testee.CurrentTrigger = ExpectedTrigger;
 
-            this.testee.AddTransition<AnotherTestableState>();
+            this.testee.AddTransition<SimpleTestState>();
 
-            this.stateTransitions.Verify(x => x.Add(ExpectedTrigger, typeof(AnotherTestableState)), Times.Once);
-        }
-
-        private class AnotherTestableState : IState
-        {
-            public void Execute()
-            {
-            }
+            this.stateTransitions.Verify(x => x.Add(ExpectedTrigger, typeof(SimpleTestState)), Times.Once);
         }
     }
 }

@@ -218,16 +218,9 @@
         {
             this.stateCache.Setup(x => x.RetrieveState(It.IsAny<Type>())).Returns<IState>(null);
 
-            IState result = this.testee.RetrieveState<FakeState>();
+            IState result = this.testee.RetrieveState<SimpleTestState>();
 
             result.Should().BeNull();
-        }
-
-        private class FakeState : IState
-        {
-            public void Execute()
-            {
-            }
         }
     }
 }

@@ -21,6 +21,7 @@
             this.scyano = new Mock<IScyano>();
             this.testee = new Basco<TestTrigger>(
                 this.scyano.Object,
+                new Mock<IBascoTransitionCache<TestTrigger>>().Object,
                 this.bascoConfigurator.Object,
                 this.bascoExecutor.Object);
         }
@@ -82,25 +83,11 @@
         }
 
         [Fact]
-        public void Start_WhenExecutorStarted_MustStartModuleController()
+        public void Start_WhenNotInitialized_MustThrow()
         {
-            this.testee.InitializeWithStartState<ExtendedTestState>();
-
-            this.testee.Start();
-
-            this.scyano.Verify(x => x.Start(), Times.Once);
+            this.testee.Invoking(x => x.Start())
+                .ShouldThrow<BascoException>();
         }
-
-        [Fact]
-        public void Start_WhenExecutorStarts_MustSetIsRunningToTrue()
-        {
-            this.testee.InitializeWithStartState<ExtendedTestState>();
-
-            this.testee.Start();
-
-            this.testee.IsRunning.Should().BeTrue();
-        }
-
 
         [Fact]
         public void Start_WhenStartedTwice_MustThrow()
@@ -114,6 +101,26 @@
         }
 
         [Fact]
+        public void Start_MustSetIsRunningToTrue()
+        {
+            this.testee.InitializeWithStartState<ExtendedTestState>();
+
+            this.testee.Start();
+
+            this.testee.IsRunning.Should().BeTrue();
+        }
+
+        [Fact]
+        public void Start_MustStartScyano()
+        {
+            this.testee.InitializeWithStartState<ExtendedTestState>();
+
+            this.testee.Start();
+
+            this.scyano.Verify(x => x.Start(), Times.Once);
+        }
+
+        [Fact]
         public void Start_WhenStoppedBeforeRestart_MustNotThrow()
         {
             this.testee.InitializeWithStartState<ExtendedTestState>();
@@ -122,6 +129,32 @@
 
             this.testee.Invoking(x => x.Start())
                 .ShouldNotThrow<BascoException>();
+        }
+
+        [Fact]
+        public void Start_WhenExceptionOccurs_MustStopScyano()
+        {
+            this.testee.InitializeWithStartState<ExtendedTestState>();
+            this.scyano.Setup(x => x.Start())
+                .Throws<Exception>();
+
+            this.testee.Invoking(x => x.Start())
+                .ShouldThrow<Exception>();
+
+            this.scyano.Verify(x => x.Start(), Times.Once);
+        }
+
+        [Fact]
+        public void Start_WhenExceptionOccurs_MustSetIsRunningToFalse()
+        {
+            this.testee.InitializeWithStartState<ExtendedTestState>();
+            this.scyano.Setup(x => x.Start())
+                .Throws<Exception>();
+
+            this.testee.Invoking(x => x.Start())
+                .ShouldThrow<Exception>();
+
+            this.testee.IsRunning.Should().BeFalse();
         }
 
         [Fact]

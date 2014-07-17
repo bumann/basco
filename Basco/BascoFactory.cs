@@ -20,7 +20,7 @@
             var transitionCache = new BascoTransitionCache<TTrigger>();
             var stateProvider = new BascoNextStateProvider<TTrigger>(stateCache, transitionCache);
             var bascoExecutor = new BascoExecutor<TTrigger>(stateCache, transitionCache, stateProvider, stateEnterExecutor, stateExitExecutor);
-            return new Basco<TTrigger>(ScyanoFactory.Create(), bascoConfigurator, bascoExecutor);
+            return new Basco<TTrigger>(ScyanoFactory.Create(), transitionCache, bascoConfigurator, bascoExecutor);
         }
     }
 }

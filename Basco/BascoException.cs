@@ -4,10 +4,6 @@
 
     public class BascoException : Exception
     {
-        public BascoException()
-        {
-        }
-
         public BascoException(string message)
             : base(message)
         {
