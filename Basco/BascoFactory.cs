@@ -11,15 +11,15 @@
     {
         public static IBasco<TTrigger> Create<TTrigger>(
             IBascoStatesFactory statesFactory,
-            IBascoConfigurator<TTrigger> bascoConfigurator,
-            IBascoStateEnterExecutor stateEnterExecutor,
-            IBascoStateExitExecutor stateExitExecutor)
+            IBascoConfigurator<TTrigger> bascoConfigurator)
             where TTrigger : IComparable
         {
             var stateCache = new BascoStateCache(statesFactory);
             var transitionCache = new BascoTransitionCache<TTrigger>();
             var stateProvider = new BascoNextStateProvider<TTrigger>(stateCache, transitionCache);
-            var bascoExecutor = new BascoExecutor<TTrigger>(stateCache, transitionCache, stateProvider, stateEnterExecutor, stateExitExecutor);
+            var enterExecutor = new BascoStateEnterExecutor();
+            var exitExecutor = new BascoStateExitExecutor();
+            var bascoExecutor = new BascoExecutor<TTrigger>(stateCache, transitionCache, stateProvider, enterExecutor, exitExecutor);
             return new Basco<TTrigger>(ScyanoFactory.Create(), transitionCache, bascoConfigurator, bascoExecutor);
         }
     }
