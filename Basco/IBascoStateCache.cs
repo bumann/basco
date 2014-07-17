@@ -6,6 +6,6 @@
     {
         void Initialize();
 
-        IState GetState(Type stateType);
+        IState RetrieveState(Type stateType);
     }
 }

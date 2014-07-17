@@ -24,7 +24,7 @@
             }
         }
 
-        public IState GetState(Type stateType)
+        public IState RetrieveState(Type stateType)
         {
             return this.states.SingleOrDefault(x => x.GetType() == stateType);
         }

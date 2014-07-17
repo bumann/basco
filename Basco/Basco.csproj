@@ -36,13 +36,25 @@
   <ItemGroup>
     <Compile Include="Basco.cs" />
     <Compile Include="BascoException.cs" />
-    <Compile Include="BascoExecutor.cs" />
+    <Compile Include="Execution\BascoExecutor.cs" />
     <Compile Include="BascoExtensions.cs" />
     <Compile Include="BascoFactory.cs" />
     <Compile Include="BascoStateCache.cs" />
+    <Compile Include="Execution\BascoNextStateProvider.cs" />
+    <Compile Include="Execution\BascoStateExitExecutor.cs" />
+    <Compile Include="Execution\BascoStateEnterExecutor.cs" />
+    <Compile Include="Execution\BascoTransitionCache.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Execution\IBascoNextStateProvider.cs" />
+    <Compile Include="Execution\IBascoTransitionCache.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="IBasco.cs" />
     <Compile Include="IBascoConfigurator.cs" />
-    <Compile Include="IBascoExecutor.cs" />
+    <Compile Include="Execution\IBascoStateEnterExecutor.cs" />
+    <Compile Include="Execution\IBascoExecutor.cs" />
+    <Compile Include="Execution\IBascoStateExitExecutor.cs" />
     <Compile Include="IBascoInternal.cs" />
     <Compile Include="IBascoStatesFactory.cs" />
     <Compile Include="IBascoState.cs" />
@@ -63,13 +75,11 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Scyano">
-      <HintPath>..\packages\Scyano.1.0.2\lib\portable-net45+win+wp80\Scyano.dll</HintPath>
+      <HintPath>..\packages\Scyano.1.1.0\lib\portable-net45+win+wp80\Scyano.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config">
-      <SubType>Designer</SubType>
-    </None>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -39,7 +39,7 @@
             this.factory.Setup(x => x.CreateStates()).Returns(new[] { expectedState });
             this.testee.Initialize();
 
-            var result = this.testee.GetState(expectedState.GetType());
+            var result = this.testee.RetrieveState(expectedState.GetType());
 
             result.Should().Be(expectedState);
         }

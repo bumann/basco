@@ -1,5 +1,6 @@
 ﻿namespace Basco.Test
 {
+    using Basco.Execution;
     using FluentAssertions;
     using Moq;
     using Scyano;

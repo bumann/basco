@@ -1,6 +1,7 @@
 ﻿namespace Basco
 {
     using System;
+    using Basco.Execution;
     using Scyano;
 
     public class Basco<TTransitionTrigger> : IBasco<TTransitionTrigger>
@@ -9,17 +10,16 @@
         private readonly IScyano scyano;
         private readonly IBascoConfigurator<TTransitionTrigger> bascoConfigurator;
 
-        public Basco(IScyano scyano, IBascoConfigurator<TTransitionTrigger> bascoConfigurator, IBascoExecutor<TTransitionTrigger> bascoExecutor)
+        public Basco(
+            IScyano scyano,
+            IBascoConfigurator<TTransitionTrigger> bascoConfigurator,
+            IBascoExecutor<TTransitionTrigger> bascoExecutor)
         {
             this.scyano = scyano;
             this.bascoConfigurator = bascoConfigurator;
             this.BascoExecutor = bascoExecutor;
         }
 
-        public event EventHandler StateEntered;
-
-        public event EventHandler StateExiting;
-        
         public event EventHandler StateChanged;
 
         public bool IsInitialized { get; private set; }
@@ -40,8 +40,6 @@
 
             //// TODO
             this.BascoExecutor.StateChanged += this.OnStateChanged;
-            this.BascoExecutor.StateEntered += this.OnStateEntered;
-            this.BascoExecutor.StateExiting += this.OnStateExiting;
 
             this.bascoConfigurator.Configurate(this);
             this.IsInitialized = true;
@@ -101,22 +99,6 @@
             if (this.StateChanged != null)
             {
                 this.StateChanged(this, new EventArgs());
-            }
-        }
-
-        protected void OnStateEntered(object sender, EventArgs e)
-        {
-            if (this.StateEntered != null)
-            {
-                this.StateEntered(this, new EventArgs());
-            }
-        }
-
-        protected void OnStateExiting(object sender, EventArgs e)
-        {
-            if (this.StateExiting != null)
-            {
-                this.StateExiting(this, new EventArgs());
             }
         }
     }
