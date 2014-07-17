@@ -1,0 +1,18 @@
+﻿<Window x:Class="Basco.Sample.CompositeStates.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:CompositeStates="clr-namespace:Basco.Sample.CompositeStates"
+        Title="Basco Demo - Hierarchical State Machine / Composite States"
+        Width="488.8"
+        Height="528.8">
+    <Grid>
+        <StackPanel Orientation="Horizontal">
+            <CompositeStates:DriverControl x:Name="DriverOne"
+                                           HorizontalAlignment="Left"
+                                           VerticalAlignment="Top" />
+            <CompositeStates:DriverControl x:Name="DriverTwo"
+                                           HorizontalAlignment="Left"
+                                           VerticalAlignment="Top" />
+        </StackPanel>
+    </Grid>
+</Window>
