@@ -13,19 +13,16 @@
         private readonly Mock<IBascoStateEnterExecutor> enterExecutor;
         private readonly Mock<IBascoStateExitExecutor> exitExecutor;
         private readonly Mock<IBascoNextStateProvider<TestTrigger>> stateProvider;
-        private readonly Mock<IBascoTransitionCache<TestTrigger>> transitionCache;
         private readonly BascoExecutor<TestTrigger> testee;
 
         public BascoExecutorTest()
         {
             this.stateCache = new Mock<IBascoStateCache> { DefaultValue = DefaultValue.Mock };
+            this.stateProvider = new Mock<IBascoNextStateProvider<TestTrigger>>();
             this.enterExecutor = new Mock<IBascoStateEnterExecutor>();
             this.exitExecutor = new Mock<IBascoStateExitExecutor>();
-            this.stateProvider = new Mock<IBascoNextStateProvider<TestTrigger>>();
-            this.transitionCache = new Mock<IBascoTransitionCache<TestTrigger>>();
             this.testee = new BascoExecutor<TestTrigger>(
                 this.stateCache.Object,
-                this.transitionCache.Object,
                 this.stateProvider.Object, 
                 this.enterExecutor.Object,
                 this.exitExecutor.Object);
@@ -92,18 +89,6 @@
             this.testee.Start();
 
             this.testee.ShouldRaise<IBascoExecutor<TestTrigger>>(x => x.StateChanged += null);
-        }
-
-        [Fact]
-        public void Stop_MustExitState()
-        {
-            var state = new Mock<IState>();
-            this.stateCache.Setup(x => x.RetrieveState(It.IsAny<Type>())).Returns(state.Object);
-            this.testee.InitializeWithStartState<ExtendedTestState>();
-
-            this.testee.Stop();
-
-            this.exitExecutor.Verify(x => x.Exit(this.testee.CurrentState), Times.Once);
         }
 
         [Fact]

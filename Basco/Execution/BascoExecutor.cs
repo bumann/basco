@@ -6,20 +6,17 @@ namespace Basco.Execution
         where TTransitionTrigger : IComparable
     {
         private readonly IBascoStateCache bascoStateCache;
-        //private readonly IBascoTransitionCache<TTransitionTrigger> bascoTransitionCache;
         private readonly IBascoNextStateProvider<TTransitionTrigger> bascoNextStateProvider;
         private readonly IBascoStateEnterExecutor bascoStateEnterExecutor;
         private readonly IBascoStateExitExecutor bascoStateExitExecutor;
 
         public BascoExecutor(
             IBascoStateCache bascoStateCache,
-            IBascoTransitionCache<TTransitionTrigger> bascoTransitionCache,
             IBascoNextStateProvider<TTransitionTrigger> bascoNextStateProvider,
             IBascoStateEnterExecutor bascoStateEnterExecutor,
             IBascoStateExitExecutor bascoStateExitExecutor)
         {
             this.bascoStateCache = bascoStateCache;
-            //this.bascoTransitionCache = bascoTransitionCache;
             this.bascoNextStateProvider = bascoNextStateProvider;
             this.bascoStateEnterExecutor = bascoStateEnterExecutor;
             this.bascoStateExitExecutor = bascoStateExitExecutor;
@@ -28,12 +25,6 @@ namespace Basco.Execution
         public event EventHandler StateChanged;
 
         public IState CurrentState { get; private set; }
-
-        //public void AddStateTransitions<TState>(StateTransitions<TTransitionTrigger> stateTransitions)
-        //    where TState : class, IState
-        //{
-        //    this.bascoTransitionCache.Add(typeof(TState), stateTransitions);
-        //}
 
         public void InitializeWithStartState<TState>() where TState : class, IState
         {
@@ -50,12 +41,11 @@ namespace Basco.Execution
         public void Start()
         {
             this.bascoStateEnterExecutor.Enter(this.CurrentState);
-            this.ExecuteAndRaiseStateChanged();
+            this.RaiseStateChangedAndExecute();
         }
 
         public void Stop()
         {
-            this.bascoStateExitExecutor.Exit(this.CurrentState);
             this.OnStateChanged();
         }
 
@@ -80,7 +70,7 @@ namespace Basco.Execution
             this.bascoStateExitExecutor.Exit(this.CurrentState);
             this.CurrentState = nextState;
             this.bascoStateEnterExecutor.Enter(this.CurrentState);
-            this.ExecuteAndRaiseStateChanged();
+            this.RaiseStateChangedAndExecute();
         }
 
         protected void OnStateChanged()
@@ -91,10 +81,10 @@ namespace Basco.Execution
             }
         }
 
-        private void ExecuteAndRaiseStateChanged()
+        private void RaiseStateChangedAndExecute()
         {
-            this.CurrentState.Execute();
             this.OnStateChanged();
+            this.CurrentState.Execute();
         }
     }
 }
