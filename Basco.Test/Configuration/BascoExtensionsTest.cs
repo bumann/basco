@@ -1,5 +1,6 @@
-﻿namespace Basco.Test
+﻿namespace Basco.Test.Configuration
 {
+    using Basco.Configuration;
     using Basco.Execution;
     using FluentAssertions;
     using Moq;
@@ -9,7 +10,7 @@
     public class BascoExtensionsTest
     {
         [Fact]
-        public void In_MustReturnStateTransitionsBuilder()
+        public void In_MustReturnBasco()
         {
             var basco = new Basco<TestTrigger>(
                 Mock.Of<IScyano>(), 
@@ -17,9 +18,9 @@
                 Mock.Of<IBascoConfigurator<TestTrigger>>(), 
                 Mock.Of<IBascoExecutor<TestTrigger>>());
 
-            IStateTransitionsBuilder<TestTrigger> result = basco.In<SimpleTestState, TestTrigger>();
+            IBasco<TestTrigger> result = basco.In<SimpleTestState, TestTrigger>(configurator => { });
 
-            result.Should().BeOfType<StateTransitionsBuilder<TestTrigger>>();
+            result.Should().BeOfType<Basco<TestTrigger>>();
         }
 
         [Fact]
@@ -32,7 +33,7 @@
                 Mock.Of<IBascoConfigurator<TestTrigger>>(),
                 Mock.Of<IBascoExecutor<TestTrigger>>());
 
-            basco.In<SimpleTestState, TestTrigger>();
+            basco.In<SimpleTestState, TestTrigger>(configurator => { });
 
             transitionCache.Verify(x => x.Add(typeof(SimpleTestState), It.IsAny<StateTransitions<TestTrigger>>()));
         }

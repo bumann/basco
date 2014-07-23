@@ -36,8 +36,9 @@
   <ItemGroup>
     <Compile Include="Basco.cs" />
     <Compile Include="BascoException.cs" />
+    <Compile Include="Configuration\TransitionConfigurator.cs" />
     <Compile Include="Execution\BascoExecutor.cs" />
-    <Compile Include="BascoExtensions.cs" />
+    <Compile Include="Configuration\BascoExtensions.cs" />
     <Compile Include="BascoFactory.cs" />
     <Compile Include="BascoStateCache.cs" />
     <Compile Include="Execution\BascoNextStateProvider.cs" />
@@ -51,7 +52,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="IBasco.cs" />
-    <Compile Include="IBascoConfigurator.cs" />
+    <Compile Include="Configuration\IBascoConfigurator.cs" />
     <Compile Include="Execution\IBascoStateEnterExecutor.cs" />
     <Compile Include="Execution\IBascoExecutor.cs" />
     <Compile Include="Execution\IBascoStateExitExecutor.cs" />
@@ -67,10 +68,9 @@
     <Compile Include="IStateExit.cs" />
     <Compile Include="IStateTransitions.cs" />
     <Compile Include="IStateTransitionsBuilder.cs" />
+    <Compile Include="Configuration\ITransitionConfigurator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StateTransitions.cs" />
-    <Compile Include="StateTransitionsBuilder.cs" />
-    <Compile Include="StateTransitionsBuilderExtensions.cs" />
     <Compile Include="StateTransitionsExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -81,6 +81,7 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

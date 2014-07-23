@@ -55,7 +55,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BascoExtensionsTest.cs" />
+    <Compile Include="Configuration\BascoExtensionsTest.cs" />
     <Compile Include="BascoStateCacheTest.cs" />
     <Compile Include="BascoTest.cs" />
     <Compile Include="Execution\BascoExecutorTest.cs">
@@ -73,9 +73,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ExtendedTestState.cs" />
     <Compile Include="SimpleTestState.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="StateTransitionsBuilderTest.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="StateTransitionsExtensionsTest.cs" />

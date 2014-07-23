@@ -1,6 +1,7 @@
 ﻿namespace Basco
 {
     using System;
+    using Basco.Configuration;
     using Basco.Execution;
     using Scyano;
 

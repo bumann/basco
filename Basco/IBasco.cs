@@ -2,14 +2,17 @@
 {
     using System;
 
-    public interface IBasco<TTransitionTrigger> : IBascoState, IBascoInternal<TTransitionTrigger>
+    public interface IBasco<TTransitionTrigger> : IBascoState
         where TTransitionTrigger : IComparable
     {
         bool IsInitialized { get; }
 
         bool IsRunning { get; }
 
-        void InitializeWithStartState<TState>() where TState : class, IState;
+        void AddTransitionCache(Type type, StateTransitions<TTransitionTrigger> stateTransitions);
+
+        void InitializeWithStartState<TState>()
+            where TState : class, IState;
 
         void Start();
 

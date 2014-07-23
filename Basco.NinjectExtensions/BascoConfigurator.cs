@@ -1,5 +1,6 @@
 ﻿namespace Basco.NinjectExtensions
 {
+    using Basco.Configuration;
     using Ninject.Syntax;
     using Scyano.NinjectExtensions;
 

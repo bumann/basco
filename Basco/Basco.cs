@@ -1,6 +1,7 @@
 ﻿namespace Basco
 {
     using System;
+    using Basco.Configuration;
     using Basco.Execution;
     using Scyano;
 
@@ -36,6 +37,11 @@
         public IBascoTransitionCache<TTransitionTrigger> TransitionCache { get; private set; }
 
         public IBascoExecutor<TTransitionTrigger> BascoExecutor { get; private set; }
+
+        public void AddTransitionCache(Type type, StateTransitions<TTransitionTrigger> stateTransitions) 
+        {
+            this.TransitionCache.Add(type, stateTransitions);
+        }
 
         public void InitializeWithStartState<TState>() where TState : class, IState
         {
