@@ -2,9 +2,9 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:UsingNinject="clr-namespace:Basco.Sample.UsingNinject"
-        Title="Basco Demo - V 1.2 - Using Ninject"
-        Width="367.4"
-        Height="440.4">
+        Title="Basco Demo - V 1.3 - Using Ninject"
+        Width="368"
+        Height="440">
     <Grid Margin="0,0,0.4,0.2">
         <UsingNinject:DriverControl x:Name="DriverOne"
                                     Width="85"
