@@ -6,7 +6,13 @@
 
     public class ProcessingState : IProcessingState
     {
+        private readonly IBasco<TransitionTrigger> basco;
         private CancellationTokenSource cancellationTokenSource;
+
+        public ProcessingState(IBasco<TransitionTrigger> basco)
+        {
+            this.basco = basco;
+        }
 
         public event EventHandler ProcessingChanged;
 
@@ -19,7 +25,7 @@
             Task.Run(
                 () =>
                 {
-                    while (!token.IsCancellationRequested && this.ItemCount < 80)
+                    while (!token.IsCancellationRequested && this.basco.IsRunning)
                     {
                         this.ItemCount++;
                         this.RaiseStateChanged();

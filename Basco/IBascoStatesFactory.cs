@@ -1,9 +1,11 @@
 ﻿namespace Basco
 {
+    using System;
     using System.Collections.Generic;
 
-    public interface IBascoStatesFactory
+    public interface IBascoStatesFactory<TTransitionTrigger>
+        where TTransitionTrigger : IComparable
     {
-        IEnumerable<IState> CreateStates();
+        IEnumerable<IState> CreateStates(IBasco<TTransitionTrigger> basco);
     }
 }

@@ -46,7 +46,7 @@
         public void InitializeWithStartState<TState>() where TState : class, IState
         {
             this.scyano.Initialize(this);
-            this.BascoExecutor.InitializeWithStartState<TState>();
+            this.BascoExecutor.InitializeWithStartState<TState>(this);
 
             //// TODO
             this.BascoExecutor.StateChanged += this.OnStateChanged;

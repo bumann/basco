@@ -4,19 +4,20 @@
     using System.Collections.Generic;
     using System.Linq;
 
-    public class BascoStateCache : IBascoStateCache
+    public class BascoStateCache<TTransitionTrigger> : IBascoStateCache<TTransitionTrigger>
+        where TTransitionTrigger : IComparable
     {
-        private readonly IBascoStatesFactory statesBascoFactory;
+        private readonly IBascoStatesFactory<TTransitionTrigger> statesBascoFactory;
         private ICollection<IState> states;
 
-        public BascoStateCache(IBascoStatesFactory statesBascoFactory)
+        public BascoStateCache(IBascoStatesFactory<TTransitionTrigger> statesBascoFactory)
         {
             this.statesBascoFactory = statesBascoFactory;
         }
 
-        public void Initialize()
+        public void Initialize(IBasco<TTransitionTrigger> basco)
         {
-            this.states = this.statesBascoFactory.CreateStates().ToList();
+            this.states = this.statesBascoFactory.CreateStates(basco).ToList();
 
             if (this.states.Count == 0)
             {

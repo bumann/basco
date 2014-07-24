@@ -2,10 +2,11 @@
 {
     using System;
 
-    public interface IBascoStateCache
+    public interface IBascoStateCache<TTransitionTrigger>
+        where TTransitionTrigger : IComparable
     {
-        void Initialize();
-
+        void Initialize(IBasco<TTransitionTrigger> basco);
+            
         IState RetrieveState(Type stateType);
     }
 }

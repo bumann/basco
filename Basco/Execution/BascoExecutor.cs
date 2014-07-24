@@ -5,13 +5,13 @@ namespace Basco.Execution
     public class BascoExecutor<TTransitionTrigger> : IBascoExecutor<TTransitionTrigger>
         where TTransitionTrigger : IComparable
     {
-        private readonly IBascoStateCache bascoStateCache;
+        private readonly IBascoStateCache<TTransitionTrigger> bascoStateCache;
         private readonly IBascoNextStateProvider<TTransitionTrigger> bascoNextStateProvider;
         private readonly IBascoStateEnterExecutor bascoStateEnterExecutor;
         private readonly IBascoStateExitExecutor bascoStateExitExecutor;
 
         public BascoExecutor(
-            IBascoStateCache bascoStateCache,
+            IBascoStateCache<TTransitionTrigger> bascoStateCache,
             IBascoNextStateProvider<TTransitionTrigger> bascoNextStateProvider,
             IBascoStateEnterExecutor bascoStateEnterExecutor,
             IBascoStateExitExecutor bascoStateExitExecutor)
@@ -26,9 +26,10 @@ namespace Basco.Execution
 
         public IState CurrentState { get; private set; }
 
-        public void InitializeWithStartState<TState>() where TState : class, IState
+        public void InitializeWithStartState<TState>(IBasco<TTransitionTrigger> basco)
+            where TState : class, IState
         {
-            this.bascoStateCache.Initialize();
+            this.bascoStateCache.Initialize(basco);
 
             var stateType = typeof(TState);
             this.CurrentState = this.bascoStateCache.RetrieveState(stateType);

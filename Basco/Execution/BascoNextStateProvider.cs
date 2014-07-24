@@ -5,10 +5,10 @@ namespace Basco.Execution
     public class BascoNextStateProvider<TTransitionTrigger> : IBascoNextStateProvider<TTransitionTrigger>
         where TTransitionTrigger : IComparable
     {
-        private readonly IBascoStateCache bascoStateCache;
+        private readonly IBascoStateCache<TTransitionTrigger> bascoStateCache;
         private readonly IBascoTransitionCache<TTransitionTrigger> bascoTransitionCache;
 
-        public BascoNextStateProvider(IBascoStateCache bascoStateCache, IBascoTransitionCache<TTransitionTrigger> bascoTransitionCache)
+        public BascoNextStateProvider(IBascoStateCache<TTransitionTrigger> bascoStateCache, IBascoTransitionCache<TTransitionTrigger> bascoTransitionCache)
         {
             this.bascoStateCache = bascoStateCache;
             this.bascoTransitionCache = bascoTransitionCache;

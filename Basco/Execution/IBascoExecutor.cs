@@ -8,7 +8,8 @@ namespace Basco.Execution
         //void AddStateTransitions<TState>(StateTransitions<TTransitionTrigger> stateTransitions)
         //    where TState : class, IState;
 
-        void InitializeWithStartState<TState>() where TState : class, IState;
+        void InitializeWithStartState<TState>(IBasco<TTransitionTrigger> basco)
+            where TState : class, IState;
 
         void Start(); 
 

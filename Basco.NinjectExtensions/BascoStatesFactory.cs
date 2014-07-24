@@ -1,11 +1,13 @@
 ﻿namespace Basco.NinjectExtensions
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using Ninject;
     using Ninject.Syntax;
 
-    public class BascoStatesFactory : IBascoStatesFactory
+    public class BascoStatesFactory<TTransitionTrigger> : IBascoStatesFactory<TTransitionTrigger>
+        where TTransitionTrigger : IComparable
     {
         private readonly IResolutionRoot resolutionRoot;
 
@@ -14,7 +16,7 @@
             this.resolutionRoot = resolutionRoot;
         }
 
-        public IEnumerable<IState> CreateStates()
+        public IEnumerable<IState> CreateStates(IBasco<TTransitionTrigger> basco)
         {
             return this.resolutionRoot
                 .GetAll<IState>()
