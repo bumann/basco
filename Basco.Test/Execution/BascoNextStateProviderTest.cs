@@ -8,13 +8,13 @@
 
     public class BascoNextStateProviderTest
     {
-        private readonly Mock<IBascoStateCache> stateCache;
+        private readonly Mock<IBascoStateCache<TestTrigger>> stateCache;
         private readonly Mock<IBascoTransitionCache<TestTrigger>> transitionCache;
         private readonly BascoNextStateProvider<TestTrigger> testee;
 
         public BascoNextStateProviderTest()
         {
-            this.stateCache = new Mock<IBascoStateCache>();
+            this.stateCache = new Mock<IBascoStateCache<TestTrigger>>();
             this.transitionCache = new Mock<IBascoTransitionCache<TestTrigger>>();
             this.testee = new BascoNextStateProvider<TestTrigger>(this.stateCache.Object, this.transitionCache.Object);
         }

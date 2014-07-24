@@ -32,7 +32,7 @@
         {
             this.testee.InitializeWithStartState<SimpleTestState>();
 
-            this.bascoExecutor.Verify(x => x.InitializeWithStartState<SimpleTestState>());
+            this.bascoExecutor.Verify(x => x.InitializeWithStartState<SimpleTestState>(this.testee));
         }
 
         [Fact]
