@@ -119,13 +119,13 @@
             </Viewbox>
 
             <Label HorizontalAlignment="Center" Content="" />
-            <Button Command="{Binding ConnectCommand}"
+            <Button Command="{Binding StartCommand}"
                     Content="Start"
                     IsEnabled="{Binding CanStart}" />
-            <Button Command="{Binding Path=ProcessCommand}" Content="Process" />
+            <Button Command="{Binding Path=RunCommand}" Content="Run" />
             <Button Command="{Binding Path=ErrorCommand}" Content="Error" />
             <Button Command="{Binding Path=ResetCommand}" Content="Reset" />
-            <Button Command="{Binding Path=DisconnectCommand}"
+            <Button Command="{Binding Path=StopCommand}"
                     Content="Stop"
                     IsEnabled="{Binding CanStop}" />
 

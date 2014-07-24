@@ -12,11 +12,11 @@
         private readonly IDriver driver;
         private readonly IStateB stateB;
 
-        private ICommand connectCommand;
-        private ICommand processCommand;
+        private ICommand startCommand;
+        private ICommand runCommand;
         private ICommand errorCommand;
         private ICommand resetCommand;
-        private ICommand disconnectCommand;
+        private ICommand stopCommand;
 
         public DriverControlModel(IDriver driver)
         {
@@ -50,14 +50,14 @@
 
         public Visibility ErrorVisibility { get; set; }
 
-        public ICommand ConnectCommand
+        public ICommand StartCommand
         {
-            get { return this.connectCommand ?? (this.connectCommand = new RelayCommand(param => this.Connect())); }
+            get { return this.startCommand ?? (this.startCommand = new RelayCommand(param => this.Start())); }
         }
 
-        public ICommand ProcessCommand
+        public ICommand RunCommand
         {
-            get { return this.processCommand ?? (this.processCommand = new RelayCommand(param => this.Run())); }
+            get { return this.runCommand ?? (this.runCommand = new RelayCommand(param => this.Run())); }
         }
 
         public ICommand ErrorCommand
@@ -70,12 +70,12 @@
             get { return this.resetCommand ?? (this.resetCommand = new RelayCommand(param => this.Reset())); }
         }
 
-        public ICommand DisconnectCommand
+        public ICommand StopCommand
         {
-            get { return this.disconnectCommand ?? (this.disconnectCommand = new RelayCommand(param => this.Disconnect())); }
+            get { return this.stopCommand ?? (this.stopCommand = new RelayCommand(param => this.Stop())); }
         }
 
-        public void Connect()
+        public void Start()
         {
             this.driver.Basco.Start();
         }
@@ -95,7 +95,7 @@
             this.driver.Basco.Trigger(TransitionTrigger.Reset);
         }
 
-        public void Disconnect()
+        public void Stop()
         {
             this.driver.Basco.Stop();
         }

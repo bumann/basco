@@ -2,9 +2,9 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:CompositeStates="clr-namespace:Basco.Sample.CompositeStates"
-        Title="Basco Demo - Hierarchical State Machine / Composite States"
-        Width="488.8"
-        Height="528.8">
+        Title="Basco Demo V1.3 - Hierarchical State Machine / Composite States"
+        Width="488"
+        Height="528">
     <Grid>
         <StackPanel Orientation="Horizontal">
             <CompositeStates:DriverControl x:Name="DriverOne"

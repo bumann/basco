@@ -2,7 +2,7 @@
 {
     public enum TransitionTrigger
     {
-        Connect,
+        Start,
         GotoA,
         GotoB,
         GotoC,

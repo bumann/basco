@@ -11,14 +11,14 @@
 
         Visibility ErrorVisibility { get; set; }
 
-        ICommand ConnectCommand { get; }
+        ICommand StartCommand { get; }
 
-        ICommand ProcessCommand { get; }
+        ICommand RunCommand { get; }
 
         ICommand ErrorCommand { get; }
 
         ICommand ResetCommand { get; }
 
-        ICommand DisconnectCommand { get; }
+        ICommand StopCommand { get; }
     }
 }
