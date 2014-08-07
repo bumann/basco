@@ -6,15 +6,11 @@
 
     public class StateB : IStateB
     {
-        private readonly IBasco<TransitionTrigger> basco;
         private CancellationTokenSource cancellationTokenSource;
 
-        public StateB(IBasco<TransitionTrigger> basco)
-        {
-            this.basco = basco;
-        }
-
         public event EventHandler ProcessingChanged;
+
+        public IBasco<TransitionTrigger> Basco { get; set; }
 
         public int ItemCount { get; private set; }
 
@@ -29,7 +25,7 @@
             Task.Run(
                () =>
                {
-                   while (!token.IsCancellationRequested && this.basco.IsRunning)
+                   while (!token.IsCancellationRequested && this.Basco.IsRunning)
                    {
                        this.ItemCount++;
                        this.RaiseStateChanged();

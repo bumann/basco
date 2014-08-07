@@ -14,9 +14,10 @@
         {
             var basco = new Basco<TestTrigger>(
                 Mock.Of<IScyano>(), 
+                Mock.Of<IBascoStateCache<TestTrigger>>(),
                 Mock.Of<IBascoTransitionCache<TestTrigger>>(),
-                Mock.Of<IBascoConfigurator<TestTrigger>>(), 
-                Mock.Of<IBascoExecutor<TestTrigger>>());
+                Mock.Of<IBascoExecutor<TestTrigger>>(), 
+                Mock.Of<IBascoConfigurator<TestTrigger>>());
 
             IBasco<TestTrigger> result = basco.In<SimpleTestState, TestTrigger>(configurator => { });
 
@@ -29,9 +30,10 @@
             var transitionCache = new Mock<IBascoTransitionCache<TestTrigger>>();
             var basco = new Basco<TestTrigger>(
                 Mock.Of<IScyano>(),
+                Mock.Of<IBascoStateCache<TestTrigger>>(),
                 transitionCache.Object,
-                Mock.Of<IBascoConfigurator<TestTrigger>>(),
-                Mock.Of<IBascoExecutor<TestTrigger>>());
+                Mock.Of<IBascoExecutor<TestTrigger>>(),
+                Mock.Of<IBascoConfigurator<TestTrigger>>());
 
             basco.In<SimpleTestState, TestTrigger>(configurator => { });
 

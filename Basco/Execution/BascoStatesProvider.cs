@@ -2,16 +2,21 @@ namespace Basco.Execution
 {
     using System;
 
-    public class BascoNextStateProvider<TTransitionTrigger> : IBascoNextStateProvider<TTransitionTrigger>
+    public class BascoStatesProvider<TTransitionTrigger> : IBascoStatesProvider<TTransitionTrigger>
         where TTransitionTrigger : IComparable
     {
         private readonly IBascoStateCache<TTransitionTrigger> bascoStateCache;
         private readonly IBascoTransitionCache<TTransitionTrigger> bascoTransitionCache;
 
-        public BascoNextStateProvider(IBascoStateCache<TTransitionTrigger> bascoStateCache, IBascoTransitionCache<TTransitionTrigger> bascoTransitionCache)
+        public BascoStatesProvider(IBascoStateCache<TTransitionTrigger> bascoStateCache, IBascoTransitionCache<TTransitionTrigger> bascoTransitionCache)
         {
             this.bascoStateCache = bascoStateCache;
             this.bascoTransitionCache = bascoTransitionCache;
+        }
+
+        public IState Retrieve(Type stateType)
+        {
+            return this.bascoStateCache.RetrieveState(stateType);
         }
 
         public IState RetrieveNext(IState state, TTransitionTrigger trigger)

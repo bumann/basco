@@ -9,18 +9,21 @@
         where TTransitionTrigger : IComparable
     {
         private readonly IScyano scyano;
+        private readonly IBascoStateCache<TTransitionTrigger> bascoStateCache;
         private readonly IBascoConfigurator<TTransitionTrigger> bascoConfigurator;
 
         public Basco(
             IScyano scyano,
+            IBascoStateCache<TTransitionTrigger> bascoStateCache,
             IBascoTransitionCache<TTransitionTrigger> transitionCache,
-            IBascoConfigurator<TTransitionTrigger> bascoConfigurator,
-            IBascoExecutor<TTransitionTrigger> bascoExecutor)
+            IBascoExecutor<TTransitionTrigger> bascoExecutor,
+            IBascoConfigurator<TTransitionTrigger> bascoConfigurator = null)
         {
             this.scyano = scyano;
+            this.bascoStateCache = bascoStateCache;
             this.TransitionCache = transitionCache;
-            this.bascoConfigurator = bascoConfigurator;
             this.BascoExecutor = bascoExecutor;
+            this.bascoConfigurator = bascoConfigurator;
         }
 
         public event EventHandler StateChanged;
@@ -46,12 +49,17 @@
         public void InitializeWithStartState<TState>() where TState : class, IState
         {
             this.scyano.Initialize(this);
+            this.bascoStateCache.Initialize(this);
             this.BascoExecutor.InitializeWithStartState<TState>(this);
 
             //// TODO
             this.BascoExecutor.StateChanged += this.OnStateChanged;
 
-            this.bascoConfigurator.Configurate(this);
+            if (this.bascoConfigurator != null)
+            {
+                this.bascoConfigurator.Configurate(this);
+            }
+
             this.IsInitialized = true;
         }
 

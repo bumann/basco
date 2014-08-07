@@ -1,4 +1,4 @@
-﻿namespace Basco
+﻿namespace Basco.Execution
 {
     using System;
     using System.Collections.Generic;
@@ -7,17 +7,19 @@
     public class BascoStateCache<TTransitionTrigger> : IBascoStateCache<TTransitionTrigger>
         where TTransitionTrigger : IComparable
     {
-        private readonly IBascoStatesFactory<TTransitionTrigger> statesBascoFactory;
-        private ICollection<IState> states;
+        private readonly ICollection<IState> states;
 
-        public BascoStateCache(IBascoStatesFactory<TTransitionTrigger> statesBascoFactory)
+        public BascoStateCache(IEnumerable<IState> states)
         {
-            this.statesBascoFactory = statesBascoFactory;
+            this.states = states.ToList();
         }
 
         public void Initialize(IBasco<TTransitionTrigger> basco)
         {
-            this.states = this.statesBascoFactory.CreateStates(basco).ToList();
+            foreach (var stateUsingBasco in this.states.OfType<IStateUsingBasco<TTransitionTrigger>>())
+            {
+                stateUsingBasco.Basco = basco;
+            }
 
             if (this.states.Count == 0)
             {

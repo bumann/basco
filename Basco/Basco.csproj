@@ -40,14 +40,14 @@
     <Compile Include="Execution\BascoExecutor.cs" />
     <Compile Include="Configuration\BascoExtensions.cs" />
     <Compile Include="BascoFactory.cs" />
-    <Compile Include="BascoStateCache.cs" />
-    <Compile Include="Execution\BascoNextStateProvider.cs" />
+    <Compile Include="Execution\BascoStateCache.cs" />
+    <Compile Include="Execution\BascoStatesProvider.cs" />
     <Compile Include="Execution\BascoStateExitExecutor.cs" />
     <Compile Include="Execution\BascoStateEnterExecutor.cs" />
     <Compile Include="Execution\BascoTransitionCache.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Execution\IBascoNextStateProvider.cs" />
+    <Compile Include="Execution\IBascoStatesProvider.cs" />
     <Compile Include="Execution\IBascoTransitionCache.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -60,6 +60,7 @@
     <Compile Include="IBascoStatesFactory.cs" />
     <Compile Include="IBascoState.cs" />
     <Compile Include="IBascoStateCache.cs" />
+    <Compile Include="IStateUsingBasco.cs" />
     <Compile Include="ICompositeStateConfigurator.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -81,7 +82,9 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Dev\" />
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -9,40 +9,27 @@
 
     public class BascoExecutorTest
     {
-        private readonly Mock<IBascoStateCache<TestTrigger>> stateCache;
         private readonly Mock<IBascoStateEnterExecutor> enterExecutor;
         private readonly Mock<IBascoStateExitExecutor> exitExecutor;
-        private readonly Mock<IBascoNextStateProvider<TestTrigger>> stateProvider;
+        private readonly Mock<IBascoStatesProvider<TestTrigger>> stateProvider;
         private readonly BascoExecutor<TestTrigger> testee;
 
         public BascoExecutorTest()
         {
-            this.stateCache = new Mock<IBascoStateCache<TestTrigger>> { DefaultValue = DefaultValue.Mock };
-            this.stateProvider = new Mock<IBascoNextStateProvider<TestTrigger>>();
+            this.stateProvider = new Mock<IBascoStatesProvider<TestTrigger>> { DefaultValue = DefaultValue.Mock };
             this.enterExecutor = new Mock<IBascoStateEnterExecutor>();
             this.exitExecutor = new Mock<IBascoStateExitExecutor>();
             this.testee = new BascoExecutor<TestTrigger>(
-                this.stateCache.Object,
                 this.stateProvider.Object, 
                 this.enterExecutor.Object,
                 this.exitExecutor.Object);
         }
 
         [Fact]
-        public void InitializeWithStartState_MustInitializeStateCache()
-        {
-            var basco = Mock.Of<IBasco<TestTrigger>>();
-
-            this.testee.InitializeWithStartState<IState>(basco);
-
-            this.stateCache.Verify(x => x.Initialize(basco));
-        }
-
-        [Fact]
         public void InitializeWithStartState_MustSetInitialState()
         {
             var state = Mock.Of<IState>();
-            this.stateCache.Setup(x => x.RetrieveState(It.IsAny<Type>())).Returns(state);
+            this.stateProvider.Setup(x => x.Retrieve(It.IsAny<Type>())).Returns(state);
 
             this.testee.InitializeWithStartState<IState>(Mock.Of<IBasco<TestTrigger>>());
 
@@ -52,7 +39,7 @@
         [Fact]
         public void InitializeWithStartState_WhenNoValidStartState_MustThrow()
         {
-            this.stateCache.Setup(x => x.RetrieveState(It.IsAny<Type>())).Returns<IState>(null);
+            this.stateProvider.Setup(x => x.Retrieve(It.IsAny<Type>())).Returns<IState>(null);
 
             this.testee.Invoking(x => x.InitializeWithStartState<ExtendedTestState>(Mock.Of<IBasco<TestTrigger>>()))
                 .ShouldThrow<BascoException>();
@@ -62,7 +49,7 @@
         public void Start_MustEnterState()
         {
             var state = new Mock<IState>();
-            this.stateCache.Setup(x => x.RetrieveState(It.IsAny<Type>())).Returns(state.Object);
+            this.stateProvider.Setup(x => x.Retrieve(It.IsAny<Type>())).Returns(state.Object);
             this.testee.InitializeWithStartState<ExtendedTestState>(Mock.Of<IBasco<TestTrigger>>());
 
             this.testee.Start();
@@ -74,7 +61,7 @@
         public void Start_MustPerformExecuteOnInitialState()
         {
             var state = new Mock<IState>();
-            this.stateCache.Setup(x => x.RetrieveState(It.IsAny<Type>())).Returns(state.Object);
+            this.stateProvider.Setup(x => x.Retrieve(It.IsAny<Type>())).Returns(state.Object);
             this.testee.InitializeWithStartState<ExtendedTestState>(Mock.Of<IBasco<TestTrigger>>());
 
             this.testee.Start();
@@ -126,7 +113,7 @@
         public void ChangeState_MustExitPreviousState()
         {
             var initialState = Mock.Of<IState>();
-            this.stateCache.Setup(x => x.RetrieveState(typeof(ExtendedTestState)))
+            this.stateProvider.Setup(x => x.Retrieve(typeof(ExtendedTestState)))
                 .Returns(initialState);
             this.stateProvider.Setup(x => x.RetrieveNext(It.IsAny<IState>(), It.IsAny<TestTrigger>()))
                 .Returns(Mock.Of<IState>());
@@ -190,10 +177,10 @@
         }
 
         [Fact]
-        public void RetrieveState_MustReturnCacheState()
+        public void RetrieveState_MustReturnState()
         {
             var state = Mock.Of<IState>();
-            this.stateCache.Setup(x => x.RetrieveState(typeof(ExtendedTestState))).Returns(state);
+            this.stateProvider.Setup(x => x.Retrieve(typeof(ExtendedTestState))).Returns(state);
 
             IState result = this.testee.RetrieveState<ExtendedTestState>();
 
@@ -203,7 +190,7 @@
         [Fact]
         public void RetrieveState_WhenStateNotExists_MustReturnNull()
         {
-            this.stateCache.Setup(x => x.RetrieveState(It.IsAny<Type>())).Returns<IState>(null);
+            this.stateProvider.Setup(x => x.Retrieve(It.IsAny<Type>())).Returns<IState>(null);
 
             IState result = this.testee.RetrieveState<SimpleTestState>();
 

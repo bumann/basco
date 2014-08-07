@@ -4,19 +4,14 @@
 
     public class SubStateE : ISubStateE
     {
-        private readonly IBasco<TransitionTrigger> basco;
-
-        public SubStateE(IBasco<TransitionTrigger> basco)
-        {
-            this.basco = basco;
-        }
+        public IBasco<TransitionTrigger> Basco { get; set; }
 
         public void Execute()
         {
             Thread.Sleep(800);
-            if (this.basco.IsRunning)
+            if (this.Basco.IsRunning)
             {
-                this.basco.Trigger(TransitionTrigger.GotoD);
+                this.Basco.Trigger(TransitionTrigger.GotoD);
             }
         }
     }

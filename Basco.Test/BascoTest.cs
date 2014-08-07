@@ -10,21 +10,32 @@
 
     public class BascoTest
     {
-        private readonly Mock<IBascoConfigurator<TestTrigger>> bascoConfigurator;
-        private readonly Mock<IBascoExecutor<TestTrigger>> bascoExecutor;
         private readonly Mock<IScyano> scyano;
+        private readonly Mock<IBascoStateCache<TestTrigger>> stateCache;
+        private readonly Mock<IBascoExecutor<TestTrigger>> bascoExecutor;
+        private readonly Mock<IBascoConfigurator<TestTrigger>> bascoConfigurator;
         private readonly Basco<TestTrigger> testee;
 
         public BascoTest()
         {
-            this.bascoConfigurator = new Mock<IBascoConfigurator<TestTrigger>>();
-            this.bascoExecutor = new Mock<IBascoExecutor<TestTrigger>>();
             this.scyano = new Mock<IScyano>();
+            this.stateCache = new Mock<IBascoStateCache<TestTrigger>> { DefaultValue = DefaultValue.Mock };
+            this.bascoExecutor = new Mock<IBascoExecutor<TestTrigger>>();
+            this.bascoConfigurator = new Mock<IBascoConfigurator<TestTrigger>>();
             this.testee = new Basco<TestTrigger>(
                 this.scyano.Object,
+                this.stateCache.Object,
                 new Mock<IBascoTransitionCache<TestTrigger>>().Object,
-                this.bascoConfigurator.Object,
-                this.bascoExecutor.Object);
+                this.bascoExecutor.Object,
+                this.bascoConfigurator.Object);
+        }
+
+        [Fact]
+        public void InitializeWithStartState_MustInitializeStateCache()
+        {
+            this.testee.InitializeWithStartState<SimpleTestState>();
+
+            this.stateCache.Verify(x => x.Initialize(this.testee));
         }
 
         [Fact]

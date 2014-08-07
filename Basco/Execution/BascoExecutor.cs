@@ -5,19 +5,16 @@ namespace Basco.Execution
     public class BascoExecutor<TTransitionTrigger> : IBascoExecutor<TTransitionTrigger>
         where TTransitionTrigger : IComparable
     {
-        private readonly IBascoStateCache<TTransitionTrigger> bascoStateCache;
-        private readonly IBascoNextStateProvider<TTransitionTrigger> bascoNextStateProvider;
+        private readonly IBascoStatesProvider<TTransitionTrigger> bascoStatesProvider;
         private readonly IBascoStateEnterExecutor bascoStateEnterExecutor;
         private readonly IBascoStateExitExecutor bascoStateExitExecutor;
 
         public BascoExecutor(
-            IBascoStateCache<TTransitionTrigger> bascoStateCache,
-            IBascoNextStateProvider<TTransitionTrigger> bascoNextStateProvider,
+            IBascoStatesProvider<TTransitionTrigger> bascoStatesProvider,
             IBascoStateEnterExecutor bascoStateEnterExecutor,
             IBascoStateExitExecutor bascoStateExitExecutor)
         {
-            this.bascoStateCache = bascoStateCache;
-            this.bascoNextStateProvider = bascoNextStateProvider;
+            this.bascoStatesProvider = bascoStatesProvider;
             this.bascoStateEnterExecutor = bascoStateEnterExecutor;
             this.bascoStateExitExecutor = bascoStateExitExecutor;
         }
@@ -29,13 +26,11 @@ namespace Basco.Execution
         public void InitializeWithStartState<TState>(IBasco<TTransitionTrigger> basco)
             where TState : class, IState
         {
-            this.bascoStateCache.Initialize(basco);
+            this.CurrentState = this.bascoStatesProvider.Retrieve(typeof(TState));
 
-            var stateType = typeof(TState);
-            this.CurrentState = this.bascoStateCache.RetrieveState(stateType);
             if (this.CurrentState == null)
             {
-                throw new BascoException(string.Format("No valid start state. Check configuration (IBascoConfigurator) of state [{0}] !", stateType));
+                throw new BascoException(string.Format("No valid start state. Check configuration (IBascoConfigurator) of state [{0}] !", typeof(TState)));
             }
         }
 
@@ -52,7 +47,7 @@ namespace Basco.Execution
 
         public IState RetrieveState<TState>() where TState : class, IState
         {
-            return this.bascoStateCache.RetrieveState(typeof(TState));
+            return this.bascoStatesProvider.Retrieve(typeof(TState));
         }
 
         public void ChangeState(TTransitionTrigger trigger)
@@ -62,7 +57,7 @@ namespace Basco.Execution
                 return;
             }
 
-            IState nextState = this.bascoNextStateProvider.RetrieveNext(this.CurrentState, trigger); 
+            IState nextState = this.bascoStatesProvider.RetrieveNext(this.CurrentState, trigger); 
             if (nextState == null)
             {
                 return;

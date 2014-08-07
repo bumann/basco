@@ -10,13 +10,13 @@
     {
         private readonly Mock<IBascoStateCache<TestTrigger>> stateCache;
         private readonly Mock<IBascoTransitionCache<TestTrigger>> transitionCache;
-        private readonly BascoNextStateProvider<TestTrigger> testee;
+        private readonly BascoStatesProvider<TestTrigger> testee;
 
         public BascoNextStateProviderTest()
         {
             this.stateCache = new Mock<IBascoStateCache<TestTrigger>>();
             this.transitionCache = new Mock<IBascoTransitionCache<TestTrigger>>();
-            this.testee = new BascoNextStateProvider<TestTrigger>(this.stateCache.Object, this.transitionCache.Object);
+            this.testee = new BascoStatesProvider<TestTrigger>(this.stateCache.Object, this.transitionCache.Object);
         }
 
         [Fact]
