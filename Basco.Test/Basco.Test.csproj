@@ -61,7 +61,7 @@
     <Compile Include="Execution\BascoExecutorTest.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Execution\BascoNextStateProviderTest.cs">
+    <Compile Include="Execution\BascoStatesProviderTest.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Execution\BascoStateEnterExecutorTest.cs" />

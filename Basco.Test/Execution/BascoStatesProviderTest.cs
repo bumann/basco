@@ -6,17 +6,27 @@
     using Moq;
     using Xunit;
 
-    public class BascoNextStateProviderTest
+    public class BascoStatesProviderTest
     {
         private readonly Mock<IBascoStateCache<TestTrigger>> stateCache;
         private readonly Mock<IBascoTransitionCache<TestTrigger>> transitionCache;
         private readonly BascoStatesProvider<TestTrigger> testee;
 
-        public BascoNextStateProviderTest()
+        public BascoStatesProviderTest()
         {
             this.stateCache = new Mock<IBascoStateCache<TestTrigger>>();
             this.transitionCache = new Mock<IBascoTransitionCache<TestTrigger>>();
             this.testee = new BascoStatesProvider<TestTrigger>(this.stateCache.Object, this.transitionCache.Object);
+        }
+
+        [Fact]
+        public void Retrieve_MustRetrieveCorrectState()
+        {
+            Type stateType = typeof(object);
+
+            this.testee.Retrieve(stateType);
+
+            this.stateCache.Verify(x => x.RetrieveState(stateType), Times.Once);
         }
 
         [Fact]
