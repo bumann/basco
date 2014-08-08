@@ -26,31 +26,26 @@
         }
 
         [Fact]
-        public void InitializeWithStartState_MustSetInitialState()
+        public void Initialize_MustSetInitialState()
         {
             var state = Mock.Of<IState>();
-            this.stateProvider.Setup(x => x.Retrieve(It.IsAny<Type>())).Returns(state);
 
-            this.testee.InitializeWithStartState<IState>(Mock.Of<IBasco<TestTrigger>>());
+            this.testee.Initialize(state);
 
             this.testee.CurrentState.Should().Be(state);
         }
 
         [Fact]
-        public void InitializeWithStartState_WhenNoValidStartState_MustThrow()
+        public void Initialize_WhenNoValidStartState_MustThrow()
         {
-            this.stateProvider.Setup(x => x.Retrieve(It.IsAny<Type>())).Returns<IState>(null);
-
-            this.testee.Invoking(x => x.InitializeWithStartState<ExtendedTestState>(Mock.Of<IBasco<TestTrigger>>()))
+            this.testee.Invoking(x => x.Initialize(null))
                 .ShouldThrow<BascoException>();
         }
 
         [Fact]
         public void Start_MustEnterState()
         {
-            var state = new Mock<IState>();
-            this.stateProvider.Setup(x => x.Retrieve(It.IsAny<Type>())).Returns(state.Object);
-            this.testee.InitializeWithStartState<ExtendedTestState>(Mock.Of<IBasco<TestTrigger>>());
+            this.testee.Initialize(Mock.Of<IStateEnter>());
 
             this.testee.Start();
 
@@ -61,8 +56,7 @@
         public void Start_MustPerformExecuteOnInitialState()
         {
             var state = new Mock<IState>();
-            this.stateProvider.Setup(x => x.Retrieve(It.IsAny<Type>())).Returns(state.Object);
-            this.testee.InitializeWithStartState<ExtendedTestState>(Mock.Of<IBasco<TestTrigger>>());
+            this.testee.Initialize(state.Object);
 
             this.testee.Start();
 
@@ -72,7 +66,7 @@
         [Fact]
         public void Start_MustRaiseStateChanged()
         {
-            this.testee.InitializeWithStartState<ExtendedTestState>(Mock.Of<IBasco<TestTrigger>>());
+            this.testee.Initialize(Mock.Of<IState>());
             this.testee.MonitorEvents();
 
             this.testee.Start();
@@ -83,7 +77,7 @@
         [Fact]
         public void Stop_MustRaiseStateChanged()
         {
-            this.testee.InitializeWithStartState<ExtendedTestState>(Mock.Of<IBasco<TestTrigger>>());
+            this.testee.Initialize(Mock.Of<IState>());
             this.testee.MonitorEvents();
 
             this.testee.Stop();
@@ -101,7 +95,7 @@
         [Fact]
         public void ChangeState_WhenNextStateNotSet_MustNotThrow()
         {
-            this.testee.InitializeWithStartState<ExtendedTestState>(Mock.Of<IBasco<TestTrigger>>());
+            this.testee.Initialize(Mock.Of<IState>());
 
             this.testee.Start();
 
@@ -110,14 +104,23 @@
         }
 
         [Fact]
-        public void ChangeState_MustExitPreviousState()
+        public void ChangeState_WhenNextStateNotSet_MustNotExitPreviousState()
         {
             var initialState = Mock.Of<IState>();
-            this.stateProvider.Setup(x => x.Retrieve(typeof(ExtendedTestState)))
-                .Returns(initialState);
             this.stateProvider.Setup(x => x.RetrieveNext(It.IsAny<IState>(), It.IsAny<TestTrigger>()))
-                .Returns(Mock.Of<IState>());
-            this.testee.InitializeWithStartState<ExtendedTestState>(Mock.Of<IBasco<TestTrigger>>());
+                .Returns<IState>(null);
+            this.testee.Initialize(initialState);
+
+            this.testee.ChangeState(TestTrigger.TransitionOne);
+
+            this.exitExecutor.Verify(x => x.Exit(initialState), Times.Never);
+        }
+
+        [Fact]
+        public void ChangeState_MustExitPreviousState()
+        {
+            var initialState = Mock.Of<IStateExit>();
+            this.testee.Initialize(initialState);
 
             this.testee.ChangeState(TestTrigger.TransitionOne);
 
@@ -130,7 +133,7 @@
             var nextState = Mock.Of<IState>();
             this.stateProvider.Setup(x => x.RetrieveNext(It.IsAny<IState>(), It.IsAny<TestTrigger>()))
                 .Returns(nextState);
-            this.testee.InitializeWithStartState<ExtendedTestState>(Mock.Of<IBasco<TestTrigger>>());
+            this.testee.Initialize(Mock.Of<IState>());
 
             this.testee.ChangeState(TestTrigger.TransitionOne);
 
@@ -143,7 +146,7 @@
             var nextState = Mock.Of<IState>();
             this.stateProvider.Setup(x => x.RetrieveNext(It.IsAny<IState>(), It.IsAny<TestTrigger>()))
                 .Returns(nextState);
-            this.testee.InitializeWithStartState<ExtendedTestState>(Mock.Of<IBasco<TestTrigger>>());
+            this.testee.Initialize(Mock.Of<IState>());
 
             this.testee.ChangeState(TestTrigger.TransitionOne);
 
@@ -156,7 +159,7 @@
             var nextState = new Mock<IState>();
             this.stateProvider.Setup(x => x.RetrieveNext(It.IsAny<IState>(), It.IsAny<TestTrigger>()))
                 .Returns(nextState.Object);
-            this.testee.InitializeWithStartState<ExtendedTestState>(Mock.Of<IBasco<TestTrigger>>());
+            this.testee.Initialize(Mock.Of<IState>());
             
             this.testee.ChangeState(TestTrigger.TransitionOne);
 
@@ -168,7 +171,7 @@
         {
             this.stateProvider.Setup(x => x.RetrieveNext(It.IsAny<IState>(), It.IsAny<TestTrigger>()))
                 .Returns(Mock.Of<IState>());
-            this.testee.InitializeWithStartState<ExtendedTestState>(Mock.Of<IBasco<TestTrigger>>());
+            this.testee.Initialize(Mock.Of<IState>());
             this.testee.MonitorEvents();
 
             this.testee.ChangeState(TestTrigger.TransitionOne);

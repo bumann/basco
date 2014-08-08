@@ -5,7 +5,7 @@
 
     public class BascoConfigurator : IBascoConfigurator<TransitionTrigger>
     {
-        public void Configurate(IBasco<TransitionTrigger> basco)
+        public void Configurate(IBascoInternal<TransitionTrigger> basco)
         {
             basco.In<ConnectedState, TransitionTrigger>(x => x
                 .When(TransitionTrigger.Run).Goto<ProcessingState>());

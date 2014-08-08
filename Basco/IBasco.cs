@@ -1,6 +1,7 @@
 ﻿namespace Basco
 {
     using System;
+    using System.Collections.Generic;
 
     public interface IBasco<TTransitionTrigger> : IBascoState
         where TTransitionTrigger : IComparable
@@ -11,8 +12,7 @@
 
         void AddTransitionCache(Type type, StateTransitions<TTransitionTrigger> stateTransitions);
 
-        void InitializeWithStartState<TState>()
-            where TState : class, IState;
+        void Initialize(IEnumerable<IState> states, IState startState);
 
         void Start();
 

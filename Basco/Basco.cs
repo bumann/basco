@@ -1,26 +1,26 @@
 ﻿namespace Basco
 {
     using System;
+    using System.Collections.Generic;
     using Basco.Configuration;
     using Basco.Execution;
     using Scyano;
 
-    public class Basco<TTransitionTrigger> : IBasco<TTransitionTrigger>
+    public class Basco<TTransitionTrigger> : IBascoInternal<TTransitionTrigger>
         where TTransitionTrigger : IComparable
     {
         private readonly IScyano scyano;
-        private readonly IBascoStateCache<TTransitionTrigger> bascoStateCache;
         private readonly IBascoConfigurator<TTransitionTrigger> bascoConfigurator;
 
         public Basco(
             IScyano scyano,
-            IBascoStateCache<TTransitionTrigger> bascoStateCache,
+            IBascoStateCache<TTransitionTrigger> statesCache,
             IBascoTransitionCache<TTransitionTrigger> transitionCache,
             IBascoExecutor<TTransitionTrigger> bascoExecutor,
             IBascoConfigurator<TTransitionTrigger> bascoConfigurator = null)
         {
             this.scyano = scyano;
-            this.bascoStateCache = bascoStateCache;
+            this.StatesCache = statesCache;
             this.TransitionCache = transitionCache;
             this.BascoExecutor = bascoExecutor;
             this.bascoConfigurator = bascoConfigurator;
@@ -37,6 +37,8 @@
             get { return this.BascoExecutor.CurrentState; }
         }
 
+        public IBascoStateCache<TTransitionTrigger> StatesCache { get; private set; }
+
         public IBascoTransitionCache<TTransitionTrigger> TransitionCache { get; private set; }
 
         public IBascoExecutor<TTransitionTrigger> BascoExecutor { get; private set; }
@@ -46,11 +48,16 @@
             this.TransitionCache.Add(type, stateTransitions);
         }
 
-        public void InitializeWithStartState<TState>() where TState : class, IState
+        public void AddHierchary(IBascoInternal<TTransitionTrigger> subBasco)
+        {
+            subBasco.StateChanged += this.HandleSubStateChanged;
+        }
+
+        public void Initialize(IEnumerable<IState> states, IState startState)
         {
             this.scyano.Initialize(this);
-            this.bascoStateCache.Initialize(this);
-            this.BascoExecutor.InitializeWithStartState<TState>(this);
+            this.StatesCache.Initialize(this, states);
+            this.BascoExecutor.Initialize(startState);
 
             //// TODO
             this.BascoExecutor.StateChanged += this.OnStateChanged;
@@ -67,7 +74,7 @@
         {
             if (!this.IsInitialized)
             {
-                throw new BascoException("The state machine was not initialized. Do call Basco.InitializeWithStartState<TStartState>()!");
+                throw new BascoException("The state machine was not initialized. Do call Basco.Initialize()!");
             }
 
             if (this.IsRunning)
@@ -118,6 +125,11 @@
             {
                 this.StateChanged(this, new EventArgs());
             }
+        }
+
+        private void HandleSubStateChanged(object sender, EventArgs e)
+        {
+            this.OnStateChanged(sender, e);
         }
     }
 }

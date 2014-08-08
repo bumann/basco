@@ -7,29 +7,30 @@
     public class BascoStateCache<TTransitionTrigger> : IBascoStateCache<TTransitionTrigger>
         where TTransitionTrigger : IComparable
     {
-        private readonly ICollection<IState> states;
+        private ICollection<IState> statesCache;
 
-        public BascoStateCache(IEnumerable<IState> states)
+        public void Initialize(IBasco<TTransitionTrigger> basco, IEnumerable<IState> states)
         {
-            this.states = states.ToList();
-        }
-
-        public void Initialize(IBasco<TTransitionTrigger> basco)
-        {
-            foreach (var stateUsingBasco in this.states.OfType<IStateUsingBasco<TTransitionTrigger>>())
+            this.statesCache = states.ToList();
+            if (this.statesCache.Count == 0)
             {
-                stateUsingBasco.Basco = basco;
+                throw new BascoException("StatesCache initialization failed. No states could be created. Concrete BascoStatesFactory should return all available IStates!");
             }
 
-            if (this.states.Count == 0)
+            foreach (var stateUsingBasco in this.statesCache.OfType<IStateUsingBasco<TTransitionTrigger>>())
             {
-                throw new BascoException("BascoStateCache initialization failed. No states could be created. Concrete BascoStatesFactory should return all available IStates!");
+                stateUsingBasco.Basco = basco;
             }
         }
 
         public IState RetrieveState(Type stateType)
         {
-            return this.states.SingleOrDefault(x => x.GetType() == stateType);
+            return this.statesCache.SingleOrDefault(x => x.GetType() == stateType);
+        }
+
+        public IEnumerable<IState> RetrieveStates(IEnumerable<Type> stateTypes)
+        {
+            return this.statesCache.Where(x => stateTypes.Contains(x.GetType()));
         }
     }
 }

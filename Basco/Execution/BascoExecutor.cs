@@ -23,14 +23,13 @@ namespace Basco.Execution
 
         public IState CurrentState { get; private set; }
 
-        public void InitializeWithStartState<TState>(IBasco<TTransitionTrigger> basco)
-            where TState : class, IState
+        public void Initialize(IState startState)
         {
-            this.CurrentState = this.bascoStatesProvider.Retrieve(typeof(TState));
+            this.CurrentState = startState;
 
             if (this.CurrentState == null)
             {
-                throw new BascoException(string.Format("No valid start state. Check configuration (IBascoConfigurator) of state [{0}] !", typeof(TState)));
+                throw new BascoException(string.Format("No valid start state. Check configuration (IBascoConfigurator) of state [{0}] !", startState));
             }
         }
 

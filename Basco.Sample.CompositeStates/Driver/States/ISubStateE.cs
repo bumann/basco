@@ -2,5 +2,6 @@
 {
     public interface ISubStateE : IStateUsingBasco<TransitionTrigger>
     {
+        bool Active { get; }
     }
 }

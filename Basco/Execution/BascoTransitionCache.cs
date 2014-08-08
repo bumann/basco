@@ -6,21 +6,21 @@ namespace Basco.Execution
     public class BascoTransitionCache<TTransitionTrigger> : IBascoTransitionCache<TTransitionTrigger>
         where TTransitionTrigger : IComparable
     {
-        private readonly Dictionary<Type, IStateTransitions<TTransitionTrigger>> transitionPool;
-
         public BascoTransitionCache()
         {
-            this.transitionPool = new Dictionary<Type, IStateTransitions<TTransitionTrigger>>();
+            this.TransitionPool = new Dictionary<Type, IStateTransitions<TTransitionTrigger>>();
         }
+
+        public Dictionary<Type, IStateTransitions<TTransitionTrigger>> TransitionPool { get; private set; }
 
         public void Add(Type type, StateTransitions<TTransitionTrigger> stateTransitions)
         {
-            this.transitionPool.Add(type, stateTransitions);
+            this.TransitionPool.Add(type, stateTransitions);
         }
 
         public Type RetrieveNextStateType(IState state, TTransitionTrigger trigger)
         {
-            if (this.transitionPool.Count == 0)
+            if (this.TransitionPool.Count == 0)
             {
                 return null;
             }
@@ -28,7 +28,7 @@ namespace Basco.Execution
             IStateTransitions<TTransitionTrigger> stateTransitions;
             try
             {
-                stateTransitions = this.transitionPool[state.GetType()];
+                stateTransitions = this.TransitionPool[state.GetType()];
             }
             catch (KeyNotFoundException ex)
             {

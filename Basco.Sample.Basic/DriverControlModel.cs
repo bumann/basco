@@ -1,6 +1,7 @@
 ﻿namespace Basco.Sample.Basic
 {
     using System;
+    using System.Collections.Generic;
     using System.Windows;
     using System.Windows.Input;
     using Basco.Sample.Basic.Fsm.States;
@@ -21,7 +22,9 @@
         public DriverControlModel(IBasco<TransitionTrigger> basco)
         {
             this.basco = basco;
-            this.basco.InitializeWithStartState<ConnectedState>();
+            var connectedState = new ConnectedState();
+            var states = new List<IState> { connectedState, new ProcessingState(), new ErrorState() };
+            this.basco.Initialize(states, connectedState);
             this.basco.StateChanged += this.OnDriverStateChanged;
 
             this.processingState = (IProcessingState)this.basco.RetrieveState<ProcessingState>();

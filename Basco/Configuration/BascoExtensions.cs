@@ -4,7 +4,7 @@
 
     public static class BascoExtensions
     {
-        public static IBasco<TTransitionTrigger> In<TState, TTransitionTrigger>(this IBasco<TTransitionTrigger> basco, Action<ITransitionConfigurator<TTransitionTrigger>> configurator)
+        public static IBascoInternal<TTransitionTrigger> In<TState, TTransitionTrigger>(this IBascoInternal<TTransitionTrigger> basco, Action<ITransitionConfigurator<TTransitionTrigger>> configurator)
             where TState : class, IState
             where TTransitionTrigger : IComparable
         {

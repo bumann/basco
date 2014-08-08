@@ -3,6 +3,7 @@
     using System;
     using System.Windows;
     using System.Windows.Input;
+    using Basco.Sample.CompositeStates.Driver;
     using Basco.Sample.CompositeStates.Driver.States;
     using PropertyChanged;
 
@@ -106,8 +107,8 @@
             this.CanStop = this.driver.Basco.IsRunning;
 
             this.ConnectedVisibility = this.driver.Basco.IsRunning && this.driver.Basco.CurrentState is IStateA  ? Visibility.Visible : Visibility.Hidden;
-            this.ConnectedSubDVisibility = this.driver.Basco.CurrentState is ISubStateD ? Visibility.Visible : Visibility.Hidden;
-            this.ConnectedSubEVisibility = this.driver.Basco.CurrentState is ISubStateE ? Visibility.Visible : Visibility.Hidden;
+            this.ConnectedSubDVisibility = this.driver.SubStateDIsActive ? Visibility.Visible : Visibility.Hidden;
+            this.ConnectedSubEVisibility = this.driver.SubStateEIsActive ? Visibility.Visible : Visibility.Hidden;
             if (this.ConnectedSubDVisibility == Visibility.Visible || this.ConnectedSubEVisibility == Visibility.Visible)
             {
                 this.ConnectedVisibility = Visibility.Visible;

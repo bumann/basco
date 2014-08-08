@@ -6,13 +6,19 @@
     {
         public IBasco<TransitionTrigger> Basco { get; set; }
 
+        public bool Active { get; private set; }
+
         public void Execute()
         {
+            this.Active = true;
             Thread.Sleep(800);
-            if (this.Basco.IsRunning)
+            if (!this.Basco.IsRunning)
             {
-                this.Basco.Trigger(TransitionTrigger.GotoD);
+                return;
             }
+            
+            this.Basco.Trigger(TransitionTrigger.GotoD);
+            this.Active = false;
         }
     }
 }

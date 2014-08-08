@@ -11,6 +11,6 @@
     public interface IBascoConfigurator<TTransitionTrigger>
         where TTransitionTrigger : IComparable
     {
-        void Configurate(IBasco<TTransitionTrigger> basco);
+        void Configurate(IBascoInternal<TTransitionTrigger> basco);
     }
 }

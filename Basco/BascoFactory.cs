@@ -1,7 +1,6 @@
 ﻿namespace Basco
 {
     using System;
-    using System.Collections.Generic;
     using Basco.Configuration;
     using Basco.Execution;
     using Scyano;
@@ -11,12 +10,11 @@
     /// </summary>
     public class BascoFactory
     {
-        public static IBasco<TTrigger> Create<TTrigger>(
-            IEnumerable<IState> states,
+        public static IBascoInternal<TTrigger> Create<TTrigger>(
             IBascoConfigurator<TTrigger> bascoConfigurator = null)
             where TTrigger : IComparable
         {
-            var stateCache = new BascoStateCache<TTrigger>(states);
+            var stateCache = new BascoStateCache<TTrigger>();
             var transitionCache = new BascoTransitionCache<TTrigger>();
             var stateProvider = new BascoStatesProvider<TTrigger>(stateCache, transitionCache);
             var enterExecutor = new BascoStateEnterExecutor();
