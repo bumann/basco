@@ -24,6 +24,17 @@
         }
 
         [Fact]
+        public void Enter_MustEnterEnterableState()
+        {
+            var state = new Mock<IStateEnter>();
+            this.testee.Initialize(new Mock<IBasco<TestTrigger>>().Object, state.Object);
+
+            this.testee.Enter();
+
+            state.Verify(x => x.Enter(), Times.Once);
+        }
+
+        [Fact]
         public void Execute_MustExecuteState()
         {
             var state = new Mock<IState>();
@@ -43,6 +54,17 @@
             this.testee.Exit();
 
             basco.Verify(x => x.Stop(), Times.Once);
+        }
+
+        [Fact]
+        public void Exit_MustExitExitableState()
+        {
+            var state = new Mock<IStateExit>();
+            this.testee.Initialize(new Mock<IBasco<TestTrigger>>().Object, state.Object);
+
+            this.testee.Exit();
+
+            state.Verify(x => x.Exit(), Times.Once);
         }
     }
 }
