@@ -1,15 +1,12 @@
-﻿using System.Windows.Controls;
-
-namespace Basco.Sample.UsingNinject
+﻿namespace Basco.Sample.UsingNinject
 {
-    /// <summary>
-    /// Interaction logic for DriverControl.xaml
-    /// </summary>
+    using System.Windows.Controls;
+
     public partial class DriverControl : UserControl
     {
         public DriverControl()
         {
-            InitializeComponent();
+            this.InitializeComponent();
         }
     }
 }

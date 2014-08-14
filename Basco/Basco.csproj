@@ -36,6 +36,7 @@
   <ItemGroup>
     <Compile Include="Basco.cs" />
     <Compile Include="BascoException.cs" />
+    <Compile Include="BascoCompositeState.cs" />
     <Compile Include="Configuration\TransitionConfigurator.cs" />
     <Compile Include="Execution\BascoExecutor.cs" />
     <Compile Include="Configuration\BascoExtensions.cs" />
@@ -56,6 +57,7 @@
     <Compile Include="Execution\IBascoStateEnterExecutor.cs" />
     <Compile Include="Execution\IBascoExecutor.cs" />
     <Compile Include="Execution\IBascoStateExitExecutor.cs" />
+    <Compile Include="IBascoCompositeState.cs" />
     <Compile Include="IBascoInternal.cs" />
     <Compile Include="IBascoStatesFactory.cs" />
     <Compile Include="IBascoState.cs" />

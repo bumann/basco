@@ -19,7 +19,7 @@
                 Mock.Of<IBascoExecutor<TestTrigger>>(), 
                 Mock.Of<IBascoConfigurator<TestTrigger>>());
 
-            IBasco<TestTrigger> result = basco.In<SimpleTestState, TestTrigger>(configurator => { });
+            IBasco<TestTrigger> result = basco.For<SimpleTestState, TestTrigger>(configurator => { });
 
             result.Should().BeOfType<Basco<TestTrigger>>();
         }
@@ -35,7 +35,7 @@
                 Mock.Of<IBascoExecutor<TestTrigger>>(),
                 Mock.Of<IBascoConfigurator<TestTrigger>>());
 
-            basco.In<SimpleTestState, TestTrigger>(configurator => { });
+            basco.For<SimpleTestState, TestTrigger>(configurator => { });
 
             transitionCache.Verify(x => x.Add(typeof(SimpleTestState), It.IsAny<StateTransitions<TestTrigger>>()));
         }

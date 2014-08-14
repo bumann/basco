@@ -53,11 +53,10 @@
             subBasco.StateChanged += this.HandleSubStateChanged;
         }
 
-        public void Initialize(IEnumerable<IState> states, IState startState)
+        public void Initialize(IEnumerable<IState> states, Type startStateType)
         {
             this.scyano.Initialize(this);
             this.StatesCache.Initialize(this, states);
-            this.BascoExecutor.Initialize(startState);
 
             //// TODO
             this.BascoExecutor.StateChanged += this.OnStateChanged;
@@ -67,6 +66,7 @@
                 this.bascoConfigurator.Configurate(this);
             }
 
+            this.BascoExecutor.Initialize(startStateType);
             this.IsInitialized = true;
         }
 
@@ -119,17 +119,17 @@
             this.BascoExecutor.ChangeState(trigger);
         }
 
-        protected void OnStateChanged(object sender, EventArgs e)
+        private void HandleSubStateChanged(object sender, EventArgs e)
+        {
+            this.OnStateChanged(sender, e);
+        }
+
+        private void OnStateChanged(object sender, EventArgs e)
         {
             if (this.StateChanged != null)
             {
                 this.StateChanged(this, new EventArgs());
             }
-        }
-
-        private void HandleSubStateChanged(object sender, EventArgs e)
-        {
-            this.OnStateChanged(sender, e);
         }
     }
 }

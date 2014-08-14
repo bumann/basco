@@ -37,12 +37,34 @@
         }
 
         [Fact]
-        public void RetrieveState_MustReturnState()
+        public void RetrieveState_WhenMatchingComposite_MustReturnCompositeState()
+        {
+            var expectedState = new BascoCompositeState<TestTrigger, SimpleTestState>();
+            this.testee.AddComposite(expectedState);
+
+            IState result = this.testee.RetrieveState(typeof(SimpleTestState));
+
+            result.Should().Be(expectedState);
+        }
+
+        [Fact]
+        public void RetrieveState_WhenNotMatchingComposite_MustReturnState()
         {
             var expectedState = new SimpleTestState();
             this.testee.Initialize(Mock.Of<IBasco<TestTrigger>>(), new[] { expectedState });
 
             IState result = this.testee.RetrieveState(expectedState.GetType());
+
+            result.Should().Be(expectedState);
+        }
+
+        [Fact]
+        public void RetrieveBaseState_MustReturnState()
+        {
+            var expectedState = new SimpleTestState();
+            this.testee.Initialize(Mock.Of<IBasco<TestTrigger>>(), new[] { expectedState });
+
+            IState result = this.testee.RetrieveBaseState(expectedState.GetType());
 
             result.Should().Be(expectedState);
         }

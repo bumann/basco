@@ -12,7 +12,7 @@
 
         void AddTransitionCache(Type type, StateTransitions<TTransitionTrigger> stateTransitions);
 
-        void Initialize(IEnumerable<IState> states, IState startState);
+        void Initialize(IEnumerable<IState> states, Type startStateType);
 
         void Start();
 

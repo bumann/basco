@@ -19,7 +19,7 @@ namespace Basco.Execution
             exitableState.Exit();
         }
 
-        protected void OnStateExiting()
+        private void OnStateExiting()
         {
             if (this.StateExiting != null)
             {

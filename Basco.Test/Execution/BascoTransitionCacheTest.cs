@@ -45,5 +45,20 @@
 
             result.Should().Be(nextStateType);
         }
+
+        [Fact]
+        public void RetrieveNextStateType_WhenCurrentStateIsComposite_MustReturnCorrectNextStateType()
+        {
+            var baseStateType = typeof(object);
+            var nextStateType = typeof(string);
+            var state = Mock.Of<IBascoCompositeState<TestTrigger>>(x => x.BaseStateType == baseStateType);
+            var stateTransitions = new StateTransitions<TestTrigger>();
+            stateTransitions.Add(TestTrigger.TransitionOne, nextStateType);
+            this.testee.Add(baseStateType, stateTransitions);
+
+            Type result = this.testee.RetrieveNextStateType(state, TestTrigger.TransitionOne);
+
+            result.Should().Be(nextStateType);
+        }
     }
 }

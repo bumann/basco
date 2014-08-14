@@ -19,7 +19,7 @@ namespace Basco.Execution
             this.OnStateEntered();
         }
 
-        protected void OnStateEntered()
+        private void OnStateEntered()
         {
             if (this.StateEntered != null)
             {

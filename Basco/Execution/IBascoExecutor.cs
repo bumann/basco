@@ -5,7 +5,7 @@ namespace Basco.Execution
     public interface IBascoExecutor<in TTransitionTrigger> : IBascoState
         where TTransitionTrigger : IComparable
     {
-        void Initialize(IState startState);
+        void Initialize(Type startStateType);
 
         void Start(); 
 

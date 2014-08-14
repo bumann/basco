@@ -2,8 +2,10 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using Basco.Configuration;
     using Basco.Execution;
+    using Basco.Test.Utilities;
     using FluentAssertions;
     using Moq;
     using Scyano;
@@ -34,8 +36,9 @@
         [Fact]
         public void Initialize_MustInitializeStateCache()
         {
-            var states = Mock.Of<IEnumerable<IState>>();
-            this.testee.Initialize(states, Mock.Of<IState>());
+            var states = Mock.Of<IEnumerable<IState>>().ToList();
+
+            this.testee.Initialize(states, typeof(IState));
 
             this.stateCache.Verify(x => x.Initialize(this.testee, states));
         }
@@ -45,15 +48,15 @@
         {
             var startState = Mock.Of<IState>();
 
-            this.testee.Initialize(Mock.Of<IEnumerable<IState>>(), startState);
+            this.testee.Initialize(Mock.Of<IEnumerable<IState>>(), typeof(IState));
 
-            this.bascoExecutor.Verify(x => x.Initialize(startState));
+            this.bascoExecutor.Verify(x => x.Initialize(typeof(IState)));
         }
 
         [Fact]
         public void Initialize_MustInitializeModuleController()
         {
-            this.testee.Initialize(Mock.Of<IEnumerable<IState>>(), Mock.Of<IState>());
+            this.testee.Initialize(Mock.Of<IEnumerable<IState>>(), typeof(IState));
 
             this.scyano.Verify(x => x.Initialize(this.testee));
         }
@@ -61,7 +64,7 @@
         [Fact]
         public void Initialize_MustConfigurateTransitions()
         {
-            this.testee.Initialize(Mock.Of<IEnumerable<IState>>(), Mock.Of<IState>());
+            this.testee.Initialize(Mock.Of<IEnumerable<IState>>(), typeof(IState));
 
             this.bascoConfigurator.Verify(x => x.Configurate(this.testee));
         }
@@ -69,7 +72,7 @@
         [Fact]
         public void Initialize_MustSetInitializedToTrue()
         {
-            this.testee.Initialize(Mock.Of<IEnumerable<IState>>(), Mock.Of<IState>());
+            this.testee.Initialize(Mock.Of<IEnumerable<IState>>(), typeof(IState));
 
             this.testee.IsInitialized.Should().BeTrue();
         }
@@ -108,7 +111,7 @@
         [Fact]
         public void Start_WhenStartedTwice_MustThrow()
         {
-            this.testee.Initialize(Mock.Of<IEnumerable<IState>>(), Mock.Of<IState>());
+            this.testee.Initialize(Mock.Of<IEnumerable<IState>>(), typeof(IState));
 
             this.testee.Start();
 
@@ -119,7 +122,7 @@
         [Fact]
         public void Start_MustSetIsRunningToTrue()
         {
-            this.testee.Initialize(Mock.Of<IEnumerable<IState>>(), Mock.Of<IState>());
+            this.testee.Initialize(Mock.Of<IEnumerable<IState>>(), typeof(IState));
 
             this.testee.Start();
 
@@ -129,7 +132,7 @@
         [Fact]
         public void Start_MustStartScyano()
         {
-            this.testee.Initialize(Mock.Of<IEnumerable<IState>>(), Mock.Of<IState>());
+            this.testee.Initialize(Mock.Of<IEnumerable<IState>>(), typeof(IState));
 
             this.testee.Start();
 
@@ -139,7 +142,7 @@
         [Fact]
         public void Start_WhenStoppedBeforeRestart_MustNotThrow()
         {
-            this.testee.Initialize(Mock.Of<IEnumerable<IState>>(), Mock.Of<IState>());
+            this.testee.Initialize(Mock.Of<IEnumerable<IState>>(), typeof(IState));
             this.testee.Start();
             this.testee.Stop();
 
@@ -150,7 +153,7 @@
         [Fact]
         public void Start_WhenExceptionOccurs_MustStopScyano()
         {
-            this.testee.Initialize(Mock.Of<IEnumerable<IState>>(), Mock.Of<IState>());
+            this.testee.Initialize(Mock.Of<IEnumerable<IState>>(), typeof(IState));
             this.scyano.Setup(x => x.Start())
                 .Throws<Exception>();
 
@@ -163,7 +166,7 @@
         [Fact]
         public void Start_WhenExceptionOccurs_MustSetIsRunningToFalse()
         {
-            this.testee.Initialize(Mock.Of<IEnumerable<IState>>(), Mock.Of<IState>());
+            this.testee.Initialize(Mock.Of<IEnumerable<IState>>(), typeof(IState));
             this.scyano.Setup(x => x.Start())
                 .Throws<Exception>();
 
@@ -192,7 +195,7 @@
         [Fact]
         public void Stop_MustResetIsRunning()
         {
-            this.testee.Initialize(Mock.Of<IEnumerable<IState>>(), Mock.Of<IState>());
+            this.testee.Initialize(Mock.Of<IEnumerable<IState>>(), typeof(IState));
             this.testee.Start();
 
             this.testee.Stop();
@@ -224,12 +227,24 @@
         public void BascoExecutorStateChanged_WhenInitialized_MustRaiseStateChanged()
         {
             var called = false;
-            this.testee.Initialize(Mock.Of<IEnumerable<IState>>(), Mock.Of<IState>());
+            this.testee.Initialize(Mock.Of<IEnumerable<IState>>(), typeof(IState));
             this.testee.StateChanged += (sender, args) => { called = true; };
 
             this.bascoExecutor.Raise(x => x.StateChanged += null, new EventArgs());
 
             called.Should().BeTrue();
+        }
+
+        [Fact]
+        public void AddHierchary_MustAddEventHandlerForSubBasco()
+        {
+            var basco = new Mock<IBascoInternal<TestTrigger>>();
+            this.testee.AddHierchary(basco.Object);
+            this.testee.MonitorEvents();
+
+            basco.Raise(x => x.StateChanged += null, new EventArgs());
+
+            this.testee.ShouldRaise<IBascoInternal<TestTrigger>>(x => x.StateChanged += null);
         }
     }
 }

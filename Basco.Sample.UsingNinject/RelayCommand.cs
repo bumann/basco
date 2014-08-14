@@ -23,7 +23,7 @@ namespace Basco.Sample.UsingNinject
         /// </summary>
         /// <param name="execute">The execution logic.</param>
         /// <param name="canExecute">The execution status logic.</param>
-        public RelayCommand(Action<object> execute, Predicate<object> canExecute)
+        private RelayCommand(Action<object> execute, Predicate<object> canExecute)
         {
             if (execute == null)
             {

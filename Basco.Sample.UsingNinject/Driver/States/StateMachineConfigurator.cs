@@ -6,14 +6,14 @@
     {
         public void Configurate(IBascoInternal<TransitionTrigger> basco)
         {
-            basco.In<ConnectedState, TransitionTrigger>(x => x
+            basco.For<ConnectedState, TransitionTrigger>(x => x
                 .When(TransitionTrigger.Run).Goto<ProcessingState>());
 
-            basco.In<ProcessingState, TransitionTrigger>(x => x
+            basco.For<ProcessingState, TransitionTrigger>(x => x
                 .When(TransitionTrigger.Stop).Goto<ConnectedState>()
                 .When(TransitionTrigger.Error).Goto<ErrorState>());
 
-            basco.In<ErrorState, TransitionTrigger>(x => x
+            basco.For<ErrorState, TransitionTrigger>(x => x
                 .When(TransitionTrigger.Reset).Goto<ConnectedState>());
         }
     }

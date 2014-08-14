@@ -8,6 +8,7 @@ namespace Basco.Execution
         private readonly IBascoStatesProvider<TTransitionTrigger> bascoStatesProvider;
         private readonly IBascoStateEnterExecutor bascoStateEnterExecutor;
         private readonly IBascoStateExitExecutor bascoStateExitExecutor;
+        private Type initialStateType;
 
         public BascoExecutor(
             IBascoStatesProvider<TTransitionTrigger> bascoStatesProvider,
@@ -23,13 +24,19 @@ namespace Basco.Execution
 
         public IState CurrentState { get; private set; }
 
-        public void Initialize(IState startState)
+        public void Initialize(Type startStateType)
         {
-            this.CurrentState = startState;
+            this.initialStateType = startStateType;
 
+            if (this.initialStateType == null)
+            {
+                throw new BascoException(string.Format("No valid start state type [{0}] provided. Provide valid start state type in Initialize()!", this.initialStateType));
+            }
+
+            this.CurrentState = this.bascoStatesProvider.Retrieve(this.initialStateType);
             if (this.CurrentState == null)
             {
-                throw new BascoException(string.Format("No valid start state. Check configuration (IBascoConfigurator) of state [{0}] !", startState));
+                throw new BascoException(string.Format("No valid start state found. Check initialization with states and start state type [{0}] !", this.initialStateType));
             }
         }
 
@@ -68,18 +75,18 @@ namespace Basco.Execution
             this.RaiseStateChangedAndExecute();
         }
 
-        protected void OnStateChanged()
+        private void RaiseStateChangedAndExecute()
+        {
+            this.OnStateChanged();
+            this.CurrentState.Execute();
+        }
+
+        private void OnStateChanged()
         {
             if (this.StateChanged != null)
             {
                 this.StateChanged(this, new EventArgs());
             }
-        }
-
-        private void RaiseStateChangedAndExecute()
-        {
-            this.OnStateChanged();
-            this.CurrentState.Execute();
         }
     }
 }

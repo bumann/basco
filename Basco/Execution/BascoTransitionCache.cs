@@ -28,7 +28,14 @@ namespace Basco.Execution
             IStateTransitions<TTransitionTrigger> stateTransitions;
             try
             {
-                stateTransitions = this.TransitionPool[state.GetType()];
+                Type stateType = state.GetType();
+                IBascoCompositeState<TTransitionTrigger> composite;
+                if ((composite = state as IBascoCompositeState<TTransitionTrigger>) != null)
+                {
+                    stateType = composite.BaseStateType;
+                }
+
+                stateTransitions = this.TransitionPool[stateType];
             }
             catch (KeyNotFoundException ex)
             {

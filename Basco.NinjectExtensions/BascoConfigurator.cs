@@ -14,7 +14,7 @@
             this.bindingRoot.Bind(typeof(IStateTransitions<>)).To(typeof(StateTransitions<>));
         }
 
-        public string ScopeName { get; set; }
+        public string ScopeName { get; private set; }
 
         public IBascoConfigurator WithConfigurator<TBascoConfigurator>()
         {

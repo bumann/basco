@@ -19,7 +19,7 @@
         {
             this.Basco = basco;
             var allStates = states.ToList();
-            this.Basco.Initialize(allStates, allStates.SingleOrDefault(x => x is IConnectedState));
+            this.Basco.Initialize(allStates, typeof(ConnectedState));
             this.processingState = processingState;
         }
 

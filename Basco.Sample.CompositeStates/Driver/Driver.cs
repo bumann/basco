@@ -20,7 +20,7 @@
         {
             this.Basco = basco;
             var allStates = states.ToList();
-            this.Basco.Initialize(allStates, allStates.SingleOrDefault(x => x is IStateA));
+            this.Basco.Initialize(allStates, typeof(StateA));
             this.stateB = stateB;
             this.stateD = allStates.SingleOrDefault(x => x is ISubStateD) as ISubStateD;
             this.stateE = allStates.SingleOrDefault(x => x is ISubStateE) as ISubStateE;

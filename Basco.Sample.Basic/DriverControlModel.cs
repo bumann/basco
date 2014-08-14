@@ -22,9 +22,8 @@
         public DriverControlModel(IBasco<TransitionTrigger> basco)
         {
             this.basco = basco;
-            var connectedState = new ConnectedState();
-            var states = new List<IState> { connectedState, new ProcessingState(), new ErrorState() };
-            this.basco.Initialize(states, connectedState);
+            var states = new List<IState> { new ConnectedState(), new ProcessingState(), new ErrorState() };
+            this.basco.Initialize(states,  typeof(ConnectedState));
             this.basco.StateChanged += this.OnDriverStateChanged;
 
             this.processingState = (IProcessingState)this.basco.RetrieveState<ProcessingState>();
