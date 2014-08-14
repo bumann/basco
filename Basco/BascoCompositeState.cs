@@ -15,7 +15,7 @@
 
         public Type BaseStateType { get; private set; }
 
-        public IBasco<TTransitionTrigger> Basco { get; set; }
+        public IBasco<TTransitionTrigger> Basco { get; private set; }
 
         public void Initialize(IBasco<TTransitionTrigger> subBasco, IState state)
         {

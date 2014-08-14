@@ -48,6 +48,12 @@ namespace Basco.Execution
 
         public void Stop()
         {
+            var compositeState = this.CurrentState as IBascoCompositeState<TTransitionTrigger>;
+            if (compositeState != null)
+            {
+                compositeState.Basco.Stop();
+            }
+
             this.OnStateChanged();
         }
 

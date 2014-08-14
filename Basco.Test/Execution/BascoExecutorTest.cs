@@ -99,6 +99,21 @@
         }
 
         [Fact]
+        public void Stop_WhenCurrentStateIsCompositeState_MustStopBasco()
+        {
+            var composite = new Mock<IBascoCompositeState<TestTrigger>>();
+            var basco = new Mock<IBasco<TestTrigger>>();
+            composite.Setup(x => x.Basco).Returns(basco.Object);
+            this.stateProvider.Setup(x => x.Retrieve(It.IsAny<Type>()))
+                .Returns(composite.Object);
+            this.testee.Initialize(typeof(IState));
+
+            this.testee.Stop();
+
+            basco.Verify(x => x.Stop());
+        }
+
+        [Fact]
         public void Stop_MustRaiseStateChanged()
         {
             this.testee.Initialize(typeof(IState));
