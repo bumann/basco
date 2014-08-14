@@ -6,7 +6,7 @@ using System.Runtime.CompilerServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("Basco")]
-[assembly: AssemblyDescription("Simple and easy testable (TDD) state machine.\r\nOnly 3 simple steps needed.\r\n1) Define triggers (enum)\r\n2) Create states (IState)\r\n3) Implement configurator (IBascoConfigurator)\r\n")]
+[assembly: AssemblyDescription("Very simple and easy testable (TDD) hierarchical state machine.\r\nOnly 3 simple steps needed.\r\n1) Define triggers (enum)\r\n2) Create states (IState)\r\n3) Implement configurator (IBascoConfigurator)\r\n")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Bumann")]
 [assembly: AssemblyProduct("Basco")]
