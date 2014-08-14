@@ -4,13 +4,15 @@
         xmlns:CompositeStates="clr-namespace:Basco.Sample.CompositeStates"
         Title="Basco Demo V1.3 - Hierarchical State Machine / Composite States"
         Width="488"
-        Height="528">
+        Height="568">
     <Grid>
         <StackPanel Orientation="Horizontal">
             <CompositeStates:DriverControl x:Name="DriverOne"
+                                           Height="530"
                                            HorizontalAlignment="Left"
                                            VerticalAlignment="Top" />
             <CompositeStates:DriverControl x:Name="DriverTwo"
+                                           Height="530"
                                            HorizontalAlignment="Left"
                                            VerticalAlignment="Top" />
         </StackPanel>

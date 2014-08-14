@@ -13,12 +13,12 @@
         }
 
         [Fact]
-        public void Execute_MustStartSubBasco()
+        public void Enter_MustStartSubBasco()
         {
             var basco = new Mock<IBasco<TestTrigger>>();
             this.testee.Initialize(basco.Object, Mock.Of<IState>());
 
-            this.testee.Execute();
+            this.testee.Enter();
 
             basco.Verify(x => x.Start(), Times.Once);
         }
@@ -35,12 +35,12 @@
         }
 
         [Fact]
-        public void Execute_MustStopSubBasco()
+        public void Exit_MustStopSubBasco()
         {
             var basco = new Mock<IBasco<TestTrigger>>();
             this.testee.Initialize(basco.Object, Mock.Of<IState>());
 
-            this.testee.Execute();
+            this.testee.Exit();
 
             basco.Verify(x => x.Stop(), Times.Once);
         }

@@ -6,7 +6,6 @@
         where TTransitionTrigger : IComparable
         where TState : IState
     {
-        private IBasco<TTransitionTrigger> basco;
         private IState baseState;
 
         public BascoCompositeState()
@@ -16,17 +15,38 @@
 
         public Type BaseStateType { get; private set; }
 
+        public IBasco<TTransitionTrigger> Basco { get; set; }
+
         public void Initialize(IBasco<TTransitionTrigger> subBasco, IState state)
         {
-            this.basco = subBasco;
+            this.Basco = subBasco;
             this.baseState = state;
+        }
+
+        public void Enter()
+        {
+            this.Basco.Start();
+            var enterableState = this.baseState as IStateEnter;
+            if (enterableState != null)
+            {
+                enterableState.Enter();
+            }
         }
 
         public void Execute()
         {
-            this.basco.Start();
             this.baseState.Execute();
-            this.basco.Stop();
+        }
+
+        public void Exit()
+        {
+            var exitableState = this.baseState as IStateExit;
+            if (exitableState != null)
+            {
+                exitableState.Exit(); 
+            }
+
+            this.Basco.Stop();
         }
     }
 }

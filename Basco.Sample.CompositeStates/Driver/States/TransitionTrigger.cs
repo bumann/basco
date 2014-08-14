@@ -3,16 +3,14 @@
     public enum TransitionTrigger
     {
         Start,
-        GotoA,
-        GotoB,
-        GotoC,
-        GotoD,
-        GotoE,
-        GotoF,
-        GotoG,
         Run,
+        Pause,
         Error,
         Reset,
-        Stop
+        Stop,
+        ContinueD,
+        ContinueE,
+        ContinueF,
+        ContinueG,
     }
 }

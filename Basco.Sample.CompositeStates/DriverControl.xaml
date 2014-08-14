@@ -4,9 +4,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              Width="200"
-             Height="484"
              d:DataContext="{d:DesignData DriverViewModel}"
-             mc:Ignorable="d">
+             mc:Ignorable="d" Height="503.2">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="271*" />
@@ -14,7 +13,7 @@
         </Grid.RowDefinitions>
         <StackPanel Grid.RowSpan="2"
                     Width="162"
-                    Height="484"
+                    Height="493"
                     Margin="19,0"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Top">
@@ -40,20 +39,20 @@
                 <Grid>
                     <Ellipse Width="140"
                              Margin="0,0,1,0"
-                             Fill="#FFFACC01"
+                             Fill="#FF59FF00"
                              Stroke="Black"
                              Visibility="{Binding Path=ProcessingVisibility}" />
                     <TextBlock Margin="20,20,20,20"
                                HorizontalAlignment="Center"
                                VerticalAlignment="Center"
-                               Text="State B"
+                               Text="Running"
                                TextAlignment="Center"
                                Visibility="{Binding Path=ProcessingVisibility}" />
 
                     <Grid Width="40"
                           Height="40"
                           Margin="0,0,84,0">
-                        <Ellipse Fill="#FFFFE988"
+                        <Ellipse Fill="#FFACFF80"
                                  Stroke="Black"
                                  Visibility="{Binding ProcessingSubFVisibility}" />
                         <TextBlock HorizontalAlignment="Center"
@@ -65,7 +64,7 @@
                     <Grid Width="40"
                           Height="40"
                           Margin="84,0,0,0">
-                        <Ellipse Fill="#FFFFE988"
+                        <Ellipse Fill="#FFACFF80"
                                  Stroke="Black"
                                  Visibility="{Binding ProcessingSubGVisibility}" />
                         <TextBlock HorizontalAlignment="Center"
@@ -81,20 +80,20 @@
                     <Ellipse x:Name="State_A"
                              Width="140"
                              Margin="0,0,1,0"
-                             Fill="#FF59FF00"
+                             Fill="#FFFACC01"
                              Stroke="Black"
                              Visibility="{Binding Path=ConnectedVisibility}" />
                     <TextBlock Margin="20,20,20,20"
                                HorizontalAlignment="Center"
                                VerticalAlignment="Center"
-                               Text="State A"
+                               Text="Paused"
                                TextAlignment="Center"
                                Visibility="{Binding Path=ConnectedVisibility}" />
 
                     <Grid Width="40"
                           Height="40"
                           Margin="0,0,84,0">
-                        <Ellipse Fill="#FFACFF80"
+                        <Ellipse Fill="#FFFFE988"
                                  Stroke="Black"
                                  Visibility="{Binding ConnectedSubDVisibility}" />
                         <TextBlock HorizontalAlignment="Center"
@@ -106,7 +105,7 @@
                     <Grid Width="40"
                           Height="40"
                           Margin="84,0,0,0">
-                        <Ellipse Fill="#FFACFF80"
+                        <Ellipse Fill="#FFFFE988"
                                  Stroke="Black"
                                  Visibility="{Binding ConnectedSubEVisibility}" />
                         <TextBlock HorizontalAlignment="Center"
@@ -123,6 +122,7 @@
                     Content="Start"
                     IsEnabled="{Binding CanStart}" />
             <Button Command="{Binding Path=RunCommand}" Content="Run" />
+            <Button Command="{Binding Path=PauseCommand}" Content="Pause" />
             <Button Command="{Binding Path=ErrorCommand}" Content="Error" />
             <Button Command="{Binding Path=ResetCommand}" Content="Reset" />
             <Button Command="{Binding Path=StopCommand}"

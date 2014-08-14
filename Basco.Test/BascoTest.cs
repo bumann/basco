@@ -36,7 +36,7 @@
         [Fact]
         public void Initialize_MustInitializeStateCache()
         {
-            var states = Mock.Of<IEnumerable<IState>>().ToList();
+            var states = Mock.Of<IEnumerable<IState>>();
 
             this.testee.Initialize(states, typeof(IState));
 

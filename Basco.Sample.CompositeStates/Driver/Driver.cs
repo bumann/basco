@@ -13,8 +13,6 @@
         public const string DriverScope = "DriverScope";
 
         private readonly IStateB stateB;
-        private readonly ISubStateD stateD;
-        private readonly ISubStateE stateE;
 
         public Driver(IBasco<TransitionTrigger> basco, IEnumerable<IState> states, IStateB stateB)
         {
@@ -22,8 +20,6 @@
             var allStates = states.ToList();
             this.Basco.Initialize(allStates, typeof(StateA));
             this.stateB = stateB;
-            this.stateD = allStates.SingleOrDefault(x => x is ISubStateD) as ISubStateD;
-            this.stateE = allStates.SingleOrDefault(x => x is ISubStateE) as ISubStateE;
         }
 
         public IBasco<TransitionTrigger> Basco { get; private set; }
@@ -31,22 +27,6 @@
         public IStateB StateB
         {
             get { return this.stateB; }
-        }
-
-        public bool SubStateDIsActive 
-        {
-            get
-            {
-                return this.stateD.Active;
-            }
-        }
-
-        public bool SubStateEIsActive
-        {
-            get
-            {
-                return this.stateE.Active;
-            }
         }
     }
 }

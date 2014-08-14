@@ -15,6 +15,7 @@
 
         private ICommand startCommand;
         private ICommand runCommand;
+        private ICommand pauseCommand;
         private ICommand errorCommand;
         private ICommand resetCommand;
         private ICommand stopCommand;
@@ -61,6 +62,11 @@
             get { return this.runCommand ?? (this.runCommand = new RelayCommand(param => this.Run())); }
         }
 
+        public ICommand PauseCommand
+        {
+            get { return this.pauseCommand ?? (this.pauseCommand = new RelayCommand(param => this.Pause())); }
+        }
+
         public ICommand ErrorCommand
         {
             get { return this.errorCommand ?? (this.errorCommand = new RelayCommand(param => this.Error())); }
@@ -86,6 +92,11 @@
             this.driver.Basco.Trigger(TransitionTrigger.Run);
         }
 
+        public void Pause()
+        {
+            this.driver.Basco.Trigger(TransitionTrigger.Pause);
+        }
+
         public void Error()
         {
             this.driver.Basco.Trigger(TransitionTrigger.Error);
@@ -106,28 +117,38 @@
             this.CanStart = !this.driver.Basco.IsRunning;
             this.CanStop = this.driver.Basco.IsRunning;
 
-            this.ConnectedVisibility = this.driver.Basco.IsRunning && this.driver.Basco.CurrentState is IStateA  ? Visibility.Visible : Visibility.Hidden;
-            this.ConnectedSubDVisibility = this.driver.SubStateDIsActive ? Visibility.Visible : Visibility.Hidden;
-            this.ConnectedSubEVisibility = this.driver.SubStateEIsActive ? Visibility.Visible : Visibility.Hidden;
-            if (this.ConnectedSubDVisibility == Visibility.Visible || this.ConnectedSubEVisibility == Visibility.Visible)
+            this.ConnectedVisibility = this.driver.Basco.IsRunning && this.driver.Basco.CurrentState is IStateA ? Visibility.Visible : Visibility.Hidden;
+            this.ConnectedSubDVisibility = Visibility.Hidden;
+            this.ConnectedSubEVisibility = Visibility.Hidden;
+
+            var composite = this.driver.Basco.CurrentState as IBascoCompositeState<TransitionTrigger>;
+            if (composite != null)
             {
-                this.ConnectedVisibility = Visibility.Visible;
+                this.ProcessingSubFVisibility = composite.Basco.CurrentState is SubStateF ? Visibility.Visible : Visibility.Hidden;
+                this.ProcessingSubGVisibility = composite.Basco.CurrentState is SubStateG ? Visibility.Visible : Visibility.Hidden;
+                if (this.ProcessingSubFVisibility == Visibility.Visible || this.ProcessingSubGVisibility == Visibility.Visible)
+                {
+                    this.ProcessingVisibility = Visibility.Visible;
+                }
+            }
+            else
+            {
+                this.HideProcessingState();
             }
 
-            this.ProcessingVisibility = this.driver.Basco.CurrentState is IStateB ? Visibility.Visible : Visibility.Hidden;
-            this.ProcessingSubFVisibility = this.driver.Basco.CurrentState is ISubStateF ? Visibility.Visible : Visibility.Hidden;
-            this.ProcessingSubGVisibility = this.driver.Basco.CurrentState is ISubStateG ? Visibility.Visible : Visibility.Hidden;
-            if (this.ProcessingSubFVisibility == Visibility.Visible || this.ProcessingSubGVisibility == Visibility.Visible)
-            {
-                this.ProcessingVisibility = Visibility.Visible;
-            }
-            
             this.ErrorVisibility = this.driver.Basco.CurrentState is IStateC ? Visibility.Visible : Visibility.Hidden;
         }
 
         private void OnStateBChanged(object sender, EventArgs eventArgs)
         {
             this.DisplayInfo = "Items: " + this.stateB.ItemCount;
+        }
+
+        private void HideProcessingState()
+        {
+            this.ProcessingVisibility = Visibility.Hidden;
+            this.ProcessingSubFVisibility = Visibility.Hidden;
+            this.ProcessingSubGVisibility = Visibility.Hidden;
         }
     }
 }

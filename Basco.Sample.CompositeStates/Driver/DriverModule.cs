@@ -1,6 +1,5 @@
 ﻿namespace Basco.Sample.CompositeStates.Driver
 {
-    using Basco.Sample.CompositeStates.Driver.States;
     using Ninject.Extensions.NamedScope;
     using Ninject.Modules;
 

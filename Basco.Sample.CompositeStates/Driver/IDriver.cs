@@ -7,9 +7,5 @@
         IBasco<TransitionTrigger> Basco { get; }
 
         IStateB StateB { get; }
-
-        bool SubStateDIsActive { get; }
-
-        bool SubStateEIsActive { get; }
     }
 }

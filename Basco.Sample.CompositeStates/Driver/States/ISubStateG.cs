@@ -1,6 +1,6 @@
 ﻿namespace Basco.Sample.CompositeStates.Driver.States
 {
-    public interface ISubStateG : IState
+    public interface ISubStateG : IStateUsingBasco<TransitionTrigger>
     {
     }
 }
