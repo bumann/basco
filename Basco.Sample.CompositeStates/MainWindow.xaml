@@ -3,8 +3,8 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:CompositeStates="clr-namespace:Basco.Sample.CompositeStates"
         Title="Basco Demo V1.3 - Hierarchical State Machine / Composite States"
-        Width="488"
-        Height="568">
+        Width="807.2"
+        Height="534.4">
     <Grid>
         <StackPanel Orientation="Horizontal">
             <CompositeStates:DriverControl x:Name="DriverOne"
@@ -12,6 +12,14 @@
                                            HorizontalAlignment="Left"
                                            VerticalAlignment="Top" />
             <CompositeStates:DriverControl x:Name="DriverTwo"
+                                           Height="530"
+                                           HorizontalAlignment="Left"
+                                           VerticalAlignment="Top" />
+            <CompositeStates:DriverControl x:Name="DriverThree"
+                                           Height="530"
+                                           HorizontalAlignment="Left"
+                                           VerticalAlignment="Top" />
+            <CompositeStates:DriverControl x:Name="DriverFour"
                                            Height="530"
                                            HorizontalAlignment="Left"
                                            VerticalAlignment="Top" />
