@@ -2,7 +2,6 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
     using Basco.Configuration;
     using Basco.Execution;
     using Basco.Test.Utilities;
@@ -46,8 +45,6 @@
         [Fact]
         public void Initialize_MustInitializeBascoExecutor()
         {
-            var startState = Mock.Of<IState>();
-
             this.testee.Initialize(Mock.Of<IEnumerable<IState>>(), typeof(IState));
 
             this.bascoExecutor.Verify(x => x.Initialize(typeof(IState)));
@@ -211,6 +208,25 @@
             this.testee.Trigger(ExpectedTrigger);
 
             this.scyano.Verify(x => x.Enqueue(ExpectedTrigger));
+        }
+
+        [Fact]
+        public void TriggerConsumer_MustTriggerSubBascos()
+        {
+            const TestTrigger ExpectedTrigger = TestTrigger.TransitionOne;
+            var subBasco1 = new Mock<IBascoInternal<TestTrigger>> { DefaultValue = DefaultValue.Mock };
+            var subBasco2 = new Mock<IBascoInternal<TestTrigger>> { DefaultValue = DefaultValue.Mock };
+            var executor1 = new Mock<IBascoExecutor<TestTrigger>>();
+            var executor2 = new Mock<IBascoExecutor<TestTrigger>>();
+            subBasco1.Setup(x => x.BascoExecutor).Returns(executor1.Object);
+            subBasco2.Setup(x => x.BascoExecutor).Returns(executor2.Object);
+            this.testee.AddHierchary(subBasco1.Object);
+            this.testee.AddHierchary(subBasco2.Object);
+
+            this.testee.TriggerConsumer(ExpectedTrigger);
+
+            executor1.Verify(x => x.ChangeState(ExpectedTrigger));
+            executor2.Verify(x => x.ChangeState(ExpectedTrigger));
         }
 
         [Fact]

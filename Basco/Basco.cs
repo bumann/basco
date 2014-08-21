@@ -11,6 +11,7 @@
     {
         private readonly IScyano scyano;
         private readonly IBascoConfigurator<TTransitionTrigger> bascoConfigurator;
+        private readonly IList<IBascoInternal<TTransitionTrigger>> fsmList;
 
         public Basco(
             IScyano scyano,
@@ -24,6 +25,7 @@
             this.TransitionCache = transitionCache;
             this.BascoExecutor = bascoExecutor;
             this.bascoConfigurator = bascoConfigurator;
+            this.fsmList = new List<IBascoInternal<TTransitionTrigger>>();
         }
 
         public event EventHandler StateChanged;
@@ -50,6 +52,7 @@
 
         public void AddHierchary(IBascoInternal<TTransitionTrigger> subBasco)
         {
+            this.fsmList.Add(subBasco);
             subBasco.StateChanged += this.HandleSubStateChanged;
         }
 
@@ -116,6 +119,11 @@
         [MessageConsumer]
         public void TriggerConsumer(TTransitionTrigger trigger)
         {
+            foreach (var basco in this.fsmList)
+            {
+                basco.BascoExecutor.ChangeState(trigger);
+            }
+
             this.BascoExecutor.ChangeState(trigger);
         }
 

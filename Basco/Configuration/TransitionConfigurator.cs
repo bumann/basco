@@ -42,7 +42,6 @@ namespace Basco.Configuration
             IBascoInternal<TTransitionTrigger> subBasco = BascoFactory.Create<TTransitionTrigger>();
             bascoConfigurator(subBasco);
             Type startStateType = subBasco.TransitionCache.TransitionPool.Keys.FirstOrDefault();
-            //// IState startState = this.basco.StatesCache.RetrieveState(startStateType);
             List<Type> stateTypes = subBasco.TransitionCache.TransitionPool.Keys.ToList();
             var states = this.basco.StatesCache.RetrieveStates(stateTypes);
             subBasco.Initialize(states, startStateType);

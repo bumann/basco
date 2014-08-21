@@ -21,6 +21,10 @@
         {
             this.Basco = subBasco;
             this.baseState = state;
+            if (this.baseState == null)
+            {
+                throw new BascoException("Composite state not found! Provide necessary state or fix bindings.");
+            }
         }
 
         public void Enter()

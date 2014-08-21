@@ -1,5 +1,6 @@
 ﻿namespace Basco.Test
 {
+    using FluentAssertions;
     using Moq;
     using Xunit;
 
@@ -10,6 +11,15 @@
         public BascoCompositeStateTest()
         {
             this.testee = new BascoCompositeState<TestTrigger, SimpleTestState>();
+        }
+
+        [Fact]
+        public void Initialize_WhenStateNull_MustThrow()
+        {
+            var basco = new Mock<IBasco<TestTrigger>>();
+
+            this.testee.Invoking(x => x.Initialize(basco.Object, null))
+                .ShouldThrow<BascoException>();
         }
 
         [Fact]
