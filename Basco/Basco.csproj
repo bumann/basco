@@ -37,6 +37,8 @@
     <Compile Include="Basco.cs" />
     <Compile Include="BascoException.cs" />
     <Compile Include="BascoCompositeState.cs" />
+    <Compile Include="Configuration\CompositeStateConfigurator.cs" />
+    <Compile Include="Configuration\ICompositeStateConfigurator.cs" />
     <Compile Include="Configuration\StateConfigurator.cs" />
     <Compile Include="Execution\BascoExecutor.cs" />
     <Compile Include="Configuration\BascoExtensions.cs" />

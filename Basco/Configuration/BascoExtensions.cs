@@ -30,12 +30,12 @@
         /// <param name="basco">The hierarchical state machine to configure.</param>
         /// <param name="configurator">Action to configure the transitions of the composite state.</param>
         /// <returns>The hierarchical state machine for fluent configuration.</returns>
-        public static IBascoInternal<TTransitionTrigger> ForComposite<TState, TTransitionTrigger>(this IBascoInternal<TTransitionTrigger> basco, Action<IStateConfigurator<TTransitionTrigger>> configurator)
+        public static IBascoInternal<TTransitionTrigger> ForComposite<TState, TTransitionTrigger>(this IBascoInternal<TTransitionTrigger> basco, Action<ICompositeStateConfigurator<TTransitionTrigger>> configurator)
             where TState : class, IState
             where TTransitionTrigger : IComparable
         {
-            var transitionConfigurator = new StateConfigurator<TTransitionTrigger>(basco);
-            transitionConfigurator.ForCompositeState<TState>();
+            var transitionConfigurator = new CompositeStateConfigurator<TTransitionTrigger>(basco);
+            transitionConfigurator.ForState<TState>();
             configurator(transitionConfigurator);
             return basco;
         }
