@@ -24,6 +24,8 @@ namespace Basco.Execution
 
         public IState CurrentState { get; private set; }
 
+        public bool AlwaysStartWithInitialState { private get; set; }
+
         public void Initialize(Type startStateType)
         {
             this.initialStateType = startStateType;
@@ -42,6 +44,11 @@ namespace Basco.Execution
 
         public void Start()
         {
+            if (this.AlwaysStartWithInitialState)
+            {
+                this.CurrentState = this.bascoStatesProvider.Retrieve(this.initialStateType);
+            }
+
             this.bascoStateEnterExecutor.Enter(this.CurrentState);
             this.RaiseStateChangedAndExecute();
         }

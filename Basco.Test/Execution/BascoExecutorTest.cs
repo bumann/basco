@@ -65,6 +65,45 @@
         }
 
         [Fact]
+        public void Start_WhenStartWithInitialState_MustRetrieveInitialState()
+        {
+            Type startStateType = typeof(IStateEnter);
+            this.testee.AlwaysStartWithInitialState = true;
+            this.testee.Initialize(startStateType);
+            this.stateProvider.ResetCalls();
+
+            this.testee.Start();
+
+            this.stateProvider.Verify(x => x.Retrieve(startStateType), Times.Once);
+        }
+
+        [Fact]
+        public void Start_WhenStartWithInitialState_MustSetInitialStateAsCurrent()
+        {
+            var expectedState = Mock.Of<IState>();
+            this.testee.AlwaysStartWithInitialState = true;
+            this.testee.Initialize(typeof(IStateEnter));
+            this.stateProvider.Setup(x => x.Retrieve(It.IsAny<Type>()))
+                .Returns(expectedState);
+
+            this.testee.Start();
+
+            this.testee.CurrentState.Should().Be(expectedState);
+        }
+
+        [Fact]
+        public void Start_WhenNotStartWithInitialState_MustNotRetrieveInitialState()
+        {
+            Type startStateType = typeof(IStateEnter);
+            this.testee.Initialize(startStateType);
+            this.stateProvider.ResetCalls();
+
+            this.testee.Start();
+
+            this.stateProvider.Verify(x => x.Retrieve(startStateType), Times.Never);
+        }
+
+        [Fact]
         public void Start_MustEnterState()
         {
             this.testee.Initialize(typeof(IStateEnter));

@@ -4,15 +4,16 @@ namespace Basco.Configuration
     using System.Collections.Generic;
     using System.Linq;
 
-    internal class TransitionConfigurator<TTransitionTrigger> : ITransitionConfigurator<TTransitionTrigger>
+    internal class StateConfigurator<TTransitionTrigger> : IStateConfigurator<TTransitionTrigger>
         where TTransitionTrigger : IComparable
     {
         private readonly IBascoInternal<TTransitionTrigger> basco;
         private readonly StateTransitions<TTransitionTrigger> stateTransitions;
         private TTransitionTrigger nextTrigger;
         private IBascoCompositeState<TTransitionTrigger> compositeState;
+        private IBascoInternal<TTransitionTrigger> subBasco;
 
-        public TransitionConfigurator(IBascoInternal<TTransitionTrigger> basco)
+        public StateConfigurator(IBascoInternal<TTransitionTrigger> basco)
         {
             this.basco = basco;
             this.stateTransitions = new StateTransitions<TTransitionTrigger>();
@@ -32,14 +33,14 @@ namespace Basco.Configuration
             this.ForState<TState>();
         }
 
-        public ITransitionConfigurator<TTransitionTrigger> WithSubStates(Action<IBascoInternal<TTransitionTrigger>> bascoConfigurator)
+        public IStateConfigurator<TTransitionTrigger> WithSubStates(Action<IBascoInternal<TTransitionTrigger>> bascoConfigurator)
         {
             if (this.compositeState == null)
             {
                 throw new BascoException("No composite state defined. Use ForComposite<YourState, YourTrigger> in your configuration!");
             }
 
-            IBascoInternal<TTransitionTrigger> subBasco = BascoFactory.Create<TTransitionTrigger>();
+            this.subBasco = BascoFactory.Create<TTransitionTrigger>();
             bascoConfigurator(subBasco);
             Type startStateType = subBasco.TransitionCache.TransitionPool.Keys.FirstOrDefault();
             List<Type> stateTypes = subBasco.TransitionCache.TransitionPool.Keys.ToList();
@@ -52,13 +53,19 @@ namespace Basco.Configuration
             return this;
         }
 
-        public ITransitionConfigurator<TTransitionTrigger> When(TTransitionTrigger trigger)
+        public IStateConfigurator<TTransitionTrigger> OnEnterAlwaysStartWithInitialState()
+        {
+            this.subBasco.BascoExecutor.AlwaysStartWithInitialState = true;
+            return this;
+        }
+
+        public IStateConfigurator<TTransitionTrigger> When(TTransitionTrigger trigger)
         {
             this.nextTrigger = trigger;
             return this;
         }
 
-        public ITransitionConfigurator<TTransitionTrigger> Goto<TTargetState>()
+        public IStateConfigurator<TTransitionTrigger> Goto<TTargetState>()
             where TTargetState : class
         {
             this.stateTransitions.Add(this.nextTrigger, typeof(TTargetState));

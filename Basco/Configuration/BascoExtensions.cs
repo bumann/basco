@@ -12,11 +12,11 @@
         /// <param name="basco">The hierarchical state machine to configure.</param>
         /// <param name="configurator">Action to configure the transitions of the state.</param>
         /// <returns>The hierarchical state machine for fluent configuration.</returns>
-        public static IBascoInternal<TTransitionTrigger> For<TState, TTransitionTrigger>(this IBascoInternal<TTransitionTrigger> basco, Action<ITransitionConfigurator<TTransitionTrigger>> configurator)
+        public static IBascoInternal<TTransitionTrigger> For<TState, TTransitionTrigger>(this IBascoInternal<TTransitionTrigger> basco, Action<IStateConfigurator<TTransitionTrigger>> configurator)
             where TState : class, IState
             where TTransitionTrigger : IComparable
         {
-            var transitionConfigurator = new TransitionConfigurator<TTransitionTrigger>(basco);
+            var transitionConfigurator = new StateConfigurator<TTransitionTrigger>(basco);
             transitionConfigurator.ForState<TState>();
             configurator(transitionConfigurator);
             return basco;
@@ -30,11 +30,11 @@
         /// <param name="basco">The hierarchical state machine to configure.</param>
         /// <param name="configurator">Action to configure the transitions of the composite state.</param>
         /// <returns>The hierarchical state machine for fluent configuration.</returns>
-        public static IBascoInternal<TTransitionTrigger> ForComposite<TState, TTransitionTrigger>(this IBascoInternal<TTransitionTrigger> basco, Action<ITransitionConfigurator<TTransitionTrigger>> configurator)
+        public static IBascoInternal<TTransitionTrigger> ForComposite<TState, TTransitionTrigger>(this IBascoInternal<TTransitionTrigger> basco, Action<IStateConfigurator<TTransitionTrigger>> configurator)
             where TState : class, IState
             where TTransitionTrigger : IComparable
         {
-            var transitionConfigurator = new TransitionConfigurator<TTransitionTrigger>(basco);
+            var transitionConfigurator = new StateConfigurator<TTransitionTrigger>(basco);
             transitionConfigurator.ForCompositeState<TState>();
             configurator(transitionConfigurator);
             return basco;
