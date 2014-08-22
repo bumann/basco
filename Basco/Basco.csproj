@@ -63,9 +63,6 @@
     <Compile Include="IBascoState.cs" />
     <Compile Include="IBascoStateCache.cs" />
     <Compile Include="IStateUsingBasco.cs" />
-    <Compile Include="ICompositeStateConfigurator.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="IState.cs" />
     <Compile Include="IStateEnter.cs" />
     <Compile Include="IStateExit.cs" />
