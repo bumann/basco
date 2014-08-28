@@ -1,6 +1,7 @@
 namespace Basco.Execution
 {
     using System;
+    using Basco.Log;
 
     public class BascoExecutor<TTransitionTrigger> : IBascoExecutor<TTransitionTrigger>
         where TTransitionTrigger : IComparable
@@ -32,18 +33,24 @@ namespace Basco.Execution
 
             if (this.initialStateType == null)
             {
-                throw new BascoException(string.Format("No valid start state type [{0}] provided. Provide valid start state type in Initialize()!", this.initialStateType));
+                var bascoException = new BascoException(string.Format("No valid start state type [{0}] provided. Provide valid start state type in Initialize()!", this.initialStateType));
+                Logger.LogError(bascoException, "state machine execution error");
+                throw bascoException;
             }
 
             this.CurrentState = this.bascoStatesProvider.Retrieve(this.initialStateType);
             if (this.CurrentState == null)
             {
-                throw new BascoException(string.Format("No valid start state found. Check initialization with states and start state type [{0}] !", this.initialStateType));
+                var bascoException = new BascoException(string.Format("No valid start state found. Check initialization with states and start state type [{0}] !", this.initialStateType));
+                Logger.LogError(bascoException, "state machine execution error");
+                throw bascoException;
             }
         }
 
         public void Start()
         {
+            Logger.LogDebug("state machine started.");
+
             if (this.AlwaysStartWithInitialState)
             {
                 this.CurrentState = this.bascoStatesProvider.Retrieve(this.initialStateType);
@@ -62,6 +69,8 @@ namespace Basco.Execution
             }
 
             this.OnStateChanged();
+
+            Logger.LogDebug("state machine stopped.");
         }
 
         public IState RetrieveState<TState>() where TState : class, IState
@@ -71,6 +80,8 @@ namespace Basco.Execution
 
         public void ChangeState(TTransitionTrigger trigger)
         {
+            Logger.LogDebug("state machine triggered with {0}.", trigger);
+
             if (this.CurrentState == null)
             {
                 return;
@@ -82,10 +93,13 @@ namespace Basco.Execution
                 return;
             }
 
+            Logger.LogDebug("state machine exiting state {0}.", this.CurrentState);
             this.bascoStateExitExecutor.Exit(this.CurrentState);
             this.CurrentState = nextState;
+            Logger.LogDebug("state machine entering state {0}.", this.CurrentState);
             this.bascoStateEnterExecutor.Enter(this.CurrentState);
             this.RaiseStateChangedAndExecute();
+            Logger.LogDebug("state machine entered state {0}.", this.CurrentState);
         }
 
         private void RaiseStateChangedAndExecute()

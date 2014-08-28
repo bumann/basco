@@ -54,6 +54,8 @@
     <Compile Include="Execution\IBascoTransitionCache.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Log\ILogger.cs" />
+    <Compile Include="Log\Logger.cs" />
     <Compile Include="IBasco.cs" />
     <Compile Include="Configuration\IBascoConfigurator.cs" />
     <Compile Include="Execution\IBascoStateEnterExecutor.cs" />
