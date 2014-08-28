@@ -2,6 +2,7 @@ namespace Basco.Execution
 {
     using System;
     using System.Collections.Generic;
+    using Basco.Configuration;
 
     public class BascoTransitionCache<TTransitionTrigger> : IBascoTransitionCache<TTransitionTrigger>
         where TTransitionTrigger : IComparable

@@ -1,6 +1,7 @@
 ﻿namespace Basco.Test.Execution
 {
     using System;
+    using Basco.Configuration;
     using Basco.Execution;
     using FluentAssertions;
     using Moq;

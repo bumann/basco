@@ -1,7 +1,8 @@
-﻿namespace Basco.Test
+﻿namespace Basco.Test.Configuration
 {
     using System;
     using System.Collections.Generic;
+    using Basco.Configuration;
     using FluentAssertions;
     using Xunit;
 

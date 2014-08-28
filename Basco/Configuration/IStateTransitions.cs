@@ -1,4 +1,4 @@
-﻿namespace Basco
+﻿namespace Basco.Configuration
 {
     using System;
     using System.Collections.Generic;

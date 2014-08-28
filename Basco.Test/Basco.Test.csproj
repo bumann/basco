@@ -77,8 +77,8 @@
     <Compile Include="SimpleTestState.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="StateTransitionsExtensionsTest.cs" />
-    <Compile Include="StateTransitionsTest.cs" />
+    <Compile Include="Configuration\StateTransitionsExtensionsTest.cs" />
+    <Compile Include="Configuration\StateTransitionsTest.cs" />
     <Compile Include="TestTrigger.cs" />
   </ItemGroup>
   <ItemGroup>
