@@ -2,6 +2,7 @@
 {
     using System;
     using Basco.Execution;
+    using Basco.Log;
     using Basco.Test.Utilities;
     using FluentAssertions;
     using Moq;
@@ -20,6 +21,7 @@
             this.enterExecutor = new Mock<IBascoStateEnterExecutor>();
             this.exitExecutor = new Mock<IBascoStateExitExecutor>();
             this.testee = new BascoExecutor<TestTrigger>(
+                new Mock<IBascoLoggerProvider> { DefaultValue = DefaultValue.Mock }.Object,
                 this.stateProvider.Object, 
                 this.enterExecutor.Object,
                 this.exitExecutor.Object);

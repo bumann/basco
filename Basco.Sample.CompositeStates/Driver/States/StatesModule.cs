@@ -1,5 +1,7 @@
 ﻿namespace Basco.Sample.CompositeStates.Driver.States
 {
+    using Basco.Log;
+    using Basco.Log4NetExtensions;
     using Basco.NinjectExtensions;
     using Ninject.Extensions.NamedScope;
     using Ninject.Modules;
@@ -10,6 +12,7 @@
         {
             this.BindStateMachine();
             this.BindStates();
+            this.BindLogger();
         }
 
         private void BindStateMachine()
@@ -49,6 +52,12 @@
             //// this.Bind<IStateA, IState>().To<StateA>();
             //// this.Bind<IStateB, IState>().To<StateB>();
             //// this.Bind<IStateC, IState>().To<StateC>();
+        }
+
+        private void BindLogger()
+        {
+            this.Bind<IBascoLogger>().To<Log4NetLogger>()
+                .InNamedScope(Driver.DriverScope);
         }
     }
 }

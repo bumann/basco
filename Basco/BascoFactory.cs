@@ -3,6 +3,7 @@
     using System;
     using Basco.Configuration;
     using Basco.Execution;
+    using Basco.Log;
     using Scyano;
 
     /// <summary>
@@ -19,7 +20,8 @@
             var stateProvider = new BascoStatesProvider<TTrigger>(stateCache, transitionCache);
             var enterExecutor = new BascoStateEnterExecutor();
             var exitExecutor = new BascoStateExitExecutor();
-            var bascoExecutor = new BascoExecutor<TTrigger>(stateProvider, enterExecutor, exitExecutor);
+            var loggerProvider = new BascoLoggerProvider(new[] { new DummyLogger() });
+            var bascoExecutor = new BascoExecutor<TTrigger>(loggerProvider, stateProvider, enterExecutor, exitExecutor);
             return new Basco<TTrigger>(ScyanoFactory.Create(), stateCache, transitionCache, bascoExecutor, bascoConfigurator);
         }
     }

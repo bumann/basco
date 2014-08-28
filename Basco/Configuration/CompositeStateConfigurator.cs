@@ -21,6 +21,7 @@
             base.ForState<TState>();
         }
 
+        //// TODO
         public ICompositeStateConfigurator<TTransitionTrigger> WithSubStates(Action<IBascoInternal<TTransitionTrigger>> bascoConfigurator)
         {
             if (this.compositeState == null)

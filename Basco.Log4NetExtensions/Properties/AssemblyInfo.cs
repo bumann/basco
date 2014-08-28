@@ -1,17 +1,19 @@
 ﻿using System.Reflection;
+using System.Resources;
 using System.Runtime.InteropServices;
 
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Basco.NinjectExtensions")]
-[assembly: AssemblyDescription("Simplified Ninject bindings for Basco.")]
+[assembly: AssemblyTitle("Basco.Log4NetExtensions")]
+[assembly: AssemblyDescription("Log4Net logging extensions for Basco")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("bumann")]
-[assembly: AssemblyProduct("Basco.NinjectExtensions")]
+[assembly: AssemblyCompany("Bumann")]
+[assembly: AssemblyProduct("Basco.Log4NetExtensions")]
 [assembly: AssemblyCopyright("Copyright © B. Bumann 2014")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
+[assembly: NeutralResourcesLanguage("en")]
 
 // Setting ComVisible to false makes the types in this assembly not visible 
 // to COM components.  If you need to access a type in this assembly from 
@@ -19,7 +21,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("e18f443e-1870-45e0-8ca5-7ed3a8b77c97")]
+[assembly: Guid("299ee072-70b1-4268-9bd1-1bc4a918ca85")]
 
 // Version information for an assembly consists of the following four values:
 //

@@ -1,12 +1,17 @@
 ﻿namespace Basco.Sample.CompositeStates
 {
     using System.Reflection;
+    using log4net.Config;
     using Ninject;
 
     public partial class MainWindow
     {
         public MainWindow()
         {
+            string directory = System.IO.Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+            string path = System.IO.Path.Combine(directory, "log4net.config");
+            XmlConfigurator.ConfigureAndWatch(new System.IO.FileInfo(path));
+
             IKernel kernel = new StandardKernel();
             kernel.Load(Assembly.GetExecutingAssembly());
 
