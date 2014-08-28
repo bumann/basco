@@ -8,16 +8,23 @@
     // ReSharper disable once ClassNeverInstantiated.Global
     public class Log4NetLogger : IBascoLogger
     {
-        private static readonly ILog Logger = LogManager.GetLogger("Basco");
+        private static int count;
+        private readonly ILog logger;
+
+        public Log4NetLogger()
+        {
+            count++;
+            this.logger = LogManager.GetLogger(string.Format("Basco [{0}]:", count));
+        }
 
         public void LogDebug(string format, params object[] args)
         {
-            Logger.DebugFormat(format, args);
+            this.logger.DebugFormat(format, args);
         }
 
         public void LogError(Exception exception, string format, params object[] args)
         {
-            Logger.Error(string.Format(CultureInfo.InvariantCulture, format, args), exception);
+            this.logger.Error(string.Format(CultureInfo.InvariantCulture, format, args), exception);
         }
     }
 }
