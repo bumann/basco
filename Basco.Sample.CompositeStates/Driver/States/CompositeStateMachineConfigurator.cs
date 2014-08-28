@@ -11,11 +11,11 @@
 
             basco.ForComposite<StateB, TransitionTrigger>(cs => cs
                 .WithSubStates(b => b
+                    .AlwaysStartInInitialState()
                     .For<SubStateF, TransitionTrigger>(state => state
                         .When(TransitionTrigger.ContinueG).Goto<SubStateG>())
                     .For<SubStateG, TransitionTrigger>(state => state
                         .When(TransitionTrigger.ContinueF).Goto<SubStateF>()))
-                .OnEnterAlwaysStartWithInitialState()
                 .When(TransitionTrigger.Pause).Goto<StateA>()
                 .When(TransitionTrigger.Error).Goto<StateC>());
 

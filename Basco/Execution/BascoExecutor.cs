@@ -24,7 +24,7 @@ namespace Basco.Execution
 
         public IState CurrentState { get; private set; }
 
-        public bool AlwaysStartWithInitialState { private get; set; }
+        public bool AlwaysStartWithInitialState { get; set; }
 
         public void Initialize(Type startStateType)
         {

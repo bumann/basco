@@ -39,5 +39,18 @@
             configurator(transitionConfigurator);
             return basco;
         }
+
+        /// <summary>
+        /// Option that forces the state machine to start always in its initial state.
+        /// Last state when state machine was stopped, is ignored.
+        /// Use this option only, if you want to clear "memory" of the state machine.
+        /// </summary>
+        /// <returns>The hierarchical state machine for fluent configuration.</returns>
+        public static IBascoInternal<TTransitionTrigger> AlwaysStartInInitialState<TTransitionTrigger>(this IBascoInternal<TTransitionTrigger> basco)
+            where TTransitionTrigger : IComparable
+        {
+            basco.BascoExecutor.AlwaysStartWithInitialState = true;
+            return basco;
+        }
     }
 }

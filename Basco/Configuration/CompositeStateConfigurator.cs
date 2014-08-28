@@ -40,11 +40,5 @@
 
             return this;
         }
-
-        public ICompositeStateConfigurator<TTransitionTrigger> OnEnterAlwaysStartWithInitialState()
-        {
-            this.subBasco.BascoExecutor.AlwaysStartWithInitialState = true;
-            return this;
-        }
     }
 }

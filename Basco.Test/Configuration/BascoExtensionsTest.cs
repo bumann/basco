@@ -70,5 +70,36 @@
 
             transitionCache.Verify(x => x.Add(typeof(SimpleTestState), It.IsAny<StateTransitions<TestTrigger>>()));
         }
+
+        [Fact]
+        public void AlwaysStartInInitialState_MustReturnBasco()
+        {
+            var basco = new Basco<TestTrigger>(
+                Mock.Of<IScyano>(),
+                Mock.Of<IBascoStateCache<TestTrigger>>(),
+                Mock.Of<IBascoTransitionCache<TestTrigger>>(),
+                Mock.Of<IBascoExecutor<TestTrigger>>(),
+                Mock.Of<IBascoConfigurator<TestTrigger>>());
+
+            IBasco<TestTrigger> result = basco.AlwaysStartInInitialState();
+
+            result.Should().BeOfType<Basco<TestTrigger>>();
+        }
+
+        [Fact]
+        public void AlwaysStartInInitialState_MustSetAlwaysStartWithInitialState()
+        {
+            var bascoExecutor = new Mock<IBascoExecutor<TestTrigger>>();
+            var basco = new Basco<TestTrigger>(
+                Mock.Of<IScyano>(),
+                Mock.Of<IBascoStateCache<TestTrigger>>(),
+                Mock.Of<IBascoTransitionCache<TestTrigger>>(),
+                bascoExecutor.Object,
+                Mock.Of<IBascoConfigurator<TestTrigger>>());
+
+            basco.AlwaysStartInInitialState();
+
+            bascoExecutor.VerifySet(x => x.AlwaysStartWithInitialState = true, Times.Once);
+        }
     }
 }
