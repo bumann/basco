@@ -96,7 +96,7 @@ namespace Basco.Execution
                 return;
             }
 
-            this.logger.LogDebug("state machine exiting state [{0}].", this.CurrentState.GetType().Name);
+            this.logger.LogDebug("state machine exiting state [{0}].", this.CurrentState.LogName<TTransitionTrigger>());
             this.bascoStateExitExecutor.Exit(this.CurrentState);
             this.CurrentState = nextState;
             this.EnteringState(this.CurrentState);
@@ -105,7 +105,7 @@ namespace Basco.Execution
 
         private void EnteringState(IState state)
         {
-            this.logger.LogDebug("state machine entering state [{0}].", state.GetType().Name);
+            this.logger.LogDebug("state machine entering state [{0}].", state.LogName<TTransitionTrigger>());
             this.bascoStateEnterExecutor.Enter(state);
         }
 
@@ -113,7 +113,7 @@ namespace Basco.Execution
         {
             this.OnStateChanged();
             this.CurrentState.Execute();
-            this.logger.LogDebug("state machine entered state [{0}].", this.CurrentState.GetType().Name);
+            this.logger.LogDebug("state machine entered state [{0}].", this.CurrentState.LogName<TTransitionTrigger>());
         }
 
         private void OnStateChanged()
