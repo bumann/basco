@@ -6,15 +6,15 @@
     using Basco.Execution;
     using Scyano;
 
-    public class Basco<TTransitionTrigger> : IBascoInternal<TTransitionTrigger>
+    public class Basco<TTransitionTrigger> : IBascoInternal<TTransitionTrigger>, IMessageProcessor<TTransitionTrigger>
         where TTransitionTrigger : IComparable
     {
-        private readonly IScyano scyano;
+        private readonly IScyano<TTransitionTrigger> scyano;
         private readonly IBascoConfigurator<TTransitionTrigger> bascoConfigurator;
         private readonly IList<IBascoInternal<TTransitionTrigger>> fsmList;
 
         public Basco(
-            IScyano scyano,
+            IScyano<TTransitionTrigger> scyano,
             IBascoStateCache<TTransitionTrigger> statesCache,
             IBascoTransitionCache<TTransitionTrigger> transitionCache,
             IBascoExecutor<TTransitionTrigger> bascoExecutor,
@@ -116,15 +116,14 @@
             this.scyano.Enqueue(trigger);
         }
 
-        [MessageConsumer]
-        public void TriggerConsumer(TTransitionTrigger trigger)
+        public void ProcessMessage(TTransitionTrigger message)
         {
             foreach (var basco in this.fsmList)
             {
-                basco.BascoExecutor.ChangeState(trigger);
+                basco.BascoExecutor.ChangeState(message);
             }
 
-            this.BascoExecutor.ChangeState(trigger);
+            this.BascoExecutor.ChangeState(message);
         }
 
         private void HandleSubStateChanged(object sender, EventArgs e)

@@ -22,7 +22,7 @@
             var exitExecutor = new BascoStateExitExecutor();
             var loggerProvider = new BascoLoggerProvider(new[] { new DummyLogger() });
             var bascoExecutor = new BascoExecutor<TTrigger>(loggerProvider, stateProvider, enterExecutor, exitExecutor);
-            return new Basco<TTrigger>(ScyanoFactory.Create(), stateCache, transitionCache, bascoExecutor, bascoConfigurator);
+            return new Basco<TTrigger>(ScyanoFactory.Create<TTrigger>(), stateCache, transitionCache, bascoExecutor, bascoConfigurator);
         }
     }
 }

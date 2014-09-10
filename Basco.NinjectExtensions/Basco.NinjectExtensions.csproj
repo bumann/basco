@@ -39,9 +39,9 @@
     <Reference Include="Ninject.Extensions.NamedScope">
       <HintPath>..\packages\Ninject.Extensions.NamedScope.3.2.0.0\lib\net45-full\Ninject.Extensions.NamedScope.dll</HintPath>
     </Reference>
-    <Reference Include="Scyano, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Scyano, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Scyano.1.1.0\lib\portable-net45+win+wp80\Scyano.dll</HintPath>
+      <HintPath>..\packages\Scyano.1.2.0\lib\portable-net45+win+wp80\Scyano.dll</HintPath>
     </Reference>
     <Reference Include="Scyano.NinjectExtensions, Version=1.0.2.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>

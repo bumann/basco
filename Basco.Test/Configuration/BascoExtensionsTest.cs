@@ -13,7 +13,7 @@
         public void For_MustReturnBasco()
         {
             var basco = new Basco<TestTrigger>(
-                Mock.Of<IScyano>(), 
+                Mock.Of<IScyano<TestTrigger>>(), 
                 Mock.Of<IBascoStateCache<TestTrigger>>(),
                 Mock.Of<IBascoTransitionCache<TestTrigger>>(),
                 Mock.Of<IBascoExecutor<TestTrigger>>(), 
@@ -29,7 +29,7 @@
         {
             var transitionCache = new Mock<IBascoTransitionCache<TestTrigger>>();
             var basco = new Basco<TestTrigger>(
-                Mock.Of<IScyano>(),
+                Mock.Of<IScyano<TestTrigger>>(),
                 Mock.Of<IBascoStateCache<TestTrigger>>(),
                 transitionCache.Object,
                 Mock.Of<IBascoExecutor<TestTrigger>>(),
@@ -44,7 +44,7 @@
         public void ForComposite_MustReturnBasco()
         {
             var basco = new Basco<TestTrigger>(
-                Mock.Of<IScyano>(),
+                Mock.Of<IScyano<TestTrigger>>(),
                 Mock.Of<IBascoStateCache<TestTrigger>>(),
                 Mock.Of<IBascoTransitionCache<TestTrigger>>(),
                 Mock.Of<IBascoExecutor<TestTrigger>>(),
@@ -60,7 +60,7 @@
         {
             var transitionCache = new Mock<IBascoTransitionCache<TestTrigger>>();
             var basco = new Basco<TestTrigger>(
-                Mock.Of<IScyano>(),
+                Mock.Of<IScyano<TestTrigger>>(),
                 Mock.Of<IBascoStateCache<TestTrigger>>(),
                 transitionCache.Object,
                 Mock.Of<IBascoExecutor<TestTrigger>>(),
@@ -75,7 +75,7 @@
         public void AlwaysStartInInitialState_MustReturnBasco()
         {
             var basco = new Basco<TestTrigger>(
-                Mock.Of<IScyano>(),
+                Mock.Of<IScyano<TestTrigger>>(),
                 Mock.Of<IBascoStateCache<TestTrigger>>(),
                 Mock.Of<IBascoTransitionCache<TestTrigger>>(),
                 Mock.Of<IBascoExecutor<TestTrigger>>(),
@@ -91,7 +91,7 @@
         {
             var bascoExecutor = new Mock<IBascoExecutor<TestTrigger>>();
             var basco = new Basco<TestTrigger>(
-                Mock.Of<IScyano>(),
+                Mock.Of<IScyano<TestTrigger>>(),
                 Mock.Of<IBascoStateCache<TestTrigger>>(),
                 Mock.Of<IBascoTransitionCache<TestTrigger>>(),
                 bascoExecutor.Object,

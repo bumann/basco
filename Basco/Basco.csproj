@@ -81,15 +81,15 @@
     <Compile Include="Configuration\StateTransitionsExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Dev\" />
+  </ItemGroup>
+  <ItemGroup>
     <Reference Include="Scyano">
-      <HintPath>..\packages\Scyano.1.1.0\lib\portable-net45+win+wp80\Scyano.dll</HintPath>
+      <HintPath>..\packages\Scyano.1.2.0\lib\portable-net45+win+wp80\Scyano.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Dev\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

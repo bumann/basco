@@ -12,7 +12,7 @@
 
     public class BascoTest
     {
-        private readonly Mock<IScyano> scyano;
+        private readonly Mock<IScyano<TestTrigger>> scyano;
         private readonly Mock<IBascoStateCache<TestTrigger>> stateCache;
         private readonly Mock<IBascoExecutor<TestTrigger>> bascoExecutor;
         private readonly Mock<IBascoConfigurator<TestTrigger>> bascoConfigurator;
@@ -20,7 +20,7 @@
 
         public BascoTest()
         {
-            this.scyano = new Mock<IScyano>();
+            this.scyano = new Mock<IScyano<TestTrigger>>();
             this.stateCache = new Mock<IBascoStateCache<TestTrigger>> { DefaultValue = DefaultValue.Mock };
             this.bascoExecutor = new Mock<IBascoExecutor<TestTrigger>>();
             this.bascoConfigurator = new Mock<IBascoConfigurator<TestTrigger>>();
@@ -211,7 +211,7 @@
         }
 
         [Fact]
-        public void TriggerConsumer_MustTriggerSubBascos()
+        public void ProcessMessage_MustTriggerSubBascos()
         {
             const TestTrigger ExpectedTrigger = TestTrigger.TransitionOne;
             var subBasco1 = new Mock<IBascoInternal<TestTrigger>> { DefaultValue = DefaultValue.Mock };
@@ -223,18 +223,18 @@
             this.testee.AddHierchary(subBasco1.Object);
             this.testee.AddHierchary(subBasco2.Object);
 
-            this.testee.TriggerConsumer(ExpectedTrigger);
+            this.testee.ProcessMessage(ExpectedTrigger);
 
             executor1.Verify(x => x.ChangeState(ExpectedTrigger));
             executor2.Verify(x => x.ChangeState(ExpectedTrigger));
         }
 
         [Fact]
-        public void TriggerConsumer_MustChangeState()
+        public void ProcessMessage_MustChangeState()
         {
             const TestTrigger ExpectedTrigger = TestTrigger.TransitionOne;
 
-            this.testee.TriggerConsumer(ExpectedTrigger);
+            this.testee.ProcessMessage(ExpectedTrigger);
 
             this.bascoExecutor.Verify(x => x.ChangeState(ExpectedTrigger));
         }
