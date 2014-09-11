@@ -41,11 +41,12 @@
     </Reference>
     <Reference Include="Scyano, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Scyano.1.2.0\lib\portable-net45+win+wp80\Scyano.dll</HintPath>
+      <HintPath>..\packages\Scyano.1.2.1\lib\portable-net45+win+wp80\Scyano.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Scyano.NinjectExtensions, Version=1.0.2.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Scyano.NinjectExtensions.1.2.0\lib\net45\Scyano.NinjectExtensions.dll</HintPath>
+      <HintPath>..\packages\Scyano.NinjectExtensions.1.2.1\lib\net45\Scyano.NinjectExtensions.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />

@@ -5,6 +5,7 @@
     using Basco.Configuration;
     using Basco.Execution;
     using Scyano;
+    using Scyano.MessageProcessing;
 
     public class Basco<TTransitionTrigger> : IBascoInternal<TTransitionTrigger>, IMessageProcessor<TTransitionTrigger>
         where TTransitionTrigger : IComparable
