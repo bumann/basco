@@ -19,7 +19,6 @@
             if (string.IsNullOrEmpty(bascoConfigurator.ScopeName))
             {
                 syntax.Bind(typeof(IBasco<>)).To(typeof(Basco<>));
-                syntax.Bind<IBascoLogger>().To<DummyLogger>();
                 syntax.Bind<IBascoLoggerProvider>().To<BascoLoggerProvider>();
                 syntax.Bind(typeof(IBascoStateCache<>)).To(typeof(BascoStateCache<>));
                 syntax.Bind(typeof(IBascoTransitionCache<>)).To(typeof(BascoTransitionCache<>));
@@ -31,8 +30,6 @@
             else
             {
                 syntax.Bind(typeof(IBasco<>)).To(typeof(Basco<>))
-                    .InNamedScope(bascoConfigurator.ScopeName);
-                syntax.Bind<IBascoLogger>().To<DummyLogger>()
                     .InNamedScope(bascoConfigurator.ScopeName);
                 syntax.Bind<IBascoLoggerProvider>().To<BascoLoggerProvider>()
                     .InNamedScope(bascoConfigurator.ScopeName);

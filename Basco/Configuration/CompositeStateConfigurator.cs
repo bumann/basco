@@ -29,7 +29,7 @@
                 throw new BascoException("No composite state defined. Use ForComposite<YourState, YourTrigger> in your configuration!");
             }
 
-            this.subBasco = BascoFactory.Create<TTransitionTrigger>();
+            this.subBasco = BascoFactory.Create<TTransitionTrigger>(this.Basco.BascoExecutor.ActiveLogger);
             bascoConfigurator(this.subBasco);
             Type startStateType = this.subBasco.TransitionCache.TransitionPool.Keys.FirstOrDefault();
             List<Type> stateTypes = this.subBasco.TransitionCache.TransitionPool.Keys.ToList();

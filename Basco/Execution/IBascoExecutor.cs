@@ -1,11 +1,14 @@
 namespace Basco.Execution
 {
     using System;
+    using Basco.Log;
 
     public interface IBascoExecutor<in TTransitionTrigger> : IBascoState
         where TTransitionTrigger : IComparable
     {
-        bool AlwaysStartWithInitialState { get; set; }
+        IBascoLogger ActiveLogger { get; }
+
+        bool AlwaysStartWithInitialState { set; }
 
         void Initialize(Type startStateType);
 

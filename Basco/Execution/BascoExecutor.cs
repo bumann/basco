@@ -28,6 +28,11 @@ namespace Basco.Execution
 
         public IState CurrentState { get; private set; }
 
+        public IBascoLogger ActiveLogger
+        {
+            get { return this.logger; }
+        }
+
         public bool AlwaysStartWithInitialState { get; set; }
 
         public void Initialize(Type startStateType)
